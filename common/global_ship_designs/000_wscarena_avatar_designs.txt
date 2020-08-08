@@ -1,0 +1,709 @@
+
+
+# Ether Drake
+ship_design = {
+	name = "NAME_Grand_Dragon"
+	ship_size = space_dragon_red
+
+	section = {
+		template = "space_dragon_red_key"
+		slot = "mid"
+		
+		component = {
+			slot = "PRIMARY_GUN_01"
+			template = "DRAGON_WEAPON"
+		}
+		component = {
+			slot = "SECONDARY_GUN_01"
+			template = "DRAGON_SECONDARY_WEAPON"
+		}
+		component = {
+			slot = "SECONDARY_GUN_02"
+			template = "DRAGON_SECONDARY_WEAPON"
+		}
+		component = {
+			slot = "SECONDARY_GUN_03"
+			template = "DRAGON_SECONDARY_WEAPON"
+		}
+		component = {
+			slot = "SECONDARY_GUN_04"
+			template = "DRAGON_SECONDARY_WEAPON"
+		}
+		component = {
+			slot = "SECONDARY_GUN_05"
+			template = "DRAGON_SECONDARY_WEAPON"
+		}
+		component = {
+			slot = "SECONDARY_GUN_06"
+			template = "DRAGON_SECONDARY_WEAPON"
+		}
+		component = {
+			slot = "SECONDARY_GUN_07"
+			template = "DRAGON_SECONDARY_WEAPON"
+		}
+		component = {
+			slot = "SECONDARY_GUN_08"
+			template = "DRAGON_SECONDARY_WEAPON"
+		}		
+		component = {
+			slot = "TERTIARY_GUN_01"
+			template = "DRAGON_TERTIARY_WEAPON"
+		}
+		component = {
+			slot = "TERTIARY_GUN_02"
+			template = "DRAGON_TERTIARY_WEAPON"
+		}
+		component = {
+			slot = "TERTIARY_GUN_03"
+			template = "DRAGON_TERTIARY_WEAPON"
+		}
+		component = {
+			slot = "TERTIARY_GUN_04"
+			template = "DRAGON_TERTIARY_WEAPON"
+		}			
+		
+		component = {
+			slot = "LARGE_UTILITY_1"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_2"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_3"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_4"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "AUX_UTILITY_1"
+			template = "AUTO_REPAIR"
+		}
+		component = {
+			slot = "AUX_UTILITY_2"
+			template = "AUTO_REPAIR"
+		}
+	}
+	required_component="GUARDIAN_DRIVE"
+	required_component="COMBAT_COMPUTER_WSCARENA"
+	required_component="GUARDIAN_PROPULSION"
+	required_component="GUARDIAN_SENSORS"
+}
+
+# Ether Drake Jump
+ship_design = {
+	name = "NAME_Grand_Dragon_Jump"
+	ship_size = space_dragon_red
+
+	section = {
+		template = "space_dragon_red_key"
+		slot = "mid"
+		
+		component = {
+			slot = "PRIMARY_GUN_01"
+			template = "DRAGON_WEAPON"
+		}
+		component = {
+			slot = "SECONDARY_GUN_01"
+			template = "DRAGON_SECONDARY_WEAPON"
+		}
+		component = {
+			slot = "SECONDARY_GUN_02"
+			template = "DRAGON_SECONDARY_WEAPON"
+		}
+		component = {
+			slot = "SECONDARY_GUN_03"
+			template = "DRAGON_SECONDARY_WEAPON"
+		}
+		component = {
+			slot = "SECONDARY_GUN_04"
+			template = "DRAGON_SECONDARY_WEAPON"
+		}
+		component = {
+			slot = "SECONDARY_GUN_05"
+			template = "DRAGON_SECONDARY_WEAPON"
+		}
+		component = {
+			slot = "SECONDARY_GUN_06"
+			template = "DRAGON_SECONDARY_WEAPON"
+		}
+		component = {
+			slot = "SECONDARY_GUN_07"
+			template = "DRAGON_SECONDARY_WEAPON"
+		}
+		component = {
+			slot = "SECONDARY_GUN_08"
+			template = "DRAGON_SECONDARY_WEAPON"
+		}		
+		component = {
+			slot = "TERTIARY_GUN_01"
+			template = "DRAGON_TERTIARY_WEAPON"
+		}
+		component = {
+			slot = "TERTIARY_GUN_02"
+			template = "DRAGON_TERTIARY_WEAPON"
+		}
+		component = {
+			slot = "TERTIARY_GUN_03"
+			template = "DRAGON_TERTIARY_WEAPON"
+		}
+		component = {
+			slot = "TERTIARY_GUN_04"
+			template = "DRAGON_TERTIARY_WEAPON"
+		}			
+		
+		component = {
+			slot = "LARGE_UTILITY_1"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_2"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_3"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_4"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "AUX_UTILITY_1"
+			template = "AUTO_REPAIR"
+		}
+		component = {
+			slot = "AUX_UTILITY_2"
+			template = "AUTO_REPAIR"
+		}
+	}
+	
+	required_component="GUARDIAN_DRIVE_2"
+	required_component="COMBAT_COMPUTER_WSCARENA"
+	required_component="GUARDIAN_PROPULSION"
+	required_component="GUARDIAN_SENSORS"
+}
+
+
+
+# Automated Dreadnought
+ship_design = {
+	name = "NAME_Relic"
+	ship_size = npc_warship_01
+
+	section = {
+		template = "automated_dreadnought_key"
+		slot = "mid"
+
+		component = {
+			slot = "LARGE_GUN_01"
+			template = "ENERGY_TORPEDO_2"
+		}		
+		component = {
+			slot = "LARGE_GUN_02"
+			template = "ENERGY_TORPEDO_2"
+		}		
+		component = {
+			slot = "LARGE_GUN_03"
+			template = "LARGE_PLASMA_3"
+		}		
+		component = {
+			slot = "LARGE_GUN_04"
+			template = "LARGE_PLASMA_3"
+		}	
+		component = {
+			slot = "LARGE_GUN_05"
+			template = "LARGE_PLASMA_3"
+		}		
+		component = {
+			slot = "LARGE_GUN_06"
+			template = "LARGE_PLASMA_3"
+		}	
+		component = {
+			slot = "LARGE_GUN_07"
+			template = "LARGE_PLASMA_3"
+		}
+		component = {
+			slot = "SMALL_GUN_01"
+			template = "SMALL_DISRUPTOR_3"
+		}	
+		component = {
+			slot = "SMALL_GUN_02"
+			template = "SMALL_DISRUPTOR_3"
+		}	
+		component = {
+			slot = "SMALL_GUN_03"
+			template = "POINT_DEFENCE_3"
+		}	
+		component = {
+			slot = "SMALL_GUN_04"
+			template = "POINT_DEFENCE_3"
+		}	
+		component = {
+			slot = "SMALL_GUN_05"
+			template = "POINT_DEFENCE_3"
+		}		
+		component = {
+			slot = "SMALL_GUN_08"
+			template = "SMALL_PLASMA_3"
+		}	
+		component = {
+			slot = "SMALL_GUN_09"
+			template = "SMALL_PLASMA_3"
+		}	
+		component = {
+			slot = "SMALL_GUN_10"
+			template = "SMALL_PLASMA_3"
+		}		
+		component = {
+			slot = "LARGE_UTILITY_1"
+			template = "LARGE_ARMOR_5"
+		}
+		component = {
+			slot = "LARGE_UTILITY_2"
+			template = "LARGE_ARMOR_5"
+		}
+		component = {
+			slot = "LARGE_UTILITY_3"
+			template = "LARGE_ARMOR_5"
+		}
+		component = {
+			slot = "LARGE_UTILITY_4"
+			template = "LARGE_ARMOR_5"
+		}
+		component = {
+			slot = "LARGE_UTILITY_5"
+			template = "LARGE_ARMOR_5"
+		}
+		component = {
+			slot = "LARGE_UTILITY_6"
+			template = "LARGE_ARMOR_5"
+		}
+		component = {
+			slot = "LARGE_UTILITY_7"
+			template = "LARGE_SHIELD_5"
+		}		
+		component = {
+			slot = "LARGE_UTILITY_8"
+			template = "LARGE_SHIELD_5"
+		}		
+		component = {
+			slot = "LARGE_UTILITY_9"
+			template = "LARGE_SHIELD_5"
+		}		
+		component = {
+			slot = "LARGE_UTILITY_10"
+			template = "LARGE_SHIELD_5"
+		}
+		component = {
+			slot = "LARGE_UTILITY_11"
+			template = "LARGE_SHIELD_5"
+		}			
+		component = {
+			slot = "AUX_UTILITY_1"
+			template = "SHIELD_BOOSTER"
+		}
+		component = {
+			slot = "AUX_UTILITY_2"
+			template = "SHIELD_BOOSTER"
+		}	
+		component = {
+			slot = "AUX_UTILITY_3"
+			template = "SHIELD_BOOSTER"
+		}
+		component = {
+			slot = "AUX_UTILITY_4"
+			template = "AUTO_REPAIR"
+		}
+		component = {
+			slot = "AUX_UTILITY_5"
+			template = "AUTO_REPAIR"
+		}				
+	}
+	required_component="GUARDIAN_DRIVE"
+	required_component="COMBAT_COMPUTER_WSCARENA"
+	required_component="GUARDIAN_PROPULSION"
+	required_component="GUARDIAN_SENSORS"
+}
+
+# Automated Dreadnought Jump
+ship_design = {
+	name = "NAME_Relic_Jump"
+	ship_size = npc_warship_01
+
+	section = {
+		template = "automated_dreadnought_key"
+		slot = "mid"
+
+		component = {
+			slot = "LARGE_GUN_01"
+			template = "ENERGY_TORPEDO_2"
+		}		
+		component = {
+			slot = "LARGE_GUN_02"
+			template = "ENERGY_TORPEDO_2"
+		}		
+		component = {
+			slot = "LARGE_GUN_03"
+			template = "LARGE_PLASMA_3"
+		}		
+		component = {
+			slot = "LARGE_GUN_04"
+			template = "LARGE_PLASMA_3"
+		}	
+		component = {
+			slot = "LARGE_GUN_05"
+			template = "LARGE_PLASMA_3"
+		}		
+		component = {
+			slot = "LARGE_GUN_06"
+			template = "LARGE_PLASMA_3"
+		}	
+		component = {
+			slot = "LARGE_GUN_07"
+			template = "LARGE_PLASMA_3"
+		}
+		component = {
+			slot = "SMALL_GUN_01"
+			template = "SMALL_DISRUPTOR_3"
+		}	
+		component = {
+			slot = "SMALL_GUN_02"
+			template = "SMALL_DISRUPTOR_3"
+		}	
+		component = {
+			slot = "SMALL_GUN_03"
+			template = "POINT_DEFENCE_3"
+		}	
+		component = {
+			slot = "SMALL_GUN_04"
+			template = "POINT_DEFENCE_3"
+		}	
+		component = {
+			slot = "SMALL_GUN_05"
+			template = "POINT_DEFENCE_3"
+		}		
+		component = {
+			slot = "SMALL_GUN_08"
+			template = "SMALL_PLASMA_3"
+		}	
+		component = {
+			slot = "SMALL_GUN_09"
+			template = "SMALL_PLASMA_3"
+		}	
+		component = {
+			slot = "SMALL_GUN_10"
+			template = "SMALL_PLASMA_3"
+		}		
+		component = {
+			slot = "LARGE_UTILITY_1"
+			template = "LARGE_ARMOR_5"
+		}
+		component = {
+			slot = "LARGE_UTILITY_2"
+			template = "LARGE_ARMOR_5"
+		}
+		component = {
+			slot = "LARGE_UTILITY_3"
+			template = "LARGE_ARMOR_5"
+		}
+		component = {
+			slot = "LARGE_UTILITY_4"
+			template = "LARGE_ARMOR_5"
+		}
+		component = {
+			slot = "LARGE_UTILITY_5"
+			template = "LARGE_ARMOR_5"
+		}
+		component = {
+			slot = "LARGE_UTILITY_6"
+			template = "LARGE_ARMOR_5"
+		}
+		component = {
+			slot = "LARGE_UTILITY_7"
+			template = "LARGE_SHIELD_5"
+		}		
+		component = {
+			slot = "LARGE_UTILITY_8"
+			template = "LARGE_SHIELD_5"
+		}		
+		component = {
+			slot = "LARGE_UTILITY_9"
+			template = "LARGE_SHIELD_5"
+		}		
+		component = {
+			slot = "LARGE_UTILITY_10"
+			template = "LARGE_SHIELD_5"
+		}
+		component = {
+			slot = "LARGE_UTILITY_11"
+			template = "LARGE_SHIELD_5"
+		}			
+		component = {
+			slot = "AUX_UTILITY_1"
+			template = "SHIELD_BOOSTER"
+		}
+		component = {
+			slot = "AUX_UTILITY_2"
+			template = "SHIELD_BOOSTER"
+		}	
+		component = {
+			slot = "AUX_UTILITY_3"
+			template = "SHIELD_BOOSTER"
+		}
+		component = {
+			slot = "AUX_UTILITY_4"
+			template = "AUTO_REPAIR"
+		}
+		component = {
+			slot = "AUX_UTILITY_5"
+			template = "AUTO_REPAIR"
+		}				
+	}
+	required_component="GUARDIAN_DRIVE_2"
+	required_component="COMBAT_COMPUTER_WSCARENA"
+	required_component="GUARDIAN_PROPULSION"
+	required_component="GUARDIAN_SENSORS"
+}
+
+# Corrupted Avatar
+ship_design = {
+	name = "NAME_Corrupted_Avatar"
+	ship_size = corrupted_avatar
+	is_event_design = yes
+	hide_size = yes
+
+	section = {
+		template = "corrupted_psionic_avatar_section"
+		slot = "mid"
+		
+		component = {
+			slot = "MEDIUM_GUN_01"
+			template = "PSIONIC_BLAST_1"
+		}
+		component = {
+			slot = "MEDIUM_GUN_02"
+			template = "PSIONIC_BLAST_1"
+		}
+		component = {
+			slot = "MEDIUM_GUN_03"
+			template = "PSIONIC_BLAST_1"
+		}
+		component = {
+			slot = "MEDIUM_GUN_04"
+			template = "PSIONIC_BLAST_1"
+		}
+	}
+	required_component="GUARDIAN_DRIVE"
+	required_component="COMBAT_COMPUTER_WSCARENA"
+	required_component="GUARDIAN_PROPULSION"
+	required_component="GUARDIAN_SENSORS"
+}
+
+# Corrupted Avatar Jump
+ship_design = {
+	name = "NAME_Corrupted_Avatar_Jump"
+	ship_size = corrupted_avatar
+	is_event_design = yes
+	hide_size = yes
+
+	section = {
+		template = "corrupted_psionic_avatar_section"
+		slot = "mid"
+		
+
+	}
+	required_component="GUARDIAN_DRIVE_2"
+	required_component="COMBAT_COMPUTER_WSCARENA"
+	required_component="GUARDIAN_PROPULSION"
+	required_component="GUARDIAN_SENSORS"
+	
+}
+
+# Voidspawn
+ship_design = {
+	name = "NAME_Voidspawn"
+	ship_size = leviathan_01_voidspawn
+	is_event_design = yes
+	hide_size = yes
+
+	section = {
+		template = "voidspawn_key"
+		slot = "mid"
+		
+		component = {
+			slot = "LARGE_GUN_01"
+			template = "SPORE_LAUNCHER"
+		}
+		component = {
+			slot = "LARGE_GUN_02"
+			template = "SPORE_LAUNCHER"
+		}
+		component = {
+			slot = "LARGE_GUN_03"
+			template = "SPORE_LAUNCHER"
+		}
+		component = {
+			slot = "LARGE_GUN_04"
+			template = "SPORE_LAUNCHER"
+		}
+		component = {
+			slot = "LARGE_GUN_05"
+			template = "SPORE_LAUNCHER"
+		}
+		component = {
+			slot = "LARGE_GUN_06"
+			template = "SPORE_LAUNCHER"
+		}
+		
+		component = {
+			slot = "LARGE_UTILITY_1"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_2"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_3"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_4"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_5"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_6"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_7"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_8"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_9"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_10"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		
+		component = {
+			slot = "AUX_UTILITY_1"
+			template = "AUTO_REPAIR"
+		}
+		component = {
+			slot = "AUX_UTILITY_2"
+			template = "AUTO_REPAIR"
+		}
+	}
+	required_component="GUARDIAN_DRIVE"
+	required_component="COMBAT_COMPUTER_WSCARENA"
+	required_component="GUARDIAN_PROPULSION"
+	required_component="GUARDIAN_SENSORS"
+}
+
+
+# Voidspawn Jump
+ship_design = {
+	name = "NAME_Voidspawn_Jump"
+	ship_size = leviathan_01_voidspawn
+	is_event_design = yes
+	hide_size = yes
+
+	section = {
+		template = "voidspawn_key"
+		slot = "mid"
+		
+		component = {
+			slot = "LARGE_GUN_01"
+			template = "SPORE_LAUNCHER"
+		}
+		component = {
+			slot = "LARGE_GUN_02"
+			template = "SPORE_LAUNCHER"
+		}
+		component = {
+			slot = "LARGE_GUN_03"
+			template = "SPORE_LAUNCHER"
+		}
+		component = {
+			slot = "LARGE_GUN_04"
+			template = "SPORE_LAUNCHER"
+		}
+		component = {
+			slot = "LARGE_GUN_05"
+			template = "SPORE_LAUNCHER"
+		}
+		component = {
+			slot = "LARGE_GUN_06"
+			template = "SPORE_LAUNCHER"
+		}
+		
+		component = {
+			slot = "LARGE_UTILITY_1"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_2"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_3"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_4"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_5"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_6"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_7"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_8"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_9"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		component = {
+			slot = "LARGE_UTILITY_10"
+			template = "LARGE_DRAGON_ARMOR"
+		}
+		
+		component = {
+			slot = "AUX_UTILITY_1"
+			template = "AUTO_REPAIR"
+		}
+		component = {
+			slot = "AUX_UTILITY_2"
+			template = "AUTO_REPAIR"
+		}
+	}
+	required_component="GUARDIAN_DRIVE_2"
+	required_component="COMBAT_COMPUTER_WSCARENA"
+	required_component="GUARDIAN_PROPULSION"
+	required_component="GUARDIAN_SENSORS"
+}

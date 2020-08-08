@@ -1,0 +1,24 @@
+# Triggers when the game starts
+on_game_start = {
+	events = {
+		phoenix_startdlc.4
+		phoenix_start.2
+	}
+}
+
+on_game_start_country = {
+		events = {
+			phoenix_start.3
+		}
+}
+
+#Fired whenever a new owner is set for a planet,
+#be it after a war or through a trade
+#From = Country scope (new owner)
+#This = Planet scope
+on_planet_transfer = {
+	events = {
+		phoenix_events.1
+		phoenix_events.2
+	}
+}

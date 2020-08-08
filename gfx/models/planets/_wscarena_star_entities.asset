@@ -1,0 +1,18 @@
+entity = {
+	name = "extra_dimensional_01_anchor_station_portal_entity"
+	pdxmesh = "extra_dimensional_01_anchor_station_portal_mesh"	
+	#scale = @exd_large_station
+
+	default_state = "idle"
+	state = { name = "idle"		state_time = 5
+		event = { time = 0 particle = "extra_dimensional_anchor_station_portal_effect"	keep_particle = yes trigger_once = yes }
+		event = { time = 0 particle = "negative_extra_dimensional_anchor_station_portal_effect"	keep_particle = yes trigger_once = yes }
+	##	start_event = { trigger_once = yes sound = { soundeffect = "ex_mining_station_signals" } }
+	}
+	
+	game_data = {
+		uv_animation_speed 		= 20.3
+		uv_animation_direction 	= { 0.09 10.0 }
+		bloom_factor = 0.6
+	}
+}

@@ -1,0 +1,125 @@
+namespace = wscarena_voidspawn_events
+
+@spawnlings_ship_size = "NAME_Swarm_Large"
+
+planet_event = {						# Voidspawn Eggs hatch
+	id = wscarena_voidspawn_events.1
+	is_triggered_only = yes
+	title = wscarena_voidspawn_events_1_title
+	desc = wscarena_voidspawn_events_1_desc
+
+	immediate = {
+		change_pc = pc_barren
+		if = {
+			limit = {
+				solar_system = {
+					any_ship_in_system = {
+						is_ship_size = leviathan_01_voidspawn
+					}
+				}
+			}
+			solar_system = {
+				random_fleet_in_system = {
+					limit = {
+						any_owned_ship = {
+							is_ship_size = leviathan_01_voidspawn
+						}
+					}			
+					create_fleet = {
+						name = "NAME_Immature_Voidspawn"
+						effect = {
+							set_owner = prev.owner
+							create_ship = {
+								name = ""
+								design = @spawnlings_ship_size
+							}
+							create_ship = {
+								name = ""
+								design = @spawnlings_ship_size
+							}
+							create_ship = {
+								name = ""
+								design = @spawnlings_ship_size
+							}
+							create_ship = {
+								name = ""
+								design = @spawnlings_ship_size
+							}
+							set_location = root
+							set_fleet_stance = aggressive
+							#set_aggro_range = 700
+							#set_aggro_range_measure_from = self
+						}
+					}						
+				}
+			}
+		}
+			
+		else = {
+			create_fleet = {
+				name = "NAME_Immature_voidspawn"
+				effect = {
+					set_owner = event_target:goodie_guardians
+					create_ship = {
+						name = "Immature Voidspawn"
+						design = @spawnlings_ship_size
+					}
+					create_ship = {
+						name = "Immature Voidspawn"
+						design = @spawnlings_ship_size
+					}
+					create_ship = {
+						name = "Immature Voidspawn"
+						design = @spawnlings_ship_size
+					}
+					create_ship = {
+						name = "Immature Voidspawn"
+						design = @spawnlings_ship_size
+					}
+					set_location = root
+					set_fleet_stance = aggressive
+					set_aggro_range = 700
+					set_aggro_range_measure_from = self
+				}
+			}						
+		}
+	}
+}
+# A fleet has entered a system
+# Scope = Fleet
+# From = System
+fleet_event = {
+	id = wscarena_voidspawn_events.2
+	is_triggered_only = yes
+	title = wscarena_voidspawn_events_2_title
+	desc = wscarena_voidspawn_events_2_desc
+
+	trigger = {
+		any_owned_ship = {
+			is_ship_size = leviathan_01_voidspawn
+		}
+		from = {
+			any_ship_in_system = {
+				is_ship_size = @spawnlings_ship_size
+				fleet = {
+					owner = {
+						is_same_value = event_target:goodie_guardians
+					}
+				}
+			}
+		}
+	}
+
+	immediate = {
+		from = {
+			every_fleet_in_system = {
+				limit = {
+					any_owned_ship = {
+						is_ship_size = @spawnlings_ship_size
+					}
+				}
+				set_owner = root.owner
+			}
+		}
+	}
+}

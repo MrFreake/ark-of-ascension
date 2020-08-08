@@ -1,0 +1,300 @@
+namespace = wscarena_psionic_entity_events
+
+@psionic_entity_effect_3_duration = 90
+
+country_event = {
+	id = wscarena_psionic_entity_events.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		spawn_psionic_entity = yes
+	}
+}
+
+# A fleet has entered a system
+# Scope = Fleet
+# From = System
+fleet_event = {									# Remove steves will upon entering a new system
+	id = wscarena_psionic_entity_events.2
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		from = { 
+			any_ship_in_system = { 
+				OR = {
+					has_modifier = steves_will_1
+					has_modifier = steves_will_2
+					has_modifier = steves_will_3 
+				}
+			}	 
+			NOT = {
+				any_ship_in_system = {
+					is_ship_size = corrupted_avatar
+					has_ship_flag = steves_will_active
+					fleet = {
+						owner = {
+							OR = {
+								is_hostile_to = prevprev.owner
+								is_at_war_with = prevprev.owner
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	immediate = {
+		from = {
+			every_fleet_in_system = { 
+				limit = {
+					any_owned_ship = {
+						OR = {
+							has_modifier = steves_will_1
+							has_modifier = steves_will_2
+							has_modifier = steves_will_3
+						}
+					}
+				}
+				while = {
+					limit = {
+						any_owned_ship = {
+							OR = {
+								has_modifier = steves_will_1
+								has_modifier = steves_will_2
+								has_modifier = steves_will_3
+							}
+						}
+					}
+					random_owned_ship = {
+						limit = {
+							OR = {
+								has_modifier = steves_will_1
+								has_modifier = steves_will_2
+								has_modifier = steves_will_3
+							}
+						}
+						if = {
+							limit = {
+								has_modifier = steves_will_1
+							}
+							remove_modifier = steves_will_1
+						}
+						if = {
+							limit = {
+								has_modifier = steves_will_2
+							}
+							remove_modifier = steves_will_2
+						}
+						if = {
+							limit = {
+								has_modifier = steves_will_3
+							}
+							remove_modifier = steves_will_3
+						}
+					}
+				} 
+			}
+		}
+	}
+}					
+
+
+ship_event = {				# Steve's Chosen, called from button effects
+	id = wscarena_psionic_entity_events.3
+	is_triggered_only = yes
+	hide_window = yes
+
+	immediate = {
+		fleet = {
+			set_event_locked = no
+		}
+		if = {
+			limit = {
+				fleet = {
+					owner = {
+						has_country_flag = player_team_1
+					}
+				}
+			}
+			solar_system = {
+				set_timed_star_flag = {
+					flag = node_team_1
+					days = @psionic_entity_effect_3_duration
+				}
+				spawn_megastructure = {
+					type = gateway_galactic_team_1
+					orbit_angle = 225
+					orbit_distance = 30
+					location = root.solar_system
+				}
+				random_system_megastructure = {
+					limit = {
+						is_megastructure_type = gateway_galactic_team_1
+					}
+					activate_gateway = this
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				fleet = {
+					owner = {
+						has_country_flag = player_team_2
+					}
+				}
+			}
+			solar_system = {
+				set_timed_star_flag = {
+					flag = node_team_2
+					days = @psionic_entity_effect_3_duration
+				}
+				spawn_megastructure = {
+					type = gateway_galactic_team_2
+					orbit_angle = 225
+					orbit_distance = 30
+					location = root.solar_system
+				}
+				random_system_megastructure = {
+					limit = {
+						is_megastructure_type = gateway_galactic_team_2
+					}
+					activate_gateway = this
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				fleet = {
+					owner = {
+						has_country_flag = player_team_3
+					}
+				}
+			}
+			solar_system = {
+				set_timed_star_flag = {
+					flag = node_team_3
+					days = @psionic_entity_effect_3_duration
+				}
+				spawn_megastructure = {
+					type = gateway_galactic_team_3
+					orbit_angle = 225
+					orbit_distance = 30
+					location = root.solar_system
+				}
+				random_system_megastructure = {
+					limit = {
+						is_megastructure_type = gateway_galactic_team_3
+					}
+					activate_gateway = this
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				fleet = {
+					owner = {
+						has_country_flag = player_team_4
+					}
+				}
+			}
+			solar_system = {
+				set_timed_star_flag = {
+					flag = node_team_4
+					days = @psionic_entity_effect_3_duration
+				}
+				spawn_megastructure = {
+					type = gateway_galactic_team_4
+					orbit_angle = 225
+					orbit_distance = 30
+					location = root.solar_system
+				}
+				random_system_megastructure = {
+					limit = {
+						is_megastructure_type = gateway_galactic_team_4
+					}
+					activate_gateway = this
+				}
+			}
+		}
+	}
+}
+
+ship_event = {
+	id = wscarena_psionic_entity_events.4
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				fleet = {
+					owner = {
+						has_country_flag = player_team_1
+					}
+				}
+			}
+			solar_system = {
+				random_system_megastructure = {
+					limit = {
+						is_megastructure_type = gateway_galactic_team_1
+					}
+					delete_megastructure = this
+				}
+			}
+		}
+		if = {
+			limit = {
+				fleet = {
+					owner = {
+						has_country_flag = player_team_2
+					}
+				}
+			}
+			solar_system = {
+				random_system_megastructure = {
+					limit = {
+						is_megastructure_type = gateway_galactic_team_2
+					}
+					delete_megastructure = this
+				}
+			}
+		}
+		if = {
+			limit = {
+				fleet = {
+					owner = {
+						has_country_flag = player_team_3
+					}
+				}
+			}
+			solar_system = {
+				random_system_megastructure = {
+					limit = {
+						is_megastructure_type = gateway_galactic_team_3
+					}
+					delete_megastructure = this
+				}
+			}
+		}
+		if = {
+			limit = {
+				fleet = {
+					owner = {
+						has_country_flag = player_team_4
+					}
+				}
+			}
+			solar_system = {
+				random_system_megastructure = {
+					limit = {
+						is_megastructure_type = gateway_galactic_team_4
+					}
+					delete_megastructure = this
+				}
+			}
+		}
+	}
+}

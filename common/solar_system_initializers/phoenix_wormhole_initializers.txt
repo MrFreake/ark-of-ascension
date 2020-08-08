@@ -1,0 +1,178 @@
+# Empire Initializer I
+phoenix_wormhole_first = {
+	class = "rl_starting_stars"
+	asteroid_belt = {
+		type = rocky_asteroid_belt
+		radius = 50
+	}
+	usage_odds = {
+		base = 0
+	}
+
+	flags = { wormhole_spawned }
+
+	init_effect = {
+		spawn_natural_wormhole = { bypass_type = wormhole random_pos = yes }
+	}
+	
+	planet = {
+		count = 1
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+	
+	change_orbit = 50
+	
+	planet = {
+		count = { min = 1 max = 3 }
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 40 max = 100 }
+	}
+	
+	planet = {
+		count = { min = 0 max = 2 }
+		orbit_distance = 20
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+		
+		change_orbit = @base_moon_distance
+
+		moon = {
+			count = { min = 0 max = 1 }
+			class = random_non_colonizable
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+	}
+	
+	planet = {
+		count = { min = 2 max = 4 }
+		orbit_distance = 20
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+		
+		change_orbit = @base_moon_distance
+
+		moon = {
+			count = { min = 0 max = 1 }
+			class = random_non_colonizable
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+	}
+	
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 20
+		class = pc_gas_giant
+		orbit_angle = { min = 90 max = 270 }
+		
+		change_orbit = @base_moon_distance
+
+		moon = {
+			count = { min = 0 max = 3 }
+			class = random_non_colonizable
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+	}
+}
+
+# Empire Initializer I
+phoenix_wormhole_second = {
+	class = "rl_starting_stars"
+	asteroid_belt = {
+		type = rocky_asteroid_belt
+		radius = 50
+	}
+	
+	usage_odds = {
+		base = 0
+	}
+
+	flags = { }
+
+	init_effect = {
+		spawn_natural_wormhole = { bypass_type = wormhole random_pos = yes }
+		random_system = {
+			limit = {
+				has_star_flag = wormhole_spawned
+				NOT = {
+					has_star_flag = wormhole_joined
+				}
+			}
+			link_wormholes = prev
+			set_star_flag = wormhole_joined
+		}
+	}
+	
+	planet = {
+		count = 1
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+	
+	change_orbit = 50
+	
+	planet = {
+		count = { min = 1 max = 3 }
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 40 max = 100 }
+	}
+	
+	planet = {
+		count = { min = 0 max = 2 }
+		orbit_distance = 20
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+		
+		change_orbit = @base_moon_distance
+
+		moon = {
+			count = { min = 0 max = 1 }
+			class = random_non_colonizable
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+	}
+	
+	planet = {
+		count = { min = 2 max = 4 }
+		orbit_distance = 20
+		class = random_non_colonizable
+		orbit_angle = { min = 90 max = 270 }
+		
+		change_orbit = @base_moon_distance
+
+		moon = {
+			count = { min = 0 max = 1 }
+			class = random_non_colonizable
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+	}
+	
+	planet = {
+		count = { min = 1 max = 2 }
+		orbit_distance = 20
+		class = pc_gas_giant
+		orbit_angle = { min = 90 max = 270 }
+		
+		change_orbit = @base_moon_distance
+
+		moon = {
+			count = { min = 0 max = 3 }
+			class = random_non_colonizable
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+	}
+}

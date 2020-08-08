@@ -1,0 +1,43 @@
+
+ship_section_template = {
+	key = "ascension_ship_section"
+	ship_size = ascension_ship
+	fits_on_slot = mid
+	should_draw_components = yes
+	entity = "ascension_ship_section_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	prerequisites = { tech_ascension_ship }
+	
+	small_utility_slots = 3
+	aux_utility_slots = 1
+	
+	resources = {
+		category = ship_sections
+		cost = {
+			alloys = 10
+		}
+	}
+}
+
+
+ship_section_template = {
+	key = "effect_ship_section"
+	ship_size = effect_ship
+	fits_on_slot = mid
+	should_draw_components = no
+	entity = "effect_ship_section_entity"
+	icon = "GFX_ship_part_core_mid"
+	
+	prerequisites = { }
+	
+	small_utility_slots = 5
+	aux_utility_slots = 2
+	
+	resources = {
+		category = ship_sections
+		cost = {
+			alloys = 10
+		}
+	}
+}

@@ -1,0 +1,15 @@
+@dragon_skin_duration = 45
+
+
+namespace = wscarena_dragon_events
+
+country_event = {
+	id = wscarena_dragon_events.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		spawn_ether_drake = yes
+	}
+
+}

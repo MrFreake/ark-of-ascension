@@ -1,0 +1,422 @@
+@initialMobsCount = 6
+
+## mobs per tier
+	#tier 1                 # Spawning set manually for cloudy bois
+@t1t1count = 5
+@t1t2count = 0
+@t1t3count = 0
+	#tier 2
+@t2t1count = 10
+@t2t2count = 1
+@t2t3count = 1
+	#tier 3
+@t3t1count = 15
+@t3t2count = 5
+@t3t3count = 1
+	#tier 4
+@t4t1count = 15
+@t4t2count = 10
+@t4t3count = 5
+
+
+## mob designs
+@forceRandomMobs = 1 # 1 for active, 0 for inactive
+@droneT1 = "NAME_Ancient_Mining_Drone"
+@droneT2 = "NAME_Ancient_Combat_Drone"
+@droneT3 = "NAME_Ancient_Destroyer"
+@whaleT1 = "NAME_Tiyanki_Calf"
+@whaleT2 = "NAME_Tiyanki_Bull"
+@whaleT3 = "NAME_Tiyanki_Cow"
+@cloudT1 = "NAME_Small_Crystal_Entity_Blue"
+@cloudT2 = "NAME_Medium_Crystal_Entity_Green"
+@cloudT3 = "NAME_Large_Crystal_Entity_Yellow"
+
+@droneBoss = "NAME_Planar_Gate" #"NAME_Automated_drone_factory"
+@whaleBoss = "NAME_Planar_Gate" #"NAME_whale_matriarch"
+@cloudBoss = "NAME_Planar_Gate" #"NAME_StormBringer"
+
+## time frame to spawn
+@T1minYears = 5
+@T1maxYears = 30
+@T2minYears = 31
+@T2maxYears = 60
+@T3minYears = 61
+
+create_goodie_guardians_country = {
+    if = {
+        limit = {
+            NOT = {
+                exists = event_target:goodie_guardians
+            }
+        }
+                create_country = {
+                    name = "NAME_Guardians_Of_The_Fallen"
+                    type = drone
+                    flag = {
+                        icon = {
+                            category = "zoological"
+                            file = "flag_zoological_1.dds"
+                        }
+                        background= {
+                            category = "backgrounds"
+                            file = "00_solid.dds"
+                        }
+                        colors={
+                            "black"
+                            "black"
+                            "null"
+                            "null"
+                        }
+                    }
+                    effect = {
+                        save_global_event_target_as = goodie_guardians
+                        set_graphical_culture = "fallen_empire_03"
+                    }
+                }
+                #event_target:goodie_guardians = {
+                #    give_technology = {
+                #        tech = tech_ftl_inhibitor
+                #        message = no
+                #    }                        
+                #}
+    }
+}
+
+spawn_T1_drone_fleet = {
+			create_goodie_guardians_country = yes
+            random_system_planet = {
+            create_fleet = {
+                name = "NAME_Ancient_Mining_Drones"
+                effect = {
+                    set_owner = event_target:goodie_guardians
+                    while = {
+                        count = @t1t1count
+                        create_ship = {
+                            name = ""
+                            design = @droneT1
+                        }
+                        set_ship_tier_1 = yes
+                    }
+                    while = {
+                        count = @t1t2count
+                        create_ship = {
+                            name = ""
+                            design = @droneT2
+                        }
+                        set_ship_tier_2 = yes
+                    }
+                    while = {
+                        count = @t1t3count
+                        create_ship = {
+                            name = ""
+                            design = @droneT3
+                        }
+                        set_ship_tier_3 = yes
+                    }
+                    set_fleet_bounty_tier_1 = yes
+					set_fleet_flag = mob_fleet
+                    set_location = prev
+                    set_fleet_stance = aggressive
+                    set_aggro_range = 1000
+                    set_aggro_range_measure_from = star
+                }
+            }
+        }
+	}
+
+	spawn_T2_drone_fleet = {
+        random_system_planet = {
+            create_fleet = {
+                name = "NAME_Ancient_Mining_Drones"
+                effect = {
+                    set_owner = event_target:goodie_guardians
+					while = {
+                        count = @t2t1count
+                        create_ship = {
+                            name = ""
+                            design = @droneT1
+                        }
+                        set_ship_tier_1 = yes
+                    }
+                    while = {
+                        count = @t2t2count
+                        create_ship = {
+                            name = ""
+                            design = @droneT2
+                        }
+                        set_ship_tier_2 = yes
+                    }
+                    while = {
+                        count = @t2t3count
+                        create_ship = {
+                            name = ""
+                            design = @droneT3
+                        }
+                        set_ship_tier_3 = yes
+                    }
+                    set_fleet_bounty_tier_2 = yes
+                    set_location = prev
+                    set_fleet_stance = aggressive
+                    set_aggro_range = 1000
+                    set_aggro_range_measure_from = star
+                }
+            }
+        }
+    }
+
+spawn_T3_drone_fleet = {
+    random_system_planet = {
+            create_fleet = {
+                name = "NAME_Ancient_Mining_Drones"
+                effect = {
+                    set_owner = event_target:goodie_guardians
+                    while = {
+                        count = @t3t1count
+                        create_ship = {
+                            name = ""
+                            design = @droneT1
+                        }
+                        set_ship_tier_1 = yes
+                    }
+                    while = {
+                        count = @t3t2count
+                        create_ship = {
+                            name = ""
+                            design = @droneT2
+                        }
+                        set_ship_tier_2 = yes
+                    }
+                    while = {
+                        count = @t3t3count
+                        create_ship = {
+                            name = ""
+                            design = @droneT3
+                        }
+                        set_ship_tier_3 = yes
+                    }
+                    set_fleet_bounty_tier_3 = yes
+                    set_location = prev
+                    set_fleet_stance = aggressive
+                    set_aggro_range = 1000
+                    set_aggro_range_measure_from = star
+                }
+            }
+        }
+    }
+
+spawn_T4_drone_fleet = {
+    random_system_planet = {
+            create_fleet = {
+                name = "NAME_Ancient_Mining_Drones"
+                effect = {
+                    set_owner = event_target:goodie_guardians
+                    while = {
+                        count = @t4t1count
+                        create_ship = {
+                            name = ""
+                            design = @droneT1
+                        }
+                        set_ship_tier_1 = yes
+                    }
+                    while = {
+                        count = @t4t2count
+                        create_ship = {
+                            name = ""
+                            design = @droneT2
+                        }
+                        set_ship_tier_2 = yes
+                    }
+                    while = {
+                        count = @t4t3count
+                        create_ship = {
+                            name = ""
+                            design = @droneT3
+                        }
+                        set_ship_tier_3 = yes
+                    }
+                    set_fleet_bounty_tier_4 = yes
+                    set_location = prev
+                    set_fleet_stance = aggressive
+                    set_aggro_range = 1000
+                    set_aggro_range_measure_from = star
+                }
+            }
+        }
+	}
+	
+	
+setup_mob_spawner = {
+    set_star_flag = mob_spawner
+	## first we create the country, this should not be here, since this effect is called multiple times.
+	create_goodie_guardians_country = yes
+	
+	init_spawn_random_mob = yes
+}
+
+
+set_ship_tier_1 = {
+    last_created_ship = {
+        set_ship_flag = level_1
+    }
+}
+
+set_ship_tier_2 = {
+    last_created_ship = {
+        set_ship_flag = level_2
+    }
+}
+
+set_ship_tier_3 = {
+    last_created_ship = {
+        set_ship_flag = level_3
+    }
+}
+
+
+set_ship_tier_4 = {
+    last_created_ship = {
+        set_ship_flag = level_4
+    }
+}
+
+
+set_ship_tier_6 = {
+    last_created_ship = {
+        set_ship_flag = level_6
+    }
+}
+
+set_fleet_bounty_tier_1 = {
+    set_fleet_flag = bounty_tier_1
+}
+
+set_fleet_bounty_tier_2 = {
+    set_fleet_flag = bounty_tier_2
+}
+
+set_fleet_bounty_tier_3 = {
+    set_fleet_flag = bounty_tier_3
+}
+
+set_fleet_bounty_tier_4 = {
+    set_fleet_flag = bounty_tier_4
+}
+
+generate_wscarena_start_deposits_and_blockers = {
+    # 5 + 3 energy		
+    add_deposit = d_searing_desert			
+    add_deposit = d_underwater_vent
+    add_deposit = d_tempestous_mountain			
+    
+    # 5 + 3 mining
+    add_deposit = d_ore_rich_caverns 		
+    add_deposit = d_prosperous_mesa
+    add_deposit = d_submerged_ore_veins
+    
+    # 5 + 3 farming
+    add_deposit = d_lush_jungle	
+    add_deposit = d_teeming_reef		
+    add_deposit = d_black_soil		
+    
+    # 1 random medium deposit
+    random_list = {
+        33 = { add_deposit = d_frozen_gas_lake }
+        33 = { add_deposit = d_prosperous_mesa }
+        33 = { add_deposit = d_fertile_lands }
+    }	
+    add_deposit = d_dust_caverns
+    add_deposit = d_bubbling_swamp
+    add_deposit = d_crystalline_caverns
+    if = {
+        limit = {
+            is_planet_class = pc_gaia
+        }
+            set_planet_size = 25
+
+            # 5 + 3 energy
+            add_deposit = d_searing_desert
+            add_deposit = d_underwater_vent
+            add_deposit = d_tempestous_mountain
+
+            # 5 + 3 mining
+            add_deposit = d_ore_rich_caverns
+            add_deposit = d_prosperous_mesa
+            add_deposit = d_submerged_ore_veins
+
+            # 5 + 3 farming (lithoids swap 3 for minerals)
+            add_deposit = d_lush_jungle
+            add_deposit = d_teeming_reef
+
+            if = {
+                limit = { owner = { is_lithoid_empire = yes } }
+                add_deposit = d_rich_mountain
+            }
+            else = {
+                add_deposit = d_black_soil
+            }
+
+            # 1 random medium deposit
+            random_list = {
+                33 = { add_deposit = d_frozen_gas_lake }
+                33 = { add_deposit = d_prosperous_mesa }
+                33 = { add_deposit = d_fertile_lands }
+            }
+
+            add_deposit = d_dust_caverns
+            add_deposit = d_bubbling_swamp
+            add_deposit = d_crystalline_caverns
+        }
+}
+
+
+spawn_gateway_team_1 = {
+                spawn_megastructure = {
+                    type = gateway_galactic_team_1
+                    orbit_angle = 225
+                    orbit_distance = 30
+                    location = solar_system
+                }
+                random_system_megastructure = {
+                    activate_gateway = this
+                }
+                set_star_flag = for_@event_target:target_country
+}
+
+spawn_gateway_team_2 = {
+                spawn_megastructure = {
+                    type = gateway_galactic_team_2
+                    orbit_angle = 225
+                    orbit_distance = 30
+                    location = solar_system
+                }
+                random_system_megastructure = {
+                    activate_gateway = this
+                }
+                set_star_flag = for_@event_target:target_country
+}
+
+spawn_gateway_team_3 = {
+                spawn_megastructure = {
+                    type = gateway_galactic_team_3
+                    orbit_angle = 225
+                    orbit_distance = 30
+                    location = solar_system
+                }
+                random_system_megastructure = {
+                    activate_gateway = this
+                }
+                set_star_flag = for_@event_target:target_country
+}
+
+spawn_gateway_team_4 = {
+                spawn_megastructure = {
+                    type = gateway_galactic_team_4
+                    orbit_angle = 225
+                    orbit_distance = 30
+                    location = solar_system
+                }
+                random_system_megastructure = {
+                    activate_gateway = this
+                }
+                set_star_flag = for_@event_target:target_country
+}

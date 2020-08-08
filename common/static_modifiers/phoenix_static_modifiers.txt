@@ -1,0 +1,6 @@
+
+capital_world = {
+	pop_environment_tolerance = 0.20
+	icon = "gfx/interface/icons/planet_modifiers/capital.dds"
+	icon_frame = 1
+}

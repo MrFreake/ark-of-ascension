@@ -1,0 +1,7 @@
+# Federation Opinion
+opinion_same_team = {
+	opinion = {
+		base = 3000
+	}
+}
+

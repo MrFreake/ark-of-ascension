@@ -1,0 +1,368 @@
+namespace = wscarena_ark_events
+
+fleet_event = {											# Initial notification for getting the ark
+	id = wscarena_ark_events.1
+	title = "wscarena_ark_events_1_name"
+	desc = "wscarena_ark_events_1_desc"
+	#picture = GFX_evt_derelict_interior
+	
+	archaeology = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		from = { set_site_progress_locked = yes }
+		set_global_flag = ark_activated
+	}
+
+	after = { 
+		from = { set_site_progress_locked = no } 
+	}
+	
+	option = {
+		name = INTERESTING
+        small_artifact_reward = yes
+        owner = {
+            add_relic = "r_ark_of_ascension"
+        }
+	}
+}
+
+ 
+#Fired whenever a new owner is set for a planet,
+#be it after a war or through a trade
+#From = Country scope (new owner)
+#This = Planet scope
+# called from on_planet_transfer
+
+planet_event = {										# Transfer relic when relic planet changes owner
+	id = wscarena_ark_events.2
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		has_planet_flag = r_ark_of_ascension
+		any_country = {
+			has_relic = r_ark_of_ascension
+		}
+	}
+
+	immediate = {
+		random_country = {
+			limit = {
+				has_relic = r_ark_of_ascension
+				NOT = {
+					is_same_value = from
+				}
+			}
+			save_event_target_as = ark_owner
+		}	
+		from = {
+			steal_relic = {
+				target = event_target:ark_owner
+				relic = r_ark_of_ascension
+			}
+		}
+	}
+}
+
+event = {											# Ascend Pops 
+	id = wscarena_ark_events.3
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		has_global_flag = ark_activated
+	}
+
+	immediate = {
+		#log = "wsc arena ark events 3 firing"
+		random_planet = {
+			limit = {
+				has_planet_flag = r_ark_of_ascension
+				count_pops = { 
+					limit = {
+						NOT = {
+							species = {
+								has_species_flag = guide_species
+							}
+						}
+					} 
+					count > 1 
+				}
+			}
+			#log = "chose planet"
+			#while = {
+			#	limit = {
+			#		any_owned_pop = {     
+			#			NOR = {
+			#				species = { has_species_flag = guide_species }
+			#				is_enslaved = yes
+			#				is_being_purged = yes
+			#				is_sapient = no
+			#				is_species = ROBOT_POP_SPECIES_1
+			#				is_species = ROBOT_POP_SPECIES_2
+			#				pop_has_trait = trait_nerve_stapled
+			#				has_living_standard = { country = root type = living_standard_ego_assimilation }
+			#				has_living_standard = { country = root type = living_standard_tech_assimilation }
+			#				has_living_standard = { country = root type = living_standard_psi_assimilation }
+			#				has_living_standard = { country = root type = living_standard_chemical_bliss }
+			#				has_living_standard = { country = root type = living_standard_none }    
+			#				species = {
+			#					is_archetype = PRESAPIENT
+			#				}
+			#				has_pop_flag = guide_species
+			#			} 
+			#		}
+			#		num_pops > 1
+			#		#count_pops = { limit = { pop_can_ascend = yes } count > 1 } 
+			#	}
+				random_owned_pop = {
+					limit = {
+						NOR = {
+							species = { has_species_flag = guide_species }
+							is_enslaved = yes
+							is_being_purged = yes
+							is_sapient = no
+							is_species = ROBOT_POP_SPECIES_1
+							is_species = ROBOT_POP_SPECIES_2
+							pop_has_trait = trait_nerve_stapled
+							has_living_standard = { country = root type = living_standard_ego_assimilation }
+							has_living_standard = { country = root type = living_standard_tech_assimilation }
+							has_living_standard = { country = root type = living_standard_psi_assimilation }
+							has_living_standard = { country = root type = living_standard_chemical_bliss }
+							has_living_standard = { country = root type = living_standard_none }    
+							species = {
+								is_archetype = PRESAPIENT
+							}
+							has_pop_flag = guide_species
+						}
+					}
+				
+				#log = "choosing pop"
+				kill_pop = yes
+				prev = {
+					owner = {
+						change_variable = {
+							which = ascended_pops
+							value = 1
+						}
+						log = "[This.GetName] Ascended 1 pop. Current total: [This.ascended_pops]"
+					}
+				}
+			
+				}
+			}
+		}
+	}
+
+
+fleet_event = {
+	id = wscarena_ark_events.4
+	is_triggered_only = yes
+	title = "wscarena_ark_events_4_title"
+	desc = "wscarena_ark_events_4_desc"
+
+	immediate = {
+		random_planet = {
+			limit = {
+				has_planet_flag = r_ark_of_ascension
+			}
+			create_species = {
+				name = "NAME_Robot"
+				plural = "NAME_Robots"
+				class = ROBOT
+				portrait = "default_robot"
+				traits = {
+					trait = "trait_mechanical"
+				}					
+				effect = {
+					set_species_flag = guide_species
+				}
+			}
+			last_created_species = { set_species_flag = guide_species }
+			root = { owner = { set_built_species = last_created_species } }
+			last_created_species = {
+				set_species_flag = Guide_species
+				#change_species_characteristics = {
+				#	pops_can_migrate = No
+				#}
+				save_event_target_as = guide_species
+			}
+			#create_pop = {
+			#	species = event_target:guide_species
+			#	ethos = random
+			#}
+			#log = "create_colony scope effect"
+			print_scope_effect = yes
+			if = { 
+				limit = {
+					is_colony = yes
+				}
+				create_pop = {
+					species = event_target:guide_species
+					ethos = {
+						ethic = "ethic_fanatic_spiritualist"
+					}
+				}
+				last_created_pop = {
+					set_pop_flag = guide_species
+				}
+			}
+			else = {
+				create_colony = {
+					owner = root.owner
+					species = event_target:guide_species
+					ethos = {
+						ethic = "ethic_fanatic_spiritualist"
+					}
+				}
+				create_pop = {
+					species = event_target:guide_species
+					ethos = {
+						ethic = "ethic_fanatic_spiritualist"
+					}
+				}
+				last_created_pop = {
+					set_pop_flag = guide_species
+				}
+			}				
+		}
+	}
+
+	option = {
+		NAME = Facinating
+	}
+}
+
+fleet_event = {
+	id = wscarena_ark_events.5
+	is_triggered_only = yes
+	title = "wscarena_ark_events_5_title"
+	desc = "wscarena_ark_events_5_desc"
+
+	immediate = {
+		random_planet = {
+			limit = {
+				has_planet_flag = r_ark_of_ascension
+			}
+			add_building = building_ancient_control_center 
+		}
+	}
+
+	option = {
+		NAME = Facinating
+	}
+}
+
+# From = system
+# FromFrom = country (new owner)
+# This = country (previous owner)
+# on_system_lost = {
+
+country_event = {
+	id = wscarena_ark_events.6
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_relic = r_ark_of_ascension
+		from = {
+			has_star_flag = relic_system
+			any_system_planet = {
+				has_planet_flag = r_ark_of_ascension
+				NOT = {
+					exists = owner
+				}
+			}
+		}
+	}
+
+	immediate = {
+		Fromfrom = {
+			steal_relic = { 
+				target = prev.this relic = r_ark_of_ascension
+
+			}
+		}
+	}
+}
+
+event = {
+	id = wscarena_ark_events.7
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		any_country = {
+			any_system_within_border = {
+				has_star_flag = relic_system
+			}
+			NOT = {
+				has_relic = r_ark_of_ascension
+			}
+		}
+	}
+
+	immediate = {
+		random_country = {
+			limit = {
+				has_relic = r_ark_of_ascension
+			}
+			random_country = {
+				limit = {
+					any_system_within_border = {
+						has_star_flag = relic_system
+					}
+				}
+				steal_relic = {
+					target = prev
+					relic = r_ark_of_ascension
+				}
+		}
+	}
+}
+}
+
+# A ship has surveyed a planet.
+# Scope = Ship
+# From = Planet
+ship_event = {
+	id = wscarena_ark_events.8
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		from = {
+			has_planet_flag = r_ark_of_ascension
+		}
+	}
+
+	immediate = {
+		set_global_flag = stairway_surveyed
+	}
+}
+
+# A pop has finished purging
+# This = Planet scope
+# From = Country
+# FromFrom = Pop
+
+planet_event = {
+	id = wscarena_ark_events.9
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		has_planet_flag = r_ark_of_ascension
+		num_pops < 1
+	}
+
+	immediate = {
+		create_colony = {
+			owner = from
+			species = owner_main_species
+			ethos = owner
+		}
+		set_planet_name = NAME_The_Stairway	
+	}
+}

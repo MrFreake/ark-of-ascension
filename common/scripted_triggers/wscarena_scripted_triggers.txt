@@ -1,0 +1,284 @@
+@level_1_level_up_exp = 20           # If you change this, this also needs to be changed
+@level_2_level_up_exp = 45          # in scripted_triggers/wscarena_scripted_triggers.txt
+@level_3_level_up_exp = 80			# AND in the localisations... SORRY! :D
+@level_4_level_up_exp = 125
+@level_5_level_up_exp = 180
+@level_6_level_up_exp = 245
+@level_7_level_up_exp = 310
+@level_8_level_up_exp = 385
+@level_9_level_up_exp = 460
+
+pop_can_ascend = {
+    NOR = {
+        species = { has_species_flag = guide_species }
+        is_enslaved = yes
+        is_being_purged = yes
+        is_sapient = no
+        is_species = ROBOT_POP_SPECIES_1
+        is_species = ROBOT_POP_SPECIES_2
+        pop_has_trait = trait_nerve_stapled
+        has_living_standard = { country = root type = living_standard_ego_assimilation }
+        has_living_standard = { country = root type = living_standard_tech_assimilation }
+        has_living_standard = { country = root type = living_standard_psi_assimilation }
+        has_living_standard = { country = root type = living_standard_chemical_bliss }
+        has_living_standard = { country = root type = living_standard_none }    
+        species = {
+            is_archetype = PRESAPIENT
+        }
+    }
+}
+using_total_war = {
+    OR = {
+        using_war_goal = {
+            type = wg_end_threat 
+            owner = attacker
+        }
+        using_war_goal = {
+            type = wg_end_threat 
+            owner = defender
+        }
+        using_war_goal = {
+            type = wg_end_threat_swarm 
+            owner = attacker
+        }
+        using_war_goal = {
+            type = wg_end_threat_swarm 
+            owner = defender
+        }
+
+        using_war_goal = {
+            type = wg_end_threat_assimilators 
+            owner = attacker
+        }
+        using_war_goal = {
+            type = wg_end_threat_assimilators 
+            owner = defender
+        }
+
+        using_war_goal = {
+            type = wg_assimilation 
+            owner = attacker
+        }
+        using_war_goal = {
+            type = wg_assimilation 
+            owner = defender
+        }
+
+        using_war_goal = {
+            type = wg_cleansing 
+            owner = attacker
+        }
+        using_war_goal = {
+            type = wg_cleansing 
+            owner = defender
+        }
+
+        using_war_goal = {
+            type = wg_absorption 
+            owner = attacker
+        }
+        using_war_goal = {
+            type = wg_absorption 
+            owner = defender
+        }
+
+        using_war_goal = {
+            type = wg_assimilation_vs_fe 
+            owner = attacker
+        }
+        using_war_goal = {
+            type = wg_assimilation_vs_fe 
+            owner = defender
+        }
+
+        using_war_goal = {
+            type = wg_cleansing_vs_fe 
+            owner = attacker
+        }
+        using_war_goal = {
+            type = wg_cleansing_vs_fe 
+            owner = defender
+        }
+
+        using_war_goal = {
+            type = wg_absorption_vs_fe 
+            owner = attacker
+        }
+        using_war_goal = {
+            type = wg_absorption_vs_fe 
+            owner = defender
+        }
+
+        using_war_goal = {
+            type = wg_colossus 
+            owner = attacker
+        }
+        using_war_goal = {
+            type = wg_colossus 
+            owner = defender
+        }
+
+        using_war_goal = {
+            type = wg_end_threat_colossus 
+            owner = attacker
+        }
+        using_war_goal = {
+            type = wg_end_threat_colossus 
+            owner = defender
+        }
+    }
+}
+
+hero_unit_can_level = {
+    OR = {
+        AND = {                 #level 9
+            check_variable = {
+                which = experience
+                value > @level_9_level_up_exp  
+            }
+            check_variable = {
+                which = level
+                value = 9
+            }
+        }
+        AND = {                 #level 8
+            check_variable = {
+                which = experience
+                value > @level_8_level_up_exp  
+            }
+            check_variable = {
+                which = level
+                value = 8
+            }
+        }
+        AND = {                 #level 7
+            check_variable = {
+                which = experience
+                value > @level_7_level_up_exp  
+            }
+            check_variable = {
+                which = level
+                value = 7
+            }
+        }
+        AND = {                 #level 6
+            check_variable = {
+                which = experience
+                value > @level_6_level_up_exp  
+            }
+            check_variable = {
+                which = level
+                value = 6
+            }
+        }
+        AND = {                 #level 5
+            check_variable = {
+                which = experience
+                value > @level_5_level_up_exp  
+            }
+            check_variable = {
+                which = level
+                value = 5
+            }
+        }
+        AND = {                 #level 4
+            check_variable = {
+                which = experience
+                value > @level_4_level_up_exp  
+            }
+            check_variable = {
+                which = level
+                value = 4
+            }
+        }
+        AND = {                 #level 3
+            check_variable = {
+                which = experience
+                value > @level_3_level_up_exp  
+            }
+            check_variable = {
+                which = level
+                value = 3
+            }
+        }
+        AND = {                 #level 2
+            check_variable = {
+                which = experience
+                value > @level_2_level_up_exp  
+            }
+            check_variable = {
+                which = level
+                value = 2
+            }
+        }
+        AND = {                 #level 1
+            check_variable = {
+                which = experience
+                value > @level_1_level_up_exp
+            }
+            check_variable = {
+                which = level
+                value = 1
+            }
+        }
+    }
+}
+
+can_form_agreement = {
+    OR = {
+        AND = {
+            has_country_flag = player_team_1
+            from = { has_country_flag = player_team_1 }
+        }
+        AND = {
+            has_country_flag = player_team_2
+            from = { has_country_flag = player_team_2 }
+        }
+        AND = {
+            has_country_flag = player_team_3
+            from = { has_country_flag = player_team_3 }
+        }
+    }
+}
+
+can_choose_node_team_1 = {
+    any_country = {
+        has_country_flag = leader_team_1
+    }
+}
+
+can_choose_leader_team_1 = {
+    NOT = {
+        any_country = {
+            has_country_flag = leader_team_1
+        }
+    }
+}
+
+can_choose_node_team_2 = {
+    any_country = {
+        has_country_flag = leader_team_2
+    }
+}
+
+can_choose_leader_team_2 = {
+    NOT = {
+        any_country = {
+            has_country_flag = leader_team_2
+        }
+    }
+}
+
+can_choose_node_team_3 = {
+    any_country = {
+        has_country_flag = leader_team_3
+    }
+}
+
+can_choose_leader_team_3 = {
+    NOT = {
+        any_country = {
+            has_country_flag = leader_team_3
+        }
+    }
+}

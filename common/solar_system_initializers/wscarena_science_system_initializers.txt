@@ -1,0 +1,300 @@
+# Basic 1
+
+@base_moon_distance = 10
+
+wscarena_science_init_01 = {
+	class = "rl_standard_stars"
+	
+	#usage = misc_system_init
+	#usage_odds = 0
+
+    flags = { spawned_system }
+
+	init_effect = {
+		spawn_T1_drone_fleet = yes
+		spawn_T1_drone_fleet = yes
+		spawn_T1_drone_fleet = yes
+		spawn_T1_drone_fleet = yes
+	}
+
+	planet = {
+		count = 1
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+	
+	change_orbit = 45
+	
+	planet = {
+		count = 1
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		class = random_non_colonizable
+		change_orbit = @base_moon_distance
+		
+		moon = {
+			count = { min = 0 max = 1 }
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+		init_effect = {
+			add_deposit = d_physics_10
+		}
+	}
+
+	change_orbit = 45
+	
+	planet = {
+		count = 1
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		class = random_non_colonizable
+		change_orbit = @base_moon_distance
+		
+		moon = {
+			count = { min = 0 max = 1 }
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+		init_effect = {
+			add_deposit = d_society_10
+		}
+	}
+
+	change_orbit = 45
+	
+	planet = {
+		count = 1
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		class = random_non_colonizable
+		change_orbit = @base_moon_distance
+		
+		moon = {
+			count = { min = 0 max = 1 }
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+		init_effect = {
+			add_deposit = d_engineering_10
+		}
+	}
+
+}
+
+# Basic 2
+ wscarena_science_init_02 = {
+	class = "rl_standard_stars"
+
+	flags = { spawned_system }
+
+	init_effect = {
+		spawn_T2_drone_fleet = yes
+		spawn_T2_drone_fleet = yes
+		spawn_T2_drone_fleet = yes
+		spawn_T2_drone_fleet = yes
+	}
+
+	#usage = misc_system_init
+	#usage_odds = 0
+	
+	planet = {
+		count = 1
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+		init_effect = {
+			add_deposit = d_physics_10
+		}
+	}
+	
+	change_orbit = 30
+	
+	planet = {
+		count = 1
+		class = random_non_colonizable
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		init_effect = {
+			add_deposit = d_physics_10
+		}
+	}
+	
+	change_orbit = 30
+	
+	planet = {
+		count = 1
+		class = random_non_colonizable
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		init_effect = {
+			add_deposit = d_society_10
+		}
+	}
+
+	change_orbit = 30
+	
+	planet = {
+		count = 1
+		class = random_non_colonizable
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		init_effect = {
+			add_deposit = d_society_10
+		}
+	}
+
+	change_orbit = 30
+	
+	planet = {
+		count = 1
+		class = random_non_colonizable
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		init_effect = {
+			add_deposit = d_engineering_10
+		}
+	}
+
+	change_orbit = 30
+	
+	planet = {
+		count = 1
+		class = random_non_colonizable
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		init_effect = {
+			add_deposit = d_engineering_10
+		}
+	}
+}
+
+# Basic 2
+wscarena_science_init_03 = {
+	class = "rl_standard_stars"
+
+	flags = { spawned_system }
+
+	init_effect = { 
+		spawn_T3_drone_fleet = yes
+		spawn_T3_drone_fleet = yes
+		spawn_T3_drone_fleet = yes
+		spawn_T4_drone_fleet = yes
+	}
+
+	#usage = misc_system_init
+	#usage_odds = 0
+	
+	planet = {
+		count = 1
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+		init_effect = {
+			add_deposit = d_physics_10
+		}
+	}
+	
+	change_orbit = 30
+	
+	planet = {
+		count = 1
+		class = random_non_colonizable
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		init_effect = {
+			add_deposit = d_physics_10
+		}
+	}
+
+	change_orbit = 30
+	
+	planet = {
+		count = 1
+		class = random_non_colonizable
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		init_effect = {
+			add_deposit = d_physics_10
+		}
+	}
+
+	change_orbit = 30
+	
+	planet = {
+		count = 1
+		class = random_non_colonizable
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		init_effect = {
+			add_deposit = d_society_10
+		}
+	}
+
+	change_orbit = 30
+	
+	planet = {
+		count = 1
+		class = random_non_colonizable
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		init_effect = {
+			add_deposit = d_society_10
+		}
+	}
+
+	change_orbit = 30
+	
+	planet = {
+		count = 1
+		class = random_non_colonizable
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		init_effect = {
+			add_deposit = d_society_10
+		}
+	}
+
+	change_orbit = 30
+	
+	planet = {
+		count = 1
+		class = random_non_colonizable
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		init_effect = {
+			add_deposit = d_engineering_10
+		}
+	}
+
+	change_orbit = 30
+	
+	planet = {
+		count = 1
+		class = random_non_colonizable
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		init_effect = {
+			add_deposit = d_engineering_10
+		}
+	}
+
+	change_orbit = 30
+	
+	planet = {
+		count = 1
+		class = random_non_colonizable
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		init_effect = {
+			add_deposit = d_engineering_10
+		}
+	}
+}

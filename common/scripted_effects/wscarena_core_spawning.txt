@@ -1,0 +1,1181 @@
+
+
+@stage_1_min = 15
+@stage_1_max = 16
+@stage_2_min = 30
+@stage_2_max = 31
+@stage_3_min = 45
+@stage_3_max = 46
+
+
+spawn_relic_system = {
+    no_scope = {    
+        spawn_system = {
+            min_distance >= 0
+            max_distance <= 1
+            # 45
+            #min_orientation_angle = 270
+            #max_orientation_angle = 180
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+        event_target:last_created_system = {
+            set_star_flag = relic_system
+            set_name = "Anward"
+            star = {
+                set_name = "Anward"
+                change_pc = pc_dimensional_portal
+                reroll_planet = yes
+                prevent_anomaly = yes
+                save_global_event_target_as = ascension_portal
+            }
+            set_star_flag = core_system
+            save_global_event_target_as = relic_system
+            random_system_planet = {
+                limit = {
+                    is_star = no
+                }
+                set_planet_flag = r_ark_of_ascension
+                change_pc = pc_gaia 
+                prevent_anomaly = yes
+                set_planet_name = "NAME_The_Stairway"
+                set_planet_size = 25
+                reroll_planet = yes
+                    create_archaeological_site = site_ark_of_ascension_1
+            }
+            every_system_planet = {
+                limit = {
+                    is_star = no
+                    NOT = {
+                        has_planet_flag = r_ark_of_ascension
+                    }
+                }
+                random_list = {
+                    33 = {
+                        change_pc = pc_shattered
+                    }
+                    33 = {
+                        change_pc = pc_shielded
+                    }
+                    33 = {
+                        change_pc = pc_molten
+                    }
+                    33 = {
+                        change_pc = pc_infested
+                    }
+                }
+            }
+        }
+    }
+        
+
+
+                            # Position 1 Core Systems
+spawn_pos_1_core_system = {
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_1_min
+            max_distance <= @stage_1_max
+            # 45
+            min_orientation_angle = 30
+            max_orientation_angle = 31
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = relic_neighbor
+        random_system = {
+            limit = {
+                has_star_flag = relic_system
+            }
+            add_hyperlane = {
+                from = THIS
+                to = PREV
+                
+            }
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_2_min
+            max_distance <= @stage_2_max
+            # 45
+            min_orientation_angle = 60
+            max_orientation_angle = 61
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_3_min
+            max_distance <= @stage_3_max
+            # 45
+            min_orientation_angle = 90
+            max_orientation_angle = 91
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = pos_1_gateway
+        set_star_flag = core_gateway
+        set_star_flag = node_team_1
+        spawn_megastructure = {
+            type = gateway_galactic_team_1
+            orbit_angle = 225
+            orbit_distance = 30
+            location = solar_system
+        }
+        random_system_megastructure = {
+            limit = {
+                is_megastructure_type = gateway_galactic_team_1
+            }
+            activate_gateway = this
+        }
+  
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        #save_event_target_as = second_last_created_system
+    }    
+}
+
+                                    # Position 2 Core Systems
+spawn_pos_2_core_system = {
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_1_min
+            max_distance <= @stage_1_max
+            # 45
+            min_orientation_angle = 60
+            max_orientation_angle = 61
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = relic_neighbor
+        random_system = {
+            limit = {
+                has_star_flag = relic_system
+            }
+            add_hyperlane = {
+                from = THIS
+                to = PREV
+                
+            }
+        }
+        spawn_megastructure = {
+            type = strategic_coordination_center_ruined 
+            orbit_angle = 225
+            orbit_distance = 0
+            location = solar_system
+            init_effect = {
+
+                upgrade_megastructure_to = strategic_coordination_center_restored
+                finish_upgrade = yes
+
+                solar_system = { 
+                    random_system_planet = { trigger_megastructure_icon = yes }
+                    
+                }
+
+            }
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_2_min
+            max_distance <= @stage_2_max
+            # 45
+            min_orientation_angle = 90
+            max_orientation_angle = 91
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_3_min
+            max_distance <= @stage_3_max
+            # 45
+            min_orientation_angle = 120
+            max_orientation_angle = 121
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = pos_2_gateway
+        set_star_flag = core_gateway
+        set_star_flag = node_team_1
+        spawn_megastructure = {
+            type = gateway_galactic_team_1
+            orbit_angle = 225
+            orbit_distance = 30
+            location = solar_system
+        }
+        random_system_megastructure = {
+            limit = {
+                is_megastructure_type = gateway_galactic_team_1
+            }
+            activate_gateway = this
+        }
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        #save_event_target_as = second_last_created_system
+    }    
+}
+
+                                    # Position 3 Core Systems
+spawn_pos_3_core_system = {
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_1_min
+            max_distance <= @stage_1_max
+            # 45
+            min_orientation_angle = 91
+            max_orientation_angle = 91
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = relic_neighbor
+        random_system = {
+            limit = {
+                has_star_flag = relic_system
+            }
+            add_hyperlane = {
+                from = THIS
+                to = PREV
+                
+            }
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_2_min
+            max_distance <= @stage_2_max
+            # 45
+            min_orientation_angle = 120
+            max_orientation_angle = 121
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_3_min
+            max_distance <= @stage_3_max
+            # 45
+            min_orientation_angle = 150
+            max_orientation_angle = 151
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = pos_3_gateway
+        set_star_flag = core_gateway
+        set_star_flag = node_team_1
+        spawn_megastructure = {
+            type = gateway_galactic_team_1
+            orbit_angle = 225
+            orbit_distance = 30
+            location = solar_system
+        }
+        random_system_megastructure = {
+            limit = {
+                is_megastructure_type = gateway_galactic_team_1
+            }
+            activate_gateway = this
+        }
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        #save_event_target_as = second_last_created_system
+    }    
+}
+
+                                    # Position 4 Core Systems
+spawn_pos_4_core_system = {
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_1_min
+            max_distance <= @stage_1_max
+            # 45
+            min_orientation_angle = 120
+            max_orientation_angle = 121
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = relic_neighbor
+        random_system = {
+            limit = {
+                has_star_flag = relic_system
+            }
+            add_hyperlane = {
+                from = THIS
+                to = PREV
+                
+            }
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_2_min
+            max_distance <= @stage_2_max
+            # 45
+            min_orientation_angle = 150
+            max_orientation_angle = 151
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_3_min
+            max_distance <= @stage_3_max
+            # 45
+            min_orientation_angle = 190
+            max_orientation_angle = 191
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = pos_4_gateway
+        set_star_flag = core_gateway
+        set_star_flag = node_team_3
+        spawn_megastructure = {
+            type = gateway_galactic_team_3
+            orbit_angle = 225
+            orbit_distance = 30
+            location = solar_system
+        }
+        random_system_megastructure = {
+            limit = {
+                is_megastructure_type = gateway_galactic_team_3
+            }
+            activate_gateway = this
+        }
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        #save_event_target_as = second_last_created_system
+    }    
+}
+
+spawn_pos_5_core_system = {                 # Position 5 core systems
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_1_min
+            max_distance <= @stage_1_max
+            # 45
+            min_orientation_angle = 150
+            max_orientation_angle = 151
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = relic_neighbor
+        random_system = {
+            limit = {
+                has_star_flag = relic_system
+            }
+            add_hyperlane = {
+                from = THIS
+                to = PREV
+                
+            }
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_2_min
+            max_distance <= @stage_2_max
+            # 45
+            min_orientation_angle = 190
+            max_orientation_angle = 191
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_3_min
+            max_distance <= @stage_3_max
+            # 45
+            min_orientation_angle = 220
+            max_orientation_angle = 221
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = pos_5_gateway
+        set_star_flag = core_gateway
+        set_star_flag = node_team_3
+        spawn_megastructure = {
+            type = gateway_galactic_team_3
+            orbit_angle = 225
+            orbit_distance = 30
+            location = solar_system
+        }
+        random_system_megastructure = {
+            limit = {
+                is_megastructure_type = gateway_galactic_team_3
+            }
+            activate_gateway = this
+        }
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        #save_event_target_as = second_last_created_system
+    }    
+}
+
+
+spawn_pos_6_core_system = {                 # Position 6 core systems
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_1_min
+            max_distance <= @stage_1_max
+            # 45
+            min_orientation_angle = 180
+            max_orientation_angle = 181
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = relic_neighbor
+        spawn_megastructure = {
+            type = strategic_coordination_center_ruined 
+            orbit_angle = 225
+            orbit_distance = 0
+            location = solar_system
+            init_effect = {
+
+                upgrade_megastructure_to = strategic_coordination_center_restored
+                finish_upgrade = yes
+
+                solar_system = { 
+                    random_system_planet = { trigger_megastructure_icon = yes }
+                    
+                }
+
+            }
+        }
+        random_system = {
+            limit = {
+                has_star_flag = relic_system
+            }
+            add_hyperlane = {
+                from = THIS
+                to = PREV
+                
+            }
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_2_min
+            max_distance <= @stage_2_max
+            # 45
+            min_orientation_angle = 220
+            max_orientation_angle = 221
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_3_min
+            max_distance <= @stage_3_max
+            # 45
+            min_orientation_angle = 250
+            max_orientation_angle = 251
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = pos_6_gateway
+        set_star_flag = core_gateway
+        set_star_flag = node_team_3
+        spawn_megastructure = {
+            type = gateway_galactic_team_3
+            orbit_angle = 225
+            orbit_distance = 30
+            location = solar_system
+        }
+        random_system_megastructure = {
+            limit = {
+                is_megastructure_type = gateway_galactic_team_3
+            }
+            activate_gateway = this
+        }
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        #save_event_target_as = second_last_created_system
+    }    
+}
+
+
+spawn_pos_7_core_system = {                 # Position 7 core systems
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_1_min
+            max_distance <= @stage_1_max
+            # 45
+            min_orientation_angle = 220
+            max_orientation_angle = 221
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = relic_neighbor
+        random_system = {
+            limit = {
+                has_star_flag = relic_system
+            }
+            add_hyperlane = {
+                from = THIS
+                to = PREV
+                
+            }
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_2_min
+            max_distance <= @stage_2_max
+            # 45
+            min_orientation_angle = 250
+            max_orientation_angle = 251
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_3_min
+            max_distance <= @stage_3_max
+            # 45
+            min_orientation_angle = 280
+            max_orientation_angle = 281
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = pos_7_gateway
+        set_star_flag = core_gateway
+        set_star_flag = node_team_2
+        spawn_megastructure = {
+            type = gateway_galactic_team_2
+            orbit_angle = 225
+            orbit_distance = 30
+            location = solar_system
+        }
+        random_system_megastructure = {
+            limit = {
+                is_megastructure_type = gateway_galactic_team_2
+            }
+            activate_gateway = this
+        }
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        #save_event_target_as = second_last_created_system
+    }    
+}
+
+
+spawn_pos_8_core_system = {                 # Position 8 core systems
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_1_min
+            max_distance <= @stage_1_max
+            # 45
+            min_orientation_angle = 250
+            max_orientation_angle = 251
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = relic_neighbor
+        random_system = {
+            limit = {
+                has_star_flag = relic_system
+            }
+            add_hyperlane = {
+                from = THIS
+                to = PREV
+                
+            }
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_2_min
+            max_distance <= @stage_2_max
+            # 45
+            min_orientation_angle = 280
+            max_orientation_angle = 281
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_3_min
+            max_distance <= @stage_3_max
+            # 45
+            min_orientation_angle = 310
+            max_orientation_angle = 311
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = pos_8_gateway
+        set_star_flag = core_gateway
+        set_star_flag = node_team_2
+        spawn_megastructure = {
+            type = gateway_galactic_team_2
+            orbit_angle = 225
+            orbit_distance = 30
+            location = solar_system
+        }
+        random_system_megastructure = {
+            limit = {
+                is_megastructure_type = gateway_galactic_team_2
+            }
+            activate_gateway = this
+        }
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        #save_event_target_as = second_last_created_system
+    }    
+}
+
+
+
+spawn_pos_9_core_system = {                 # Position 9 core systems
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_1_min
+            max_distance <= @stage_1_max
+            # 45
+            min_orientation_angle = 280
+            max_orientation_angle = 281
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = relic_neighbor
+        random_system = {
+            limit = {
+                has_star_flag = relic_system
+            }
+            add_hyperlane = {
+                from = THIS
+                to = PREV
+                
+            }
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_2_min
+            max_distance <= @stage_2_max
+            # 45
+            min_orientation_angle = 310
+            max_orientation_angle = 311
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_3_min
+            max_distance <= @stage_3_max
+            # 45
+            min_orientation_angle = 340
+            max_orientation_angle = 341
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = pos_9_gateway
+        set_star_flag = core_gateway
+        set_star_flag = node_team_2
+        spawn_megastructure = {
+            type = gateway_galactic_team_2
+            orbit_angle = 225
+            orbit_distance = 30
+            location = solar_system
+        }
+        random_system_megastructure = {
+            limit = {
+                is_megastructure_type = gateway_galactic_team_2
+            }
+            activate_gateway = this
+        }
+
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        #save_event_target_as = second_last_created_system
+    }    
+}
+
+
+
+spawn_pos_10_core_system = {                 # Position 10 core systems
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_1_min
+            max_distance <= @stage_1_max
+            # 45
+            min_orientation_angle = 310
+            max_orientation_angle = 311
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = relic_neighbor
+        spawn_megastructure = {
+            type = strategic_coordination_center_ruined 
+            orbit_angle = 225
+            orbit_distance = 0
+            location = solar_system
+            init_effect = {
+
+                upgrade_megastructure_to = strategic_coordination_center_restored
+                finish_upgrade = yes
+
+                solar_system = { 
+                    random_system_planet = { trigger_megastructure_icon = yes }
+                    
+                }
+
+            }
+        }
+        random_system = {
+            limit = {
+                has_star_flag = relic_system
+            }
+            add_hyperlane = {
+                from = THIS
+                to = PREV
+                
+            }
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_2_min
+            max_distance <= @stage_2_max
+            # 45
+            min_orientation_angle = 340
+            max_orientation_angle = 341
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_3_min
+            max_distance <= @stage_3_max
+            # 45
+            min_orientation_angle = 10
+            max_orientation_angle = 11
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = pos_10_gateway
+        set_star_flag = core_gateway
+        set_star_flag = node_team_4
+        spawn_megastructure = {
+            type = gateway_galactic_team_4
+            orbit_angle = 225
+            orbit_distance = 30
+            location = solar_system
+        }
+        random_system_megastructure = {
+            limit = {
+                is_megastructure_type = gateway_galactic_team_4
+            }
+            activate_gateway = this
+        }
+ 
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        #save_event_target_as = second_last_created_system
+    }    
+}
+
+
+spawn_pos_11_core_system = {                 # Position 11 core systems
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_1_min
+            max_distance <= @stage_1_max
+            # 45
+            min_orientation_angle = 340
+            max_orientation_angle = 341
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = relic_neighbor
+        random_system = {
+            limit = {
+                has_star_flag = relic_system
+            }
+            add_hyperlane = {
+                from = THIS
+                to = PREV
+                
+            }
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_2_min
+            max_distance <= @stage_2_max
+            # 45
+            min_orientation_angle = 10
+            max_orientation_angle = 11
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_3_min
+            max_distance <= @stage_3_max
+            # 45
+            min_orientation_angle = 40
+            max_orientation_angle = 41
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = pos_11_gateway
+        set_star_flag = core_gateway
+        set_star_flag = node_team_4
+        spawn_megastructure = {
+            type = gateway_galactic_team_4
+            orbit_angle = 225
+            orbit_distance = 30
+            location = solar_system
+        }
+        random_system_megastructure = {
+            limit = {
+                is_megastructure_type = gateway_galactic_team_4
+            }
+            activate_gateway = this
+        }
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        #save_event_target_as = second_last_created_system
+    }    
+}
+
+
+spawn_pos_12_core_system = {                 # Position 12 core systems
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_1_min
+            max_distance <= @stage_1_max
+            # 45
+            min_orientation_angle = 10
+            max_orientation_angle = 11
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = relic_neighbor
+        random_system = {
+            limit = {
+                has_star_flag = relic_system
+            }
+            add_hyperlane = {
+                from = THIS
+                to = PREV
+                
+            }
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_2_min
+            max_distance <= @stage_2_max
+            # 45
+            min_orientation_angle = 41
+            max_orientation_angle = 41
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        save_event_target_as = second_last_created_system
+    }
+    no_scope = {    
+        spawn_system = {
+            min_distance >= @stage_3_min
+            max_distance <= @stage_3_max
+            # 45
+            min_orientation_angle = 70
+            max_orientation_angle = 71
+            initializer =  wscarena_basic_init_01 
+            hyperlane = no
+        }
+    }
+
+    event_target:last_created_system = {
+        set_star_flag = core_system
+        set_star_flag = pos_12_gateway
+        set_star_flag = core_gateway
+        set_star_flag = node_team_4
+        spawn_megastructure = {
+            type = gateway_galactic_team_4
+            orbit_angle = 225
+            orbit_distance = 30
+            location = solar_system
+        }
+        random_system_megastructure = {
+            limit = {
+                is_megastructure_type = gateway_galactic_team_4
+            }
+            activate_gateway = this
+        }
+
+        add_hyperlane = {
+            from = THIS
+            to = event_target:second_last_created_system
+        }
+        #save_event_target_as = second_last_created_system
+    }    
+}
+

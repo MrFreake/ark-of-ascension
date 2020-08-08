@@ -1,0 +1,27 @@
+namespace = wscarena_mobhandler
+@maxSpawns = 6
+
+#respawn mobs
+event = {                                       
+    id = wscarena_mobhandler.1
+    hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		event_target:goodie_guardians = {
+			fleet_power <= 150000
+		}
+	}
+
+	## respawn mobs every year for country drone
+    immediate = {
+		every_system = {
+				limit = {
+					check_variable = {  which = mobcount value < @maxSpawns}
+					has_star_flag = mob_spawner
+					has_star_flag = has_boss_flag
+				}		
+				respawn_mobs = yes
+			}
+		}
+	}

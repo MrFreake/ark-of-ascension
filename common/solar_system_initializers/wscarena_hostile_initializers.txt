@@ -1,0 +1,557 @@
+### Ether Drake
+
+@base_moon_distance = 10
+
+wscarena_guardians_init_dragon = {
+	class = sc_black_hole
+	
+	flags = { guardians_dragon_system guardian hostile_system }
+
+	init_effect = {
+		spawn_megastructure = {
+			type = matter_decompressor_ruined 
+			orbit_angle = 225
+			orbit_distance = 0
+			location = solar_system
+			init_effect = {
+				upgrade_megastructure_to = matter_decompressor_restored
+				finish_upgrade = yes
+				solar_system = { 
+					random_system_planet = { trigger_megastructure_icon = yes }
+					
+				}
+
+			}
+		}		
+	}
+	planet = {
+		count = 1
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+	
+	change_orbit = 10
+
+	# Hoard
+	planet = {
+		count = 1
+		orbit_distance = 20
+		orbit_angle = 20
+		size = 5
+		has_ring = no
+
+		init_effect = {
+			create_goodie_guardians_country = yes
+			set_name = "NAME_Dragons_Hoard"
+			set_planet_flag = hoard_planet
+			save_global_event_target_as = guardian_dragon_planet
+			prevent_anomaly = yes
+			set_deposit = d_guardian_dragon_hoard
+
+			create_fleet = {
+				name = "NAME_Ether_Drake"
+				settings = {
+					spawn_debris = no
+					is_boss = yes
+				}
+				effect = {
+					set_owner = event_target:goodie_guardians
+					create_ship = {
+						name = "NAME_Avice"
+						design = "NAME_Grand_Dragon"
+					}
+					set_fleet_flag = dragon_fleet
+					set_location = event_target:guardian_dragon_planet
+					set_fleet_stance = aggressive
+					set_aggro_range_measure_from = self
+					set_aggro_range = 500
+					queue_actions = {
+						repeat = {
+							find_closest_planet = {
+								trigger = {
+									id = dragon.home.1
+									is_star = yes
+								}
+								found_planet = {
+									move_to = this
+									orbit_planet = this
+									wait = {
+										duration = 30
+										random = 20
+									}
+								}
+							}
+							find_closest_planet = {
+								trigger = {
+									id = dragon.home.2
+									is_star = no
+									NOT = {
+										is_same_value = event_target:guardian_dragon_planet
+									}
+								}
+								found_planet = {
+									move_to = this
+									orbit_planet = this
+									wait = {
+										duration = 30
+										random = 20
+									}
+								}
+							}
+							find_closest_planet = {
+								trigger = {
+									id = dragon.home.3
+									is_same_value = event_target:guardian_dragon_planet
+								}
+								found_planet = {
+									move_to = this
+									orbit_planet = this
+									wait = {
+										duration = 30
+										random = 20
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	change_orbit = 15
+	
+	planet = {
+		count = { min = 1 max = 4 }
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		
+		change_orbit = @base_moon_distance
+		
+		moon = {
+			count = { min = 0 max = 1 }
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+
+		init_effect = {
+		}
+	}
+}
+
+# Mining Drones
+wscarena_hostile_init_01 = {
+	class = "rl_standard_stars"
+	asteroid_belt = {
+		type = rocky_asteroid_belt
+		radius = 95
+	}
+	
+	flags = { hostile_system drone_system_1 }
+	
+	planet = {
+		count = 1
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+	
+	change_orbit = 30
+	
+	planet = {
+		count = 2
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+	}
+	
+	change_orbit = 25
+	
+	planet = {
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 0 max = 150 }
+	}
+	planet = {
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 160 max = 330 }
+	}
+	
+	planet = {
+		count = { min = 2 max = 5 }
+		orbit_distance = 25
+		orbit_angle = { min = 90 max = 270 }
+		
+		change_orbit = @base_moon_distance
+		
+		moon = {
+			count = { min = 0 max = 1 }
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+	}
+	
+	init_effect = {
+		create_goodie_guardians_country = yes
+		spawn_T1_drone_fleet = yes
+		spawn_T1_drone_fleet = yes
+		spawn_T1_drone_fleet = yes
+		spawn_T1_drone_fleet = yes
+		While = {
+			count = 2
+			random_system_planet = {
+				limit = {
+					is_star = no
+					NOT = {
+						is_planet_class = pc_gas_giant
+					}
+				}
+				add_deposit = d_minerals_10
+			}
+		}
+	}	
+}
+# Mining Drone Destroyers
+wscarena_hostile_init_02 = {
+	class = "rl_standard_stars"
+	asteroid_belt = {
+		type = rocky_asteroid_belt
+		radius = 95
+	}
+	
+	flags = { hostile_system drone_destroyer_system }
+	
+	planet = {
+		count = 1
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+	
+	init_effect = {
+		create_goodie_guardians_country = yes
+		spawn_T2_drone_fleet = yes
+		spawn_T2_drone_fleet = yes
+		spawn_T2_drone_fleet = yes
+		spawn_T2_drone_fleet = yes
+		While = {
+			count = 3
+			random_system_planet = {
+				limit = {
+					is_star = no
+					NOT = {
+						is_planet_class = pc_gas_giant
+					}
+				}
+				add_deposit = d_minerals_10
+			}
+		}
+	}
+
+	change_orbit = 30
+	
+	planet = {
+		count = 2
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+	}
+	
+	change_orbit = 25
+	
+	planet = {
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 0 max = 150 }
+	}
+	planet = {
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 160 max = 330 }
+	}
+	
+	planet = {
+		count = { min = 2 max = 5 }
+		orbit_distance = 25
+		orbit_angle = { min = 90 max = 270 }
+		
+		change_orbit = @base_moon_distance
+		
+		moon = {
+			count = { min = 0 max = 1 }
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+	}
+	
+}
+
+# Mining Drones
+wscarena_hostile_init_03 = {
+	class = "rl_standard_stars"
+	asteroid_belt = {
+		type = rocky_asteroid_belt
+		radius = 95
+	}
+	
+	usage = misc_system_init
+	usage_odds = {
+		base = 0
+		modifier = {
+			factor = 0
+			NOT = { is_in_cluster = resource_cluster_4 }
+		}
+		modifier = {
+            factor = 0
+            has_star_flag = empire_cluster
+        }
+	}
+	
+	flags = { hostile_system drone_system_2 }
+	
+	planet = {
+		count = 1
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+	
+	change_orbit = 30
+	
+	planet = {
+		count = 2
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+	}
+	
+	change_orbit = 25
+	
+	planet = {
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 0 max = 150 }
+	}
+	planet = {
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 160 max = 330 }
+	}
+	
+	planet = {
+		count = { min = 2 max = 5 }
+		orbit_distance = 25
+		orbit_angle = { min = 90 max = 270 }
+		
+		change_orbit = @base_moon_distance
+		
+		moon = {
+			count = { min = 0 max = 1 }
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+	}
+	
+	init_effect = {
+		create_goodie_guardians_country = yes
+		spawn_T3_drone_fleet = yes
+		spawn_T3_drone_fleet = yes
+		spawn_T3_drone_fleet = yes
+		spawn_T3_drone_fleet = yes
+		While = {
+			count = 4
+			random_system_planet = {
+				limit = {
+					is_star = no
+					NOT = {
+						is_planet_class = pc_gas_giant
+					}
+				}
+				add_deposit = d_minerals_10
+			}
+		}
+	}
+}
+
+# Mining Drones
+wscarena_hostile_init_04 = {
+	class = "rl_standard_stars"
+	asteroid_belt = {
+		type = rocky_asteroid_belt
+		radius = 95
+	}
+	
+	#usage = misc_system_init
+	usage_odds = {
+		base = 0
+		modifier = {
+			factor = 0
+			NOT = { is_in_cluster = resource_cluster_4 }
+		}
+		modifier = {
+            factor = 0
+            has_star_flag = empire_cluster
+        }
+	}
+	
+	flags = { hostile_system drone_system_2 }
+	
+	planet = {
+		count = 1
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+	
+	change_orbit = 30
+	
+	planet = {
+		count = 2
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+	}
+	
+	change_orbit = 25
+	
+	planet = {
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 0 max = 150 }
+	}
+	planet = {
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 160 max = 330 }
+	}
+	
+	planet = {
+		count = { min = 2 max = 5 }
+		orbit_distance = 25
+		orbit_angle = { min = 90 max = 270 }
+		
+		change_orbit = @base_moon_distance
+		
+		moon = {
+			count = { min = 0 max = 1 }
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+	}
+	
+	init_effect = {
+		create_goodie_guardians_country = yes
+		spawn_T3_drone_fleet = yes
+		spawn_T3_drone_fleet = yes
+		spawn_T4_drone_fleet = yes
+		spawn_T4_drone_fleet = yes
+		While = {
+			count = 5
+			random_system_planet = {
+				limit = {
+					is_star = no
+					NOT = {
+						is_planet_class = pc_gas_giant
+					}
+				}
+				add_deposit = d_minerals_10
+			}
+		}
+	}
+}
+
+# Mining Drones
+wscarena_hostile_init_05 = {
+	class = "rl_standard_stars"
+	asteroid_belt = {
+		type = rocky_asteroid_belt
+		radius = 95
+	}
+	
+	#usage = misc_system_init
+	usage_odds = {
+		base = 0
+		modifier = {
+			factor = 0
+			NOT = { is_in_cluster = resource_cluster_4 }
+		}
+		modifier = {
+            factor = 0
+            has_star_flag = empire_cluster
+        }
+	}
+	
+	flags = { hostile_system drone_system_2 }
+	
+	planet = {
+		count = 1
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+	
+	change_orbit = 30
+	
+	planet = {
+		count = 2
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+	}
+	
+	change_orbit = 25
+	
+	planet = {
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 0 max = 150 }
+	}
+	planet = {
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 160 max = 330 }
+	}
+	
+	planet = {
+		count = { min = 2 max = 5 }
+		orbit_distance = 25
+		orbit_angle = { min = 90 max = 270 }
+		
+		change_orbit = @base_moon_distance
+		
+		moon = {
+			count = { min = 0 max = 1 }
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+	}
+	
+	init_effect = {
+		create_goodie_guardians_country = yes
+		spawn_T4_drone_fleet = yes
+		spawn_T4_drone_fleet = yes
+		spawn_T4_drone_fleet = yes
+		spawn_T4_drone_fleet = yes
+		While = {
+			count = 6
+			random_system_planet = {
+				limit = {
+					is_star = no
+					NOT = {
+						is_planet_class = pc_gas_giant
+					}
+				}
+				add_deposit = d_minerals_10
+			}
+		}
+	}
+}

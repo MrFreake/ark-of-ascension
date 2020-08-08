@@ -1,0 +1,1803 @@
+namespace = wscarena_test
+
+@hero_respawn_time = 90
+
+# This = Ship
+# From = Disabler Ship
+# On_ship_disabled
+
+ship_event = {                          # Collapse Hyperlane when Station is disabled
+    id = wscarena_test.5
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        is_ship_class = shipclass_starbase
+        solar_system = {
+            NOT = { has_star_flag = player_cluster_isolated }
+            has_star_flag = entrance_system_actual
+            any_neighbor_system = {
+                ignore_hyperlanes = no
+                has_star_flag = anchor_system
+            }
+        }
+    }
+    
+
+    immediate = {
+        solar_system = {
+            set_star_flag = player_cluster_isolated
+            random_neighbor_system = {
+                ignore_hyperlanes = no
+                limit = {
+                    has_star_flag = new_home_system
+                }
+                remove_hyperlane = {
+                    from = this
+                    to = prev
+                }
+            }
+        }
+    }
+}
+
+country_event = {                   # setup homeworld
+    id = wscarena_test.20
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        is_country_type = default
+        NOR = {
+            has_country_flag = observer
+            any_system_within_border = {
+                has_star_flag = nuke_host
+            }
+        }
+        #has_country_flag = anchor_spawned
+    }
+
+    immediate = {
+			set_country_flag = anchor_spawned
+            #log = "wscarena_test.20 firing"
+            #log = "[This.GetName]"
+            #save_event_target_as = target_country
+            random_owned_planet = {
+                #limit = {
+                #    is_capital = yes
+                #}
+            #    save_global_event_target_as = target_capital
+                #set_planet_flag = for_@root
+            }
+
+				event_target:new_home_system = {
+                        #log = "target system = [This.GetName]"
+                        set_star_flag = new_home_system
+                        
+
+                        random_system_planet = {
+                            limit = {
+                                is_star = no
+                                is_asteroid = no
+                            }
+                            #log = "target planet = [This.GetName]"
+                            set_planet_flag = new_home_planet
+                            save_event_target_as = new_capital
+                            set_planet_size = 18
+                            if = {
+                                limit = {
+                                    event_target:target_country = {
+                                        has_ethic = ethic_gestalt_consciousness
+                                        NOT = { 
+                                            has_authority = auth_machine_intelligence
+                                        }
+                                    }
+                                }
+                                change_pc = pc_hive
+                            }
+                            else_if = {
+                                limit = { 
+                                    event_target:target_country = { 
+                                        has_authority = auth_machine_intelligence
+                                    } 
+                                }
+                                change_pc = pc_machine
+                            }
+                            else = {
+                                change_pc = pc_gaia
+                                reroll_planet = yes
+                            }
+                            set_owner = root
+                            root = {
+                                every_owned_fleet = {
+                                    limit = {
+                                        any_owned_ship = {
+                                            is_ship_class = shipclass_starbase
+                                        }
+                                    }
+                                    delete_fleet = this
+                                }
+                            }
+                            while = {
+                                limit = {
+                                    event_target:target_capital = {
+                                        count_pops = { count > 1 }
+                                    }
+                                }
+                                event_target:target_capital = {
+                                    random_owned_pop = {
+                                        resettle_pop = {
+                                            pop = this
+                                            planet = event_target:new_capital
+                                        }
+                                        #log = "Resettling pop of species [This.GetSpeciesName]"
+                                    }
+                                }
+                            }
+                            create_colony = {
+                                owner = root
+                                species = owner_main_species
+                                ethos = owner
+                            }
+                            #generate_empire_home_planet = yes
+                            set_capital = yes		
+                            set_name = event_target:target_capital
+                            clear_planet_modifiers = yes
+                            prevent_anomaly = yes
+                            #generate_wscarena_start_pops = yes
+							generate_start_pops = yes
+                            if = {
+                                limit = {
+                                    owner = {
+                                        NOR = {
+                                            is_hive_empire = no
+								            is_machine_empire = no
+                                            }
+                                        }
+                                    }
+                                    while = {
+                                        count = 2
+                                        generate_wscarena_start_deposits_and_blockers_OLD = yes                                                            
+                                    }
+                            }
+                            generate_wscarena_start_buildings_and_districts = yes
+                            #generate_start_buildings_and_districts = yes
+
+                            generate_home_planet_final_pass = yes
+                            check_planet_employment = yes
+                            calculate_modifier = yes
+
+                            solar_system = {
+                                set_name = event_target:target_capital.star
+                            }
+                            #while = {
+                              #  limit = { 
+                              #      event_target:target_capital = {
+                              #          num_pops > 0
+                              #      }
+                              #  }
+                              #  event_target:target_capital = {
+                              #      random_owned_pop = {
+                              #          resettle_pop = {
+                              #              pop = this
+                              #              planet = event_target:new_capital
+                              #          }
+                              #      }
+                             #   }
+                            #}
+                            #event_target:target_capital = {
+                            #    every_owned_pop = {
+                            #        resettle_pop = {
+                            #            pop = THIS
+                            #            planet = event_target:new_capital
+                            #        }
+                            #    }
+                            #}
+
+                            root = {             # Remove Old Homeworld and starting ships
+                                #set_homeworld_habitability = yes                            
+                                every_playable_country = {
+                                    establish_communications_no_message = prev
+                                }
+                                every_owned_pop_species = {
+                                    set_species_homeworld = event_target:new_capital
+                                }
+                                #if = {
+                                #   limit = {
+                                #        any_owned_pop_species = {
+                                #            NOT = {
+                                #                is_same_species = event_target:primary_species
+                                #            }
+                                #        }
+                                #    }
+                               # 
+                               # random_owned_pop_species = {
+                               #     limit = {
+                               #         NOT = {
+                               #             is_same_species = event_target:primary_species
+                               #         }
+                               #     }
+                               #     save_global_event_target_as = secondary_species
+                               # }
+                            
+                                every_owned_ship = {
+                                    delete_ship = this
+                                }
+                                every_owned_fleet = {
+                                        delete_fleet = this
+                                }
+                                #every_owned_starbase = {
+                                #    set_owner = event_target:global_event_country
+                                #    delete_ship = this
+                                #}
+                                event_target:target_capital = {
+                                    #set_owner = event_target:global_event_country
+                                    every_owned_pop = {
+                                        #log = "[This.GetSpeciesName] slain!" 
+                                        kill_pop = yes
+                                    }
+                                    destroy_colony = yes
+                                    solar_system = {
+                                        every_system_planet = {
+                                            limit = {
+                                                OR = {
+                                                    has_deposit = yes
+                                                    habitable_planet = yes
+                                                    is_planet_class = pc_nuked
+                                                }
+                                                NOT = {
+                                                    has_planet_flag = wscarena_prescripted
+                                                }
+                                            }
+                                            sanitize_planet = yes                                   
+                                        }
+                                        every_system_planet = { 
+                                            surveyed = { 
+                                                set_surveyed = no 
+                                                surveyor = root
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            event_target:new_capital = {                # Spawn New Starbase
+                                #planet_event = {                         # Spawn Capital Buildings
+                                #    id = game_start.12
+                                #    scopes = {
+                                #        from = event_target:primary_species
+                                #    }
+                                #}
+                                #generate_wscarena_start_pops = yes
+                                #generate_empire_home_planet = yes
+                                solar_system = {
+                                    #if = {                                 # Check for ringworld slider
+                                     #   limit = {
+                                      #      no_scope = { check_variable = {
+                                      #          which = local_num_guaranteed_colonies
+                                      #          value > 0
+                                      #      }
+                                      #      }
+                                      #  }
+                                      #  solar_system = {
+                                      #      spawn_system = {
+                                      #          initializer = fallen_ring_system
+                                      #          min_distance = 15
+                                      ##          max_distance = 30
+                                       #     }
+                                       # }
+                                    #}
+                                    generate_home_system_resources = yes
+                                    every_system_planet = {
+                                        limit = { 
+                                            has_deposit_for = shipclass_mining_station
+                                            #has_planet_flag = starting_mining_target
+                                            has_mining_station = no
+                                        }
+                                        create_mining_station = {
+                                            owner = root
+                                        }
+                                    }
+                                    every_system_planet = {
+                                        limit = { 
+                                            has_deposit_for = shipclass_research_station 
+                                            #has_planet_flag = starting_research_target
+                                            has_research_station = no
+                                        }
+                                        create_research_station = {
+                                            owner = root
+                                        }
+                                    }
+                                    random_neighbor_system = {
+                                            limit = {
+                                                NOR = {
+                                                    has_star_flag = spawned_system
+                                                    has_star_flag = fallen_ring_system
+                                                    has_star_flag = ring_system
+                                                }
+                                            }
+                                                set_star_flag = entrance_system_actual
+                                                create_starbase = {
+                                                    size = "starbase_citadel"
+                                                    owner = event_target:target_country
+                                                    module = "shipyard"
+                                                    module = "anchorage"
+                                                    module = "anchorage"
+                                                    module = "hangar_bay"
+                                                    module = "gun_battery"
+                                                    module = "gun_battery"
+
+                                                    building = "crew_quarters"
+                                                    building = "command_center"
+                                                    building = "target_uplink_computer"
+                                                    building = "listening_post"
+
+                                                }
+                                        }
+                                }
+                            }
+                            root = {
+                                country_event = {                       # Add Starting Ships
+                                    id = game_start.9
+                                }
+
+                            }
+                        }                    
+                    }
+                 }
+                
+
+    
+                             }
+    after = {
+        clear_global_event_target = target_capital
+        clear_global_event_target = primary_species
+        clear_global_event_target = target_country
+        clear_global_event_target = target_capital_system
+    }
+    }
+    
+
+
+
+country_event = {               # Setup Starbases
+    id = wscarena_test.23
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        is_country_type = default
+        #has_country_flag = anchor_spawned
+    }
+
+    immediate = {
+        random_owned_planet = {
+            limit = {
+                #is_capital = yes
+                num_pops > 5
+            }
+            if = {
+                limit = {
+                    owner = { 
+                        is_gestalt = yes
+                }
+            }
+            solar_system = {
+                create_starbase = {
+                    size = starbase_starport
+                    module = shipyard
+                    module = solar_panel_network 
+                    building = crew_quarters 
+                    owner = root
+                }
+            }
+        }
+        else = {
+            solar_system = {
+                create_starbase = {
+                    size = starbase_starport
+                    module = shipyard
+                    module = trading_hub 
+                    building = crew_quarters 
+                    owner = root
+                }
+            }
+        }
+    }
+    random_system = {
+        limit = {
+            has_star_flag = entrance_system_actual
+            has_star_flag = for_@root
+        }
+        
+            create_starbase = {
+                size = starbase_citadel 
+                owner = root
+                module = gun_battery
+                module = gun_battery
+                module = gun_battery
+                module = missile_battery
+                module = missile_battery
+                module = missile_battery
+                building = crew_quarters
+            }
+        }
+    }
+}
+
+country_event = {                   # Choose avatar
+    id = wscarena_test.30
+	is_triggered_only = yes
+	#hide_window = yes
+    title = wscarena_test_30_title
+    desc = wscarena_test_30_desc
+
+    trigger = {
+        #has_country_flag = anchor_spawned
+        NOT = {
+            has_country_flag = picked_hero
+        }
+        #is_ai = yes
+    }
+    immediate = {
+        if = {
+            limit = {
+                has_origin = "origin_ether_drake"
+            }
+            set_country_flag = ether_drake_hero
+            spawn_ether_drake = yes
+        }
+        if = {
+            limit = {
+                has_origin = "origin_psionic_entity"
+            }
+            set_country_flag = psionic_entity_hero
+            spawn_psionic_entity = yes
+        }
+        if = {
+            limit = {
+                has_origin = "origin_automated_dreadnought"
+            }
+            set_country_flag = automated_dreadnought_hero
+            spawn_automated_dreadnought = yes
+        }
+        if = {
+            limit = {
+                has_origin = "origin_voidspawn"
+            }
+            set_country_flag = voidspawn_avatar
+            spawn_voidspawn_avatar = yes
+        }
+    }
+
+    after = {
+        Hidden_effect = {
+        create_neutral_effect_country = yes
+        set_country_flag = picked_hero
+        every_country = {
+            limit = {
+                is_ai = yes
+                is_country_type = default
+                NOR = {
+                    any_system_within_border = {
+                        has_star_flag = nuke_host
+                    }
+                    has_country_flag = picked_hero
+                }
+            }
+            country_event = {
+                id = wscarena_test.30
+            }
+        }
+    }
+}
+}
+
+# This = owner of ship 1 (combatant)
+# From = owner of ship 2 (destroyed)
+# FromFrom = ship 1
+# FromFromFrom = ship 2
+#on_ship_destroyed_perp = {
+#        wscarena_test.31    
+#        wscarena_test.32    
+
+country_event = {
+    id = wscarena_test.31       # Kills mob ship
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        fromfrom = {
+            has_ship_flag = hero_unit
+        }
+        fromfromfrom = {
+            NOT = {
+                has_ship_flag = hero_unit
+            }
+            fleet = {
+                owner = {
+                    is_same_value = event_target:goodie_guardians
+                }
+            }
+        }
+    }
+
+    immediate = {
+        change_variable = {
+            which = kills
+            value = 2
+        }
+        set_incoming_xp = yes
+        log = "incoming_xp = [This.incoming_xp]"
+        scale_incoming_xp_to_level = yes
+        log = "after divide, incoming_xp = [This.incoming_xp]"
+        change_variable = {
+            which = experience 
+            value = incoming_xp
+        }
+        set_variable = {
+            which = incoming_xp
+            value = 0
+        }
+        if = {
+            limit = {
+                hero_unit_can_level = yes
+                is_ai = yes
+            }
+            level_up_hero = yes
+        }
+        fromfrom = {
+            solar_system = {
+                closest_system = {
+                    min_steps = 1
+                    max_steps = 6
+                    limit = {
+                        has_star_flag = mob_spawner
+
+                    }
+                    if = {
+                        limit = {
+                            NOT = {
+                                has_star_flag = recently_reinforced
+                            }
+                        }
+                        set_timed_star_flag = {
+                            flag = recently_reinforced
+                            days = 60
+                        }
+                        random_fleet_in_system = {
+                            limit = {
+                                owner = {
+                                    is_same_value = event_target:goodie_guardians
+                                }
+                            }
+                            move_mob_to_random_neighbor = yes
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+# This = owner of ship 1 (combatant)
+# From = owner of ship 2 (destroyed)
+# FromFrom = ship 1
+# FromFromFrom = ship 2
+country_event = {
+    id = wscarena_test.32       # Kills Hero Ship
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        fromfrom = {
+            has_ship_flag = hero_unit
+        }
+        fromfromfrom = {
+            #OR = {
+                has_ship_flag = hero_unit
+                #is_ship_size = battleship
+                #is_ship_Size = starbase_citadel
+            #}
+        }
+    }
+
+    immediate = {
+        change_variable = {
+            which = hero_kills
+            value = 1
+        }
+        change_variable = {
+            which = experience 
+            value = 15
+        }
+        #if = {
+        #    limit = {
+        #        hero_unit_can_level = yes
+        #    }
+        #    random_owned_ship = {
+        #        limit = {
+        #            has_ship_flag = hero_unit
+        #        }
+        #            level_up_hero = yes
+        #    }
+        #}
+    }
+}
+
+country_event = {
+    id = wscarena_test.33
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        change_variable = {
+            which = experience
+            value = 15
+        }
+    }
+}
+# This = owner of ship 1 (combatant)
+# From = owner of ship 2 (destroyed)
+# FromFrom = ship 1
+# FromFromFrom = ship 2
+country_event = {               # Notification for killed hero
+    id = wscarena_test.34
+    is_triggered_only = yes
+    #hide_window = yes
+    title = wscarena_test_34_title
+    desc = wscarena_test_34_desc
+
+    trigger = {
+        from = {
+            is_country_type = default
+        }
+        fromfromfrom = {
+            has_ship_flag = hero_unit
+        }
+    }
+    
+
+    immediate = {
+            from = {
+                country_event = {
+                    id = wscarena_test.39
+                    days = @hero_respawn_time
+                }
+            }
+        }
+}
+
+# This = owner of ship 1 (combatant)
+# From = owner of ship 2 (destroyed)
+# FromFrom = ship 1
+# FromFromFrom = ship 2
+country_event = {
+    id = wscarena_test.35       # Kills regular ship owned by a player
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        fromfrom = {
+            has_ship_flag = hero_unit
+        }
+        fromfromfrom = {
+            NOR = {
+                has_ship_flag = hero_unit
+                fleet = {
+                    owner = {
+                        is_same_value = event_target:goodie_guardians
+                    }
+                }
+            }
+        }
+    }
+    immediate = {
+        change_variable = {
+            which = kills
+            value = 1
+        }
+        change_variable = {
+            which = experience 
+            value = 3
+        }
+    }
+}
+
+# This = owner of fleet 1 (combatant)
+# From = owner of fleet 2 (destroyed)
+# FromFrom = fleet 1
+# FromFromFrom = fleet 2
+country_event = {               # Mob Fleet bounty
+    id = wscarena_test.36
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        fromfrom = {
+            any_owned_ship = {
+                has_ship_flag = hero_unit
+            }
+        }
+        fromfromfrom = {
+            owner = {
+                is_same_value = event_target:goodie_guardians
+            }
+        }
+    }
+
+    immediate = {
+        set_incoming_bounty_xp = yes
+        scale_incoming_xp_to_level = yes
+        change_variable = {
+            which = experience
+            value = incoming_xp
+        }
+        set_variable = {
+            which = incoming_xp
+            value = 0
+        }
+    }
+}
+country_event = {
+    id = wscarena_test.37
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        any_owned_fleet = {
+            NOT = {
+                has_fleet_flag = already_picked
+            }
+        }
+    }
+
+    immediate = {
+        event_target:goodie_guardians = {
+            random_owned_fleet = {
+                limit = {
+                    is_ship_class = shipclass_military
+                }
+                set_fleet_flag = already_picked
+                queue_actions = {
+                    find_closest_system = {
+                        trigger = {
+                            id = mobs_migration.trigger.1
+                                any_system_planet = {
+                                        has_planet_flag = r_ark_of_ascension
+                                }
+                    }
+                        found_system = {
+                            move_to = this
+                            find_closest_planet = {
+                                trigger = {
+                                    id = mobs_migration.trigger.2
+                                    has_planet_flag = r_ark_of_ascension
+                                }
+                                found_planet = {
+                                    move_to = this
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        country_event = {
+            id = wscarena_test.37
+            days = 30
+        }
+    }
+}
+
+fleet_event = {
+    id = wscarena_test.38
+    title = wscarena_test_38_title
+    desc = wscarena_test_38_desc
+    is_triggered_only = yes
+
+    immediate = {
+        set_event_locked = no
+        random_owned_ship = {
+            reduce_hp_percent = 0.9
+        }
+    }
+}
+
+country_event = {               # Delayed respawning from wscarena_test.34
+    id = wscarena_test.39
+    is_triggered_only = yes
+    title = wscarena_test_39_title
+    desc = wscarena_test_39_desc
+
+    immediate = {
+        random_owned_planet = {
+            limit = {
+                is_capital = yes
+            }
+            save_event_target_as = target_capital
+        }
+        if = {
+            limit = {
+                has_country_flag = ether_drake_hero
+            }
+            respawn_ether_drake = yes
+            setup_respawned_hero = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = psionic_entity_hero
+            }
+            respawn_psionic_entity = yes
+            setup_respawned_hero = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = automated_dreadnought_hero
+            }
+            respawn_automated_dreadnought = yes
+            setup_respawned_hero = yes
+        }
+        if = {
+            limit = {
+                has_country_flag = voidspawn_avatar
+            }
+            respawn_voidspawn_avatar = yes
+            setup_respawned_hero =yes
+        }
+    }
+}
+
+country_event = {           # Set closed borders
+    id = wscarena_test.43
+    is_triggered_only = yes
+    hide_window = yes
+    fire_only_once = yes
+
+    immediate = {
+        every_country = {
+            every_country = {
+                limit = {
+                    has_closed_borders = prev
+                }
+                set_closed_borders = {
+                    who = PREV
+                    status = yes
+                }
+            }
+        }
+    }
+}
+
+event = {                   # Set hostility and borders
+    id = wscarena_test.45
+    is_triggered_only = yes
+    hide_window = yes
+    fire_only_once = yes
+
+    immediate = {
+            # Team 1
+    every_country = {
+        limit = {
+            has_country_flag = player_team_1
+        }
+        every_country = {
+            limit = {
+                is_country_type = default
+                NOT = {
+                    has_country_flag = player_team_1
+                }
+            }
+            set_faction_hostility = { target = prev set_hostile = yes  }
+            set_closed_borders = {
+                who = prev
+                status = yes
+            }
+            }
+        }
+        every_country = {
+            limit = {
+                has_country_flag = player_team_1
+            }
+            every_country = {
+                limit = {
+                    has_country_flag = player_team_1
+                    NOT = {
+                        is_same_value = prev
+                    }
+                }
+                set_faction_hostility = { target = prev set_friendly = yes }
+                set_closed_borders = {
+                    who = prev
+                    status = no
+                }
+            }
+        }
+
+    # Team 2
+    every_country = {
+        limit = {
+            has_country_flag = player_team_2
+        }
+        every_country = {
+            limit = {
+                is_country_type = default
+                NOT = {
+                    has_country_flag = player_team_2
+                }
+            }
+            set_faction_hostility = { target = prev set_hostile = yes  }
+            set_closed_borders = {
+                who = prev
+                status = yes
+            }
+            }
+        }
+        every_country = {
+            limit = {
+                has_country_flag = player_team_2
+            }
+            every_country = {
+                limit = {
+                    has_country_flag = player_team_2
+                    NOT = {
+                        is_same_value = prev
+                    }
+                }
+                set_faction_hostility = { target = prev set_friendly = yes }
+            }
+        }
+    # Team 3
+    every_country = {
+        limit = {
+            has_country_flag = player_team_3
+        }
+        every_country = {
+            limit = {
+                is_country_type = default
+                NOT = {
+                    has_country_flag = player_team_3
+                }
+            }
+            set_faction_hostility = { target = prev set_hostile = yes  }
+            set_closed_borders = {
+                who = prev
+                status = yes
+            }
+            }
+        }
+        every_country = {
+            limit = {
+                has_country_flag = player_team_3
+            }
+            every_country = {
+                limit = {
+                    has_country_flag = player_team_3
+                    NOT = {
+                        is_same_value = prev
+                    }
+                }
+                set_faction_hostility = { target = prev set_friendly = yes }
+            }
+        }
+
+    # Team 4
+    every_country = {
+        limit = {
+            has_country_flag = player_team_4
+        }
+        every_country = {
+            limit = {
+                is_country_type = default
+                NOT = {
+                    has_country_flag = player_team_4
+                }
+            }
+            set_faction_hostility = { target = prev set_hostile = yes  }
+            set_closed_borders = {
+                who = prev
+                status = yes
+            }
+            }
+        }
+        every_country = {
+            limit = {
+                has_country_flag = player_team_4
+            }
+            every_country = {
+                limit = {
+                    has_country_flag = player_team_4
+                    NOT = {
+                        is_same_value = prev
+                    }
+                }
+                set_faction_hostility = { target = prev set_friendly = yes }
+            }
+        }
+
+    }
+}
+
+
+event = {                           # Form federations
+    id = wscarena_test.46           # Makes the human the leader of the federation
+    is_triggered_only = yes         # 
+    hide_window = yes
+    fire_only_once = yes
+
+    immediate = {
+    every_country = {
+        limit = {
+            is_country_type = default
+            NOR = {
+                has_country_flag = observer
+                any_system_within_border = {
+                    has_star_flag = nuke_host
+                }
+            }
+            NAND = {
+                has_global_flag = formed_team_1
+                has_global_flag = formed_team_2
+                has_global_flag = formed_team_3
+                has_global_flag = formed_team_4
+            }
+        }
+        if = {                  # Team 1
+            limit = {
+                NOT = { has_global_flag = formed_team_1 }
+                any_country = {
+                    has_country_flag = player_team_1
+                    is_ai = no
+                }
+            }
+            random_country = {
+                limit = {
+                    has_country_flag = player_team_1
+                    is_ai = no
+                }
+                set_country_flag = player_leader_team_1
+                random_system_within_border = {
+                    limit = {
+                        any_system_planet = {
+                            has_planet_flag = new_home_planet
+                        }
+                    }
+                    random_neighbor_system = {
+                        #spawn_gateway_team_1 = yes
+                    }
+                }
+                every_country = {
+                    limit = {
+                        has_country_flag = player_team_1
+                        NOT = {
+                            is_same_value = prev
+                        }
+                    }
+                    random_system_within_border = {
+                        limit = {
+                            any_system_planet = {
+                                has_planet_flag = new_home_planet
+                            }
+                        }
+                        random_neighbor_system = {
+                            #spawn_gateway_team_1 = yes
+                        }
+                    }
+                    join_alliance = { who = prev override_requirements = yes }
+                    add_opinion_modifier = {
+                        who = prev
+                        modifier = opinion_same_team
+                    }
+                    random_country = {
+                        limit = {
+                            has_country_flag = player_leader_team_1
+                        }
+                        add_opinion_modifier = {
+                            who = prev
+                            modifier = opinion_same_team
+                        }
+                    }
+                }
+            }
+            set_global_flag = formed_team_1
+        }
+        else_if = {
+            limit = {
+                NOT = {
+                    has_global_flag = formed_team_1
+                }
+            }
+            random_country = {
+                limit = {
+                    has_country_flag = player_team_1
+                }
+                set_country_flag = player_leader_team_1
+                random_system_within_border = {
+                    limit = {
+                        any_system_planet = {
+                            has_planet_flag = new_home_planet
+                        }
+                    }
+                    random_neighbor_system = {
+                        #spawn_gateway_team_1 = yes
+                    }
+                }
+                every_country = {
+                    limit = {
+                        has_country_flag = player_team_1
+                        NOT = {
+                            is_same_value = prev
+                        }
+                    }
+                    random_system_within_border = {
+                        limit = {
+                            any_system_planet = {
+                                has_planet_flag = new_home_planet
+                            }
+                        }
+                        random_neighbor_system = {
+                            #spawn_gateway_team_1 = yes
+                        }
+                    }
+                    join_alliance = { who = prev override_requirements = yes }
+                    add_opinion_modifier = {
+                        who = prev
+                        modifier = opinion_same_team
+                    }
+                    random_country = {
+                        limit = {
+                            has_country_flag = player_leader_team_1
+                        }
+                        add_opinion_modifier = {
+                            who = prev
+                            modifier = opinion_same_team
+                        }
+                    }
+                }
+            }
+            set_global_flag = formed_team_1
+        }
+
+        else_if = {                  # Team 2
+            limit = {
+                NOT = { has_global_flag = formed_team_2 }
+                any_country = {
+                    has_country_flag = player_team_2
+                    is_ai = no
+                }
+            }
+            random_country = {
+                limit = {
+                    has_country_flag = player_team_2
+                    is_ai = no
+                }
+                set_country_flag = player_leader_team_2
+                random_system_within_border = {
+                    limit = {
+                        any_system_planet = {
+                            has_planet_flag = new_home_planet
+                        }
+                    }
+                    random_neighbor_system = {
+                        #spawn_gateway_team_2 = yes
+                    }
+                }
+                every_country = {
+                    limit = {
+                        has_country_flag = player_team_2
+                        NOT = {
+                            is_same_value = prev
+                        }
+                    }
+                    random_system_within_border = {
+                        limit = {
+                            any_system_planet = {
+                                has_planet_flag = new_home_planet
+                            }
+                        }
+                        random_neighbor_system = {
+                            #spawn_gateway_team_2 = yes
+                        }
+                    }
+                    join_alliance = { who = prev override_requirements = yes }
+                    add_opinion_modifier = {
+                        who = prev
+                        modifier = opinion_same_team
+                    }
+                    random_country = {
+                        limit = {
+                            has_country_flag = player_leader_team_2
+                        }
+                        add_opinion_modifier = {
+                            who = prev
+                            modifier = opinion_same_team
+                        }
+                    }
+                }
+            }
+            set_global_flag = formed_team_2
+        }
+        else_if = {
+            limit = {
+                NOT = {
+                    has_global_flag = formed_team_2
+                }
+            }
+            random_country = {
+                limit = {
+                    has_country_flag = player_team_2
+                }
+                set_country_flag = player_leader_team_2
+                random_system_within_border = {
+                    limit = {
+                        any_system_planet = {
+                            has_planet_flag = new_home_planet
+                        }
+                    }
+                    random_neighbor_system = {
+                        #spawn_gateway_team_2 = yes
+                    }
+                }
+                every_country = {
+                    limit = {
+                        has_country_flag = player_team_2
+                        NOT = {
+                            is_same_value = prev
+                        }
+                    }
+                    random_system_within_border = {
+                        limit = {
+                            any_system_planet = {
+                                has_planet_flag = new_home_planet
+                            }
+                        }
+                        random_neighbor_system = {
+                            #spawn_gateway_team_2 = yes
+                        }
+                    }
+                    join_alliance = { who = prev override_requirements = yes }
+                    add_opinion_modifier = {
+                        who = prev
+                        modifier = opinion_same_team
+                    }
+                    random_country = {
+                        limit = {
+                            has_country_flag = player_leader_team_2
+                        }
+                        add_opinion_modifier = {
+                            who = prev
+                            modifier = opinion_same_team
+                        }
+                    }
+                }
+            }
+            set_global_flag = formed_team_2
+        }
+
+
+        else_if = {                  # Team 3
+            limit = {
+                NOT = { has_global_flag = formed_team_3 }
+                any_country = {
+                    has_country_flag = player_team_3
+                    is_ai = no
+                }
+            }
+            random_country = {
+                limit = {
+                    has_country_flag = player_team_3
+                    is_ai = no
+                }
+                set_country_flag = player_leader_team_3
+                random_system_within_border = {
+                    limit = {
+                        any_system_planet = {
+                            has_planet_flag = new_home_planet
+                        }
+                    }
+                    random_neighbor_system = {
+                        #spawn_gateway_team_3 = yes
+                    }
+                }
+                every_country = {
+                    limit = {
+                        has_country_flag = player_team_3
+                        NOT = {
+                            is_same_value = prev
+                        }
+                    }
+                    random_system_within_border = {
+                        limit = {
+                            any_system_planet = {
+                                has_planet_flag = new_home_planet
+                            }
+                        }
+                        random_neighbor_system = {
+                            #spawn_gateway_team_3 = yes
+                        }
+                    }
+                    join_alliance = { who = prev override_requirements = yes }
+                    add_opinion_modifier = {
+                        who = prev
+                        modifier = opinion_same_team
+                    }
+                    random_country = {
+                        limit = {
+                            has_country_flag = player_leader_team_3
+                        }
+                        add_opinion_modifier = {
+                            who = prev
+                            modifier = opinion_same_team
+                        }
+                    }
+                }
+            }
+            set_global_flag = formed_team_3
+        }
+        else_if = {
+            limit = {
+                NOT = {
+                    has_global_flag = formed_team_3
+                }
+            }
+            random_country = {
+                limit = {
+                    has_country_flag = player_team_3
+                }
+                set_country_flag = player_leader_team_3
+                random_system_within_border = {
+                    limit = {
+                        any_system_planet = {
+                            has_planet_flag = new_home_planet
+                        }
+                    }
+                    random_neighbor_system = {
+                        #spawn_gateway_team_3 = yes
+                    }
+                }
+                every_country = {
+                    limit = {
+                        has_country_flag = player_team_3
+                        NOT = {
+                            is_same_value = prev
+                        }
+                    }
+                    random_system_within_border = {
+                        limit = {
+                            any_system_planet = {
+                                has_planet_flag = new_home_planet
+                            }
+                        }
+                        random_neighbor_system = {
+                            #spawn_gateway_team_3 = yes
+                        }
+                    }
+                    join_alliance = { who = prev override_requirements = yes }
+                    add_opinion_modifier = {
+                        who = prev
+                        modifier = opinion_same_team
+                    }
+                    random_country = {
+                        limit = {
+                            has_country_flag = player_leader_team_3
+                        }
+                        add_opinion_modifier = {
+                            who = prev
+                            modifier = opinion_same_team
+                        }
+                    }
+                }
+            }
+            set_global_flag = formed_team_3
+        }
+
+
+        else_if = {                  # Team 4
+            limit = {
+                NOT = { has_global_flag = formed_team_4 }
+                any_country = {
+                    has_country_flag = player_team_4
+                    is_ai = no
+                }
+            }
+            random_country = {
+                limit = {
+                    has_country_flag = player_team_4
+                    is_ai = no
+                }
+                set_country_flag = player_leader_team_4
+                random_system_within_border = {
+                    limit = {
+                        any_system_planet = {
+                            has_planet_flag = new_home_planet
+                        }
+                    }
+                    random_neighbor_system = {
+                        #spawn_gateway_team_4 = yes
+                    }
+                }
+                every_country = {
+                    limit = {
+                        has_country_flag = player_team_4
+                        NOT = {
+                            is_same_value = prev
+                        }
+                    }
+                    random_system_within_border = {
+                        limit = {
+                            any_system_planet = {
+                                has_planet_flag = new_home_planet
+                            }
+                        }
+                        random_neighbor_system = {
+                            #spawn_gateway_team_4 = yes
+                        }
+                    }
+                    join_alliance = { who = prev override_requirements = yes }
+                    add_opinion_modifier = {
+                        who = prev
+                        modifier = opinion_same_team
+                    }
+                    random_country = {
+                        limit = {
+                            has_country_flag = player_leader_team_4
+                        }
+                        add_opinion_modifier = {
+                            who = prev
+                            modifier = opinion_same_team
+                        }
+                    }
+                }
+            }
+            set_global_flag = formed_team_4
+        }
+        else_if = {
+            limit = {
+                NOT = {
+                    has_global_flag = formed_team_4
+                }
+            }
+            random_country = {
+                limit = {
+                    has_country_flag = player_team_4
+                }
+                set_country_flag = player_leader_team_4
+                random_system_within_border = {
+                    limit = {
+                        any_system_planet = {
+                            has_planet_flag = new_home_planet
+                        }
+                    }
+                    random_neighbor_system = {
+                        #spawn_gateway_team_4 = yes
+                    }
+                }
+                every_country = {
+                    limit = {
+                        has_country_flag = player_team_4
+                        NOT = {
+                            is_same_value = prev
+                        }
+                    }
+                    random_system_within_border = {
+                        limit = {
+                            any_system_planet = {
+                                has_planet_flag = new_home_planet
+                            }
+                        }
+                        random_neighbor_system = {
+                            #spawn_gateway_team_4 = yes
+                        }
+                    }
+                    join_alliance = { who = prev override_requirements = yes }
+                    add_opinion_modifier = {
+                        who = prev
+                        modifier = opinion_same_team
+                    }
+                    random_country = {
+                        limit = {
+                            has_country_flag = player_leader_team_4
+                        }
+                        add_opinion_modifier = {
+                            who = prev
+                            modifier = opinion_same_team
+                        }
+                    }
+                }
+            }
+            set_global_flag = formed_team_4
+        }
+    }
+}
+}
+
+
+# A country has increased the level of a tech, use last_increased_tech trigger to check tech and level.
+# This = Country
+country_event = {               # Team 1 Increases Tech
+    id = wscarena_test.47
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        AND = {             
+            is_country_type = default
+            has_country_flag = player_team_1
+            any_country = {
+                has_country_flag = player_team_1
+                NOR = {
+                    is_same_value = root
+                    #has_technology = last_increased_tech
+                }
+            }
+        }
+    }
+
+    immediate = {
+        every_country = {
+            limit = {
+                has_country_flag = player_team_1
+                NOT = {
+                    is_same_value = root
+                }
+            }
+            copy_techs_from = {
+                target = root
+            }
+        }
+    }
+}
+
+country_event = {               # Team 2 Increases Tech
+    id = wscarena_test.48
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        AND = {             
+            is_country_type = default
+            has_country_flag = player_team_2
+            any_country = {
+                has_country_flag = player_team_2
+                NOR = {
+                    is_same_value = root
+                    #has_technology = last_increased_tech
+                }
+            }
+        }
+    }
+
+    immediate = {
+        every_country = {
+            limit = {
+                has_country_flag = player_team_2
+                NOT = {
+                    is_same_value = root
+                }
+            }
+            copy_techs_from = {
+                target = root
+            }
+        }
+    }
+}
+
+country_event = {               # Team 3 Increases Tech
+    id = wscarena_test.49
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        AND = {             
+            is_country_type = default
+            has_country_flag = player_team_3
+            any_country = {
+                has_country_flag = player_team_3
+                NOR = {
+                    is_same_value = root
+                    #has_technology = last_increased_tech
+                }
+            }
+        }
+    }
+
+    immediate = {
+        every_country = {
+            limit = {
+                has_country_flag = player_team_3
+                NOT = {
+                    is_same_value = root
+                }
+            }
+            copy_techs_from = {
+                target = root
+            }
+        }
+    }
+}
+
+country_event = {               # Team 4 Increases Tech
+    id = wscarena_test.50
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        AND = {             
+            is_country_type = default
+            has_country_flag = player_team_4
+            any_country = {
+                has_country_flag = player_team_4
+                NOR = {
+                    is_same_value = root
+                    #has_technology = last_increased_tech
+                }
+            }
+        }
+    }
+
+    immediate = {
+        every_country = {
+            limit = {
+                has_country_flag = player_team_4
+                NOT = {
+                    is_same_value = root
+                }
+            }
+            copy_techs_from = {
+                target = root
+            }
+        }
+    }
+}
+
+event = {                   # Upgrade Ringworld section
+    id = wscarena_test.51
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        years_passed > 29
+    }
+
+    immediate = {
+        every_system = {
+            limit = {
+                has_star_flag = ring_system 
+                has_megastructure = "ring_world_ruined"
+            }
+            random_system_megastructure = {
+                limit = {
+                    is_megastructure_type = "ring_world_ruined"
+                }
+                upgrade_megastructure_to = "ring_world_restored"
+            }
+        }
+    }
+}
+
+# A ship has been built
+# Root = Ship
+# From = Planet
+ship_event = {                                  # ascension ship kills a valid pop
+    id = wscarena_test.55
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        is_ship_size = ascension_ship
+    }
+
+    immediate = {
+        if = {
+            limit = {
+                fleet = {
+                    owner = {
+                        any_owned_pop = {
+                            pop_can_ascend = yes
+                        }
+                    }
+                }
+            }
+            fleet = {
+                owner = {
+                    random_owned_pop = {
+                        limit = {
+                            pop_can_ascend = yes
+                        }
+                        kill_pop = yes
+                    }
+                }
+            }
+        }
+        else = {
+            delete_ship = this
+        }
+    }
+}
+
+event = {                                       # monthly pulse for ship ascension
+    id = wscarena_test.56
+    is_triggered_only = yes
+    hide_window = yes
+    
+
+    immediate = {
+        event_target:ascension_portal = {
+            planet_event = {
+                id = wscarena_test.57
+                days = 5
+            }
+        }
+        event_target:ascension_portal = {
+            planet_event = {
+                id = wscarena_test.57
+                days = 10
+            }
+        }
+        event_target:ascension_portal = {
+            planet_event = {
+                id = wscarena_test.57
+                days = 15
+            }
+        }
+        event_target:ascension_portal = {
+            planet_event = {
+                id = wscarena_test.57
+                days = 20
+            }
+        }
+        event_target:ascension_portal = {
+            planet_event = {
+                id = wscarena_test.57
+                days = 25
+            }
+        }
+    }
+}
+
+planet_event = {                                        # ascension ship ascends
+    id = wscarena_test.57
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        solar_system = {
+            any_ship_in_system = {
+                distance = { source = root min_distance >= 0 max_distance <= 30 type = euclidean }
+                is_ship_size = ascension_ship
+            }    
+        } 
+    }
+
+    immediate = {
+        while = {
+            count = 5
+            solar_system = {
+                    random_fleet_in_system = {
+                        limit = {
+                            distance = { source = root min_distance >= 0 max_distance <= 30 type = euclidean }
+                            any_owned_ship = {
+                                is_ship_size = ascension_ship
+                            }
+                        }
+                            random_owned_ship = {
+                                limit = {
+                                    is_ship_size = ascension_ship
+                                }
+                                destroy_ship = this
+                                fleet = {
+                                    owner = {
+                                        change_variable = {
+                                            which = ascended_pops
+                                            value = 1
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+    }
+}

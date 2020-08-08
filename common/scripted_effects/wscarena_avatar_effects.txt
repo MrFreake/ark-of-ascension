@@ -1,0 +1,1409 @@
+@level_1_level_up_exp = 20           # If you change this, this also needs to be changed
+@level_2_level_up_exp = 45          # in scripted_triggers/wscarena_scripted_triggers.txt
+@level_3_level_up_exp = 80			# AND in the localisations... SORRY! :D
+@level_4_level_up_exp = 125
+@level_5_level_up_exp = 180
+@level_6_level_up_exp = 245
+@level_7_level_up_exp = 310
+@level_8_level_up_exp = 385
+@level_9_level_up_exp = 460
+@jump_drive_level = 6
+
+#xp bounty for killing fleet
+@T1fleetBounty = 2.5
+@T2fleetBounty = 6
+@T3fleetBounty = 10
+@T4fleetBounty = 15
+
+setup_hero = {
+	root = {
+		set_variable = {
+			which = level
+			value = 1
+		}
+		set_variable = {
+			which = experience
+			value = 0
+		}
+		set_variable = {
+			which = kills
+			value = 0
+		}
+		set_variable = {
+			which = hero_kills
+			value = 0
+		}
+		set_variable = {
+			which = incoming_xp
+			value = 0
+		}
+	}
+	add_modifier = {
+		modifier = level_1
+		days = -1
+	}
+}
+
+setup_respawned_hero = {
+	random_owned_ship = {
+		limit = {
+			has_ship_flag = hero_unit
+		}
+		reduce_hp_percent = 0.9
+		add_modifier = {
+			modifier = hero_unit_respawned
+			days = 360
+		}
+	}
+	if = {						# Level 10
+		limit = {
+			check_variable = {
+				which = level
+				value = 10
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_10
+				days = -1
+			}
+		}
+		set_variable = {
+			which = experience
+			value = @level_9_level_up_exp
+		}
+		set_variable = {
+			which = level
+			value = 10
+		}
+	}
+	else_if = {					# Level 9
+		limit = {
+			check_variable = {
+				which = level
+				value = 9
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_9
+				days = -1
+			}
+		}
+		set_variable = {
+			which = experience
+			value = @level_8_level_up_exp
+		}
+		set_variable = {
+			which = level
+			value = 9
+		}
+	}
+	else_if = {				# Level 8
+		limit = {
+			check_variable = {
+				which = level
+				value = 8
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_8
+				days = -1
+			}
+		}
+		set_variable = {
+			which = experience
+			value = @level_7_level_up_exp
+		
+		}
+		set_variable = {
+			which = level
+			value = 8
+		}
+	}
+	else_if = {				# Level 7
+		limit = {
+			check_variable = {
+				which = level
+				value = 7
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_7
+				days = -1
+			}
+		}
+		set_variable = {
+			which = experience
+			value = @level_6_level_up_exp
+		
+		}
+		set_variable = {
+			which = level
+			value = 7
+		}
+	}
+	else_if = {				# Level 6
+		limit = {
+			check_variable = {
+				which = level
+				value = 6
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_6
+				days = -1
+			}
+		}
+			set_variable = {
+				which = experience
+				value = @level_5_level_up_exp
+			
+		}
+		set_variable = {
+			which = level
+			value = 6
+		}
+	}
+	else_if = {				# Level 5
+		limit = {
+			check_variable = {
+				which = level
+				value = 5
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_5
+				days = -1
+			}
+		}
+		set_variable = {
+			which = experience
+			value = @level_4_level_up_exp
+		
+		}
+		set_variable = {
+			which = level
+			value = 5
+		}
+	}
+	else_if = {				# Level 4
+		limit = {
+			check_variable = {
+				which = level
+				value = 4
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_4
+				days = -1
+			}
+		}
+		set_variable = {
+			which = experience
+			value = @level_3_level_up_exp
+		}
+		set_variable = {
+			which = level
+			value = 4
+		}
+	}
+	
+	else_if = {				# Level 3
+		limit = {
+			check_variable = {
+				which = level
+				value = 3
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_3
+				days = -1
+			}
+		}
+		set_variable = {
+			which = experience
+			value = @level_2_level_up_exp
+		}
+		set_variable = {
+			which = level
+			value = 3
+		}
+	}
+	
+	else_if = {				# Level 2
+		limit = {
+			check_variable = {
+				which = level
+				value = 2
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_2
+				days = -1
+			}
+		}
+		set_variable = {
+			which = experience
+			value = @level_1_level_up_exp
+		}
+		set_variable = {
+			which = level
+			value = 2
+		}
+	}
+	
+	else = {				# Level 1
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_1
+				days = -1
+			}
+		}
+		set_variable = {
+			which = experience
+			value = 0
+		}
+		set_variable = {
+			which = level
+			value = 1
+		}
+	}
+}
+
+
+setup_design_changed_hero = {
+
+	if = {						# Level 10
+		limit = {
+			check_variable = {
+				which = level
+				value = 10
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_10
+				days = -1
+			}
+		}
+	}
+	else_if = {					# Level 9
+		limit = {
+			check_variable = {
+				which = level
+				value = 9
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_9
+				days = -1
+			}
+		}
+	}
+	else_if = {				# Level 8
+		limit = {
+			check_variable = {
+				which = level
+				value = 8
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_8
+				days = -1
+			}
+		}
+	}
+	else_if = {				# Level 7
+		limit = {
+			check_variable = {
+				which = level
+				value = 7
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_7
+				days = -1
+			}
+		}
+	}
+	else_if = {				# Level 6
+		limit = {
+			check_variable = {
+				which = level
+				value = 6
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_6
+				days = -1
+			}
+		}
+	}
+	else_if = {				# Level 5
+		limit = {
+			check_variable = {
+				which = level
+				value = 5
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_5
+				days = -1
+			}
+		}
+	}
+	else_if = {				# Level 4
+		limit = {
+			check_variable = {
+				which = level
+				value = 4
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_4
+				days = -1
+			}
+		}
+	}
+	
+	else_if = {				# Level 3
+		limit = {
+			check_variable = {
+				which = level
+				value = 3
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_3
+				days = -1
+			}
+		}
+	}
+	
+	else_if = {				# Level 2
+		limit = {
+			check_variable = {
+				which = level
+				value = 2
+			}
+		}
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_2
+				days = -1
+			}
+		}
+	}
+	
+	else = {				# Level 1
+		random_owned_ship = {
+			limit = {
+				has_ship_flag = hero_unit
+			}
+			add_modifier = {
+				modifier = level_1
+				days = -1
+			}
+		}
+	}
+}
+
+
+level_up_hero = {			# level_10
+	random_owned_ship = {
+		limit = {
+			has_ship_flag = hero_unit
+		}
+		if = {
+			limit = {
+				has_modifier = level_10
+				}
+			}
+		
+		else_if = {				#level_9		
+			limit = {
+				has_modifier = level_9 
+			}
+			remove_modifier = level_9
+			add_modifier = {
+				modifier = level_10
+				days = -1
+			}
+			prev = {
+				set_variable = {
+					which = level
+					value = 10
+				}
+			}
+		}
+		else_if = {				#level_8		
+			limit = {
+				has_modifier = level_8
+			}
+			remove_modifier = level_8
+			add_modifier = {
+				modifier = level_9
+				days = -1
+			}
+			prev = {
+				set_variable = {
+					which = level
+					value = 9
+				}
+			}
+		}
+		else_if = {				#level_7		
+			limit = {
+				has_modifier = level_7
+			}
+			remove_modifier = level_7
+			add_modifier = {
+				modifier = level_8
+				days = -1
+			}
+			prev = {
+				set_variable = {
+					which = level
+					value = 8
+				}
+			}
+		}
+		else_if = {				#level_6		
+			limit = {
+				has_modifier = level_6
+			}
+			remove_modifier = level_6
+			add_modifier = {
+				modifier = level_7
+				days = -1
+			}
+			prev = {
+				set_variable = {
+					which = level
+					value = 7
+				}
+			}
+		}
+		else_if = {				#level_5		
+			limit = {
+				has_modifier = level_5
+			}
+			remove_modifier = level_5
+			add_modifier = {
+				modifier = level_6
+				days = -1
+			}
+			prev = {
+				set_variable = {
+					which = level
+					value = 6
+				}
+			}
+		}
+		else_if = {				#level_4		
+			limit = {
+				has_modifier = level_4
+			}
+			remove_modifier = level_4
+			add_modifier = {
+				modifier = level_5
+				days = -1
+			}
+			prev = {
+				set_variable = {
+					which = level
+					value = 5
+				}
+			}
+		}
+		else_if = {				#level_3		
+			limit = {
+				has_modifier = level_3
+			}
+			remove_modifier = level_3
+			add_modifier = {
+				modifier = level_4
+				days = -1
+			}
+			prev = {
+				set_variable = {
+					which = level
+					value = 4
+				}
+			}
+		}
+		else_if = {				#level_2		
+			limit = {
+				has_modifier = level_2
+			}
+			remove_modifier = level_2
+			add_modifier = {
+				modifier = level_3
+				days = -1
+			}
+			prev = {
+				set_variable = {
+					which = level
+					value = 3
+				}
+			}
+		}
+		else_if = {				#level_1		
+			limit = {
+				has_modifier = level_1
+			}
+			remove_modifier = level_1
+			add_modifier = {
+				modifier = level_2
+				days = -1
+			}
+			prev = {
+				set_variable = {
+					which = level
+					value = 2
+				}
+			}
+		}
+	}
+}
+
+# Ether Drake effects
+spawn_ether_drake = {
+	random_owned_planet = {
+		limit = {
+			is_capital = yes
+		}
+		save_event_target_as = capital_planet
+	}
+	create_fleet = {
+		name = "NAME_Ether_Drake"
+		settings = {
+			spawn_debris = no
+			#is_boss = yes
+		}
+		effect = {
+			set_owner = root
+			create_ship = {
+				name = "NAME_Avice"
+				design = "NAME_Grand_Dragon"
+			}
+			random_owned_ship = {
+				limit = {
+					is_ship_size = space_dragon_red
+				}
+				set_ship_flag = ether_drake
+				set_ship_flag = hero_unit
+				setup_hero = yes
+			}
+			set_location = root.capital_scope
+			set_fleet_stance = aggressive
+			#set_aggro_range_measure_from = self
+			#set_aggro_range = 500
+		}
+		settings = { 
+			can_upgrade = no 
+			can_disband = no
+			can_change_composition = no 
+			can_change_leader = no 
+			uses_naval_capacity = no
+		}
+	}
+}
+
+
+## Psionic Entity Effects
+
+spawn_psionic_entity = {
+	random_owned_planet = {
+		limit = {
+			is_capital = yes
+		}
+		save_event_target_as = capital_planet
+	}
+	create_fleet = {
+		name = "NAME_Corrupted_Avatar"
+		settings = {
+			spawn_debris = no
+			#is_boss = yes
+		}			
+		effect = {
+			set_owner = root
+			create_ship = {
+				name = "NAME_Corrupted_Avatar"
+				design = "NAME_Corrupted_Avatar"
+			}
+
+			random_owned_ship = {
+				limit = {
+					is_ship_size = corrupted_avatar
+				}
+				set_ship_flag = psionic_entity
+				set_ship_flag = hero_unit
+				setup_hero = yes
+			}
+			set_location = event_target:capital_planet
+			set_fleet_stance = aggressive
+		}
+		settings = { 
+			can_upgrade = no 
+			can_disband = no
+			can_change_composition = no 
+			can_change_leader = no 
+			uses_naval_capacity = no
+		}
+	}
+}
+
+## Automated Dreadnought 
+
+spawn_automated_dreadnought = {
+	random_owned_planet = {
+		limit = {
+			is_capital = yes
+		}
+		save_event_target_as = capital_planet
+	}
+
+	create_fleet = {
+		name = "NAME_Automated_Dreadnought"
+		settings = {
+			spawn_debris = no
+			#is_boss = yes
+		}
+		effect = {
+			set_owner = root
+			create_ship = {
+				name = "NAME_JuukTidir"
+				design = "NAME_Relic"
+				graphical_culture = "npf_01_dirty"
+			}
+			set_location = root.capital_scope
+			set_fleet_stance = aggressive
+			random_owned_ship = {
+				limit = {
+					is_ship_size = npc_warship_01
+				}
+				set_ship_flag = automated_dreadnought
+				set_ship_flag = hero_unit
+				setup_hero = yes
+			}
+		}
+		settings = { 
+			can_upgrade = no 
+			can_disband = no
+			can_change_composition = no 
+			can_change_leader = no 
+			uses_naval_capacity = no
+		}
+	}
+}
+
+# Ether Drake effects
+respawn_ether_drake = {
+	if = {
+		limit = {
+			check_variable = {
+				which = level
+				value < @jump_drive_level
+			}
+		}
+		create_fleet = {
+			name = "NAME_Ether_Drake"
+			settings = {
+				spawn_debris = no
+				#is_boss = yes
+			}
+			effect = {
+				set_owner = prev
+				create_ship = {
+					name = "NAME_Avice"
+					design = "NAME_Grand_Dragon"
+				}
+				random_owned_ship = {
+					limit = {
+						is_ship_size = space_dragon_red
+					}
+					set_ship_flag = ether_drake
+					set_ship_flag = hero_unit
+					#setup_hero = yes
+				}
+				set_location = event_target:capital_planet
+				set_fleet_stance = aggressive
+				#set_aggro_range_measure_from = self
+				#set_aggro_range = 500
+			}
+			settings = { 
+				can_upgrade = no 
+				can_disband = no
+				can_change_composition = no 
+				can_change_leader = no 
+				uses_naval_capacity = no
+			}
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = level
+				value >= @jump_drive_level
+			}
+		}
+		create_fleet = {
+			name = "NAME_Ether_Drake"
+			settings = {
+				spawn_debris = no
+				#is_boss = yes
+			}
+			effect = {
+				set_owner = prev
+				create_ship = {
+					name = "NAME_Avice"
+					design = "NAME_Grand_Dragon_Jump"
+				}
+				random_owned_ship = {
+					limit = {
+						is_ship_size = space_dragon_red
+					}
+					set_ship_flag = ether_drake
+					set_ship_flag = hero_unit
+					#setup_hero = yes
+				}
+				set_location = event_target:capital_planet
+				set_fleet_stance = aggressive
+				#set_aggro_range_measure_from = self
+				#set_aggro_range = 500
+			}
+			settings = { 
+				can_upgrade = no 
+				can_disband = no
+				can_change_composition = no 
+				can_change_leader = no 
+				uses_naval_capacity = no
+			}
+		}
+	}
+}
+
+
+## Psionic Entity Effects
+
+respawn_psionic_entity = {
+	if = {
+		limit = {
+			check_variable = {
+				which = level
+				value < @jump_drive_level
+			}
+		}
+		create_fleet = {
+			name = "NAME_Corrupted_Avatar"
+			settings = {
+				spawn_debris = no
+				can_upgrade = no 
+				can_disband = no
+				can_change_composition = no 
+				can_change_leader = no 
+				uses_naval_capacity = no
+			}			
+			effect = {
+				set_owner = prev
+				create_ship = {
+					name = "NAME_Corrupted_Avatar"
+					design = "NAME_Corrupted_Avatar"
+				}
+
+				random_owned_ship = {
+					limit = {
+						is_ship_size = corrupted_avatar
+					}
+					set_ship_flag = psionic_avatar
+					set_ship_flag = hero_unit
+					#setup_hero = yes
+				}
+				set_location = event_target:capital_planet
+				set_fleet_stance = aggressive
+			}
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = level
+				value >= @jump_drive_level
+			}
+		}
+		create_fleet = {
+			name = "NAME_Corrupted_Avatar"
+			settings = {
+				spawn_debris = no
+				can_upgrade = no 
+				can_disband = no
+				can_change_composition = no 
+				can_change_leader = no 
+				uses_naval_capacity = no
+			}			
+			effect = {
+				set_owner = prev
+				create_ship = {
+					name = "NAME_Corrupted_Avatar"
+					design = "NAME_Corrupted_Avatar_Jump"
+				}
+
+				random_owned_ship = {
+					limit = {
+						is_ship_size = corrupted_avatar
+					}
+					set_ship_flag = psionic_avatar
+					set_ship_flag = hero_unit
+					#setup_hero = yes
+				}
+				set_location = event_target:capital_planet
+				set_fleet_stance = aggressive
+			}
+		}
+	}
+}
+
+## Automated Dreadnought 
+
+respawn_automated_dreadnought = {
+	if = {
+		limit = {
+			check_variable = {
+				which = level
+				value < @jump_drive_level
+			}
+		}
+
+		create_fleet = {
+			name = "NAME_Automated_Dreadnought"
+			settings = {
+				spawn_debris = no
+				#is_boss = yes
+			}
+			effect = {
+				set_owner = prev
+				create_ship = {
+					name = "NAME_JuukTidir"
+					design = "NAME_Relic"
+					graphical_culture = "npf_01_dirty"
+				}
+				set_location = event_target:capital_planet
+				set_fleet_stance = aggressive
+				random_owned_ship = {
+					limit = {
+						is_ship_size = npc_warship_01
+					}
+					set_ship_flag = automated_dreadnought
+					set_ship_flag = hero_unit
+					#setup_hero = yes
+				}
+			}
+			settings = { 
+				can_upgrade = no 
+				can_disband = no
+				can_change_composition = no 
+				can_change_leader = no 
+				uses_naval_capacity = no
+			}
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = level
+				value >= @jump_drive_level
+			}
+		}
+
+		create_fleet = {
+			name = "NAME_Automated_Dreadnought"
+			settings = {
+				spawn_debris = no
+				#is_boss = yes
+			}
+			effect = {
+				set_owner = prev
+				create_ship = {
+					name = "NAME_JuukTidir"
+					design = "NAME_Relic_Jump"
+					graphical_culture = "npf_01_dirty"
+				}
+				set_location = event_target:capital_planet
+				set_fleet_stance = aggressive
+				random_owned_ship = {
+					limit = {
+						is_ship_size = npc_warship_01
+					}
+					set_ship_flag = automated_dreadnought
+					set_ship_flag = hero_unit
+					#setup_hero = yes
+				}
+			}
+			settings = { 
+				can_upgrade = no 
+				can_disband = no
+				can_change_composition = no 
+				can_change_leader = no 
+				uses_naval_capacity = no
+			}
+		}
+	}
+}
+
+spawn_voidspawn_avatar = {
+	random_owned_planet = {
+		limit = {
+			is_capital = yes
+		}
+		save_event_target_as = capital_planet
+	}
+
+	create_fleet = {
+		name = "NAME_Voidspawn"
+		settings = {
+			spawn_debris = no
+			#is_boss = yes
+		}
+		effect = {
+			set_owner = root
+			create_ship = {
+				name = ""
+				design = "NAME_Voidspawn"
+				#graphical_culture = "npf_01_dirty"
+			}
+			set_location = root.capital_scope
+			set_fleet_stance = aggressive
+			random_owned_ship = {
+				limit = {
+					is_ship_size = leviathan_01_voidspawn
+				}
+				set_ship_flag = voidspawn_avatar
+				set_ship_flag = hero_unit
+				setup_hero = yes
+			}
+		}
+		settings = { 
+			can_upgrade = no 
+			can_disband = no
+			can_change_composition = no 
+			can_change_leader = no 
+			uses_naval_capacity = no
+		}
+	}
+}
+
+respawn_voidspawn_avatar = {
+	if = {
+		limit = {
+			check_variable = {
+				which = level
+				value < @jump_drive_level
+			}
+		}
+
+		create_fleet = {
+			name = "NAME_Voidspawn"
+			settings = {
+				spawn_debris = no
+				#is_boss = yes
+			}
+			effect = {
+				set_owner = root
+				create_ship = {
+					name = ""
+					design = "NAME_Voidspawn"
+					#graphical_culture = "npf_01_dirty"
+				}
+				set_location = event_target:target_capital
+				set_fleet_stance = aggressive
+				random_owned_ship = {
+					limit = {
+						is_ship_size = leviathan_01_voidspawn
+					}
+					set_ship_flag = voidspawn_avatar
+					set_ship_flag = hero_unit
+					#setup_hero = yes
+				}
+			}
+			settings = { 
+				can_upgrade = no 
+				can_disband = no
+				can_change_composition = no 
+				can_change_leader = no 
+				uses_naval_capacity = no
+			}
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = level
+				value >= @jump_drive_level
+			}
+		}
+		create_fleet = {
+			name = "NAME_Voidspawn"
+			settings = {
+				spawn_debris = no
+				#is_boss = yes
+			}
+			effect = {
+				set_owner = root
+				create_ship = {
+					name = ""
+					design = "NAME_Voidspawn_Jump"
+					#graphical_culture = "npf_01_dirty"
+				}
+				set_location = event_target:target_capital
+				set_fleet_stance = aggressive
+				random_owned_ship = {
+					limit = {
+						is_ship_size = leviathan_01_voidspawn
+					}
+					set_ship_flag = test_avatar
+					set_ship_flag = hero_unit
+					#setup_hero = yes
+				}
+			}
+			settings = { 
+				can_upgrade = no 
+				can_disband = no
+				can_change_composition = no 
+				can_change_leader = no 
+				uses_naval_capacity = no
+			}
+		}
+	}
+}
+
+set_incoming_xp = {
+	if = {					# Level 6 mob
+		limit = {
+			fromfromfrom = {
+				has_ship_flag = level_6
+			}
+		}
+		set_variable = {
+			which = incoming_xp
+			value = 6
+		}
+	}
+	if = {					# Level 4 mob
+		limit = {
+			fromfromfrom = {
+				has_ship_flag = level_4
+			}
+		}
+		set_variable = {
+			which = incoming_xp
+			value = 4
+		}
+	}
+	if = {					# Level 3 mob
+		limit = {
+			fromfromfrom = {
+				has_ship_flag = level_3
+			}
+		}
+		set_variable = {
+			which = incoming_xp
+			value = 3
+		}
+	}
+	if = {					# Level 2 mob
+		limit = {
+			fromfromfrom = {
+				has_ship_flag = level_2
+			}
+		}
+		set_variable = {
+			which = incoming_xp
+			value = 2
+		}
+	}
+	if = {					# Level 1 mob
+		limit = {
+			fromfromfrom = {
+				has_ship_flag = level_1
+			}
+		}
+		set_variable = {
+			which = incoming_xp
+			value = 1
+		}
+	}
+}
+
+set_incoming_bounty_xp = {
+	if = {
+		limit = {
+			fromfromfrom = {
+				has_fleet_flag = bounty_tier_4
+			}
+		}
+		set_variable = {
+			which = incoming_xp
+			value = 15
+		}
+	}
+	if = {
+		limit = {
+			fromfromfrom = {
+				has_fleet_flag = bounty_tier_3
+			}
+		}
+		set_variable = {
+			which = incoming_xp
+			value = 10
+		}
+	}
+	if = {
+		limit = {
+			fromfromfrom = {
+				has_fleet_flag = bounty_tier_2
+			}
+		}
+		set_variable = {
+			which = incoming_xp
+			value = 6
+		}
+	}
+	if = {
+		limit = {
+			fromfromfrom = {
+				has_fleet_flag = bounty_tier_1
+			}
+		}
+		set_variable = {
+			which = incoming_xp
+			value = 2.5
+		}
+	}
+}
+
+scale_incoming_xp_to_level = {
+	if = {					# Level 10
+		limit = {
+			check_variable = {
+				which = level
+				value = 10
+			}
+		}
+		divide_variable = {
+			which = incoming_xp
+			value = 10
+		}
+	}
+	if = {					# Level 9
+		limit = {
+			check_variable = {
+				which = level
+				value = 9
+			}
+		}
+		divide_variable = {
+			which = incoming_xp
+			value = 9
+		}
+	}
+	if = {					# Level 8
+		limit = {
+			check_variable = {
+				which = level
+				value = 8
+			}
+		}
+		divide_variable = {
+			which = incoming_xp
+			value = 8
+		}
+	}
+	if = {					# Level 7
+		limit = {
+			check_variable = {
+				which = level
+				value = 7
+			}
+		}
+		divide_variable = {
+			which = incoming_xp
+			value = 7
+		}
+	}
+	if = {					# Level 6
+		limit = {
+			check_variable = {
+				which = level
+				value = 6
+			}
+		}
+		divide_variable = {
+			which = incoming_xp
+			value = 6
+		}
+	}
+	if = {					# Level 5
+		limit = {
+			check_variable = {
+				which = level
+				value = 5
+			}
+		}
+		divide_variable = {
+			which = incoming_xp
+			value = 5
+		}
+	}
+	if = {					# Level 4
+		limit = {
+			check_variable = {
+				which = level
+				value = 4
+			}
+		}
+		divide_variable = {
+			which = incoming_xp
+			value = 4
+		}
+	}
+	if = {					# Level 3
+		limit = {
+			check_variable = {
+				which = level
+				value = 3
+			}
+		}
+		divide_variable = {
+			which = incoming_xp
+			value = 3
+		}
+	}
+	if = {					# Level 2
+		limit = {
+			check_variable = {
+				which = level
+				value = 2
+			}
+		}
+		divide_variable = {
+			which = incoming_xp
+			value = 2
+		}
+	}
+	if = {					# Level 1
+		limit = {
+			check_variable = {
+				which = level
+				value = 1
+			}
+		}
+		divide_variable = {
+			which = incoming_xp
+			value = 1
+		}
+	}
+
+}
+jump_drive_hero_design = {
+	if = {
+		limit = {
+			has_country_flag = ether_drake_hero
+		}
+		respawn_ether_drake = yes
+		setup_design_changed_hero = yes
+	}
+	if = {
+		limit = {
+			has_country_flag = psionic_entity_hero
+		}
+		respawn_psionic_entity = yes
+		setup_design_changed_hero =  yes
+	}
+	if = {
+		limit = {
+			has_country_flag = automated_dreadnought_hero
+		}
+		respawn_automated_dreadnought = yes
+		setup_design_changed_hero = yes
+	}
+	if = {
+		limit = {
+			has_country_flag = voidspawn_avatar
+		}
+		respawn_voidspawn_avatar = yes
+		setup_design_changed_hero =yes
+	}
+}

@@ -1,0 +1,94 @@
+origin_ether_drake = {
+		is_origin = yes
+		icon = "gfx/interface/icons/origins/origin_ether_drake.dds"
+		picture = origin_ether_drake
+	
+		playable = {
+			always = yes
+		}
+	
+		possible = {
+			always = yes
+		}
+	
+	
+		
+	description = "origin_ether_drake"
+	advanced_start = yes
+	
+		random_weight = {
+			base = 10
+		}
+	}
+
+origin_psionic_entity = {
+	is_origin = yes
+	icon = "gfx/interface/icons/origins/origin_psionic_entity.dds"
+	picture = origin_psionic_entity
+
+	potential = {
+		always = yes
+	}
+
+	playable = {
+		always = yes # Non-player origin
+	}
+
+	possible = {
+	}
+
+	random_weight = {
+		base = 100
+	}
+	description = "origin_psionic_entity"
+
+	advanced_start = yes
+}
+
+origin_automated_dreadnought = {
+	is_origin = yes
+	icon = "gfx/interface/icons/origins/origin_automated_dreadnought.dds"
+	picture = origin_automated_dreadnought
+
+	potential = {
+		always = yes
+	}
+
+	playable = {
+		always = yes # Non-player origin
+	}
+
+	possible = {
+	}
+
+	random_weight = {
+		base = 100
+	}
+	description = "origin_automated_dreadnaught"
+
+	advanced_start = yes
+}
+
+origin_voidspawn = {
+	is_origin = yes
+	icon = "gfx/interface/icons/origins/origins_default.dds"
+	picture = GFX_evt_metropolis
+
+	potential = {
+		always = yes
+	}
+
+	playable = {
+		always = yes # Non-player origin
+	}
+
+	possible = {
+	}
+
+	random_weight = {
+		base = 100
+	}
+	description = "origin_voidspawn"
+
+	advanced_start = yes
+}

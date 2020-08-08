@@ -1,0 +1,71 @@
+
+ship_design = {
+	name = "NAME_Ascension_Ship"
+	ship_size = ascension_ship
+	#is_event_design = yes
+	
+	section = {
+		template = "ascension_ship_section"
+		slot = "mid"
+	}
+
+	required_component = "HYPER_DRIVE_1"
+	required_component = "SHIP_THRUSTER_1"
+	required_component = "SENSOR_1"
+	required_component = "CRUISER_ANTIMATTER_REACTOR"
+	required_component = "COMBAT_COMPUTER_WSCARENA"
+}
+
+
+ship_design = {
+	name = "NAME_dragon_stare_active"
+	ship_size = effect_ship
+	is_event_design = yes
+	
+	section = {
+		template = "effect_ship_section"
+		slot = "mid"
+	}
+
+	required_component="GUARDIAN_DRIVE"
+	required_component="COMBAT_COMPUTER_WSCARENA"
+	required_component="GUARDIAN_PROPULSION"
+	#required_component = "SENSOR_1"
+	required_component = "SHIP_AURA_DRAGON_STARE"
+}
+
+ship_design = {
+	name = "NAME_dragon_skin_active"
+	ship_size = effect_ship
+	is_event_design = yes
+
+	section = {
+		template = "effect_ship_dragon_skin_emitter_section_entity"
+		slot = "mid"
+	}
+
+	required_component="GUARDIAN_DRIVE"
+	required_component="COMBAT_COMPUTER_WSCARENA"
+	required_component="GUARDIAN_PROPULSION"
+	#required_component = "SENSOR_1"
+	required_component = "SHIP_AURA_DRAGON_STARE"
+
+}
+
+ship_design = {
+	name = "NAME_dragon_frenzy_active"
+	ship_size = effect_ship
+	is_event_design = yes
+
+	section = {
+		template = "effect_ship_dragon_frenzy_emitter_section_entity"
+		slot = "mid"
+	}
+
+	required_component="GUARDIAN_DRIVE"
+	required_component="COMBAT_COMPUTER_WSCARENA"
+	required_component="GUARDIAN_PROPULSION"
+	#required_component = "SENSOR_1"
+	required_component = "SHIP_AURA_DRAGON_STARE"
+
+}

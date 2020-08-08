@@ -1,0 +1,98 @@
+
+on_press_begin = {
+    events = {
+        #wscarena_leaderboard_events.10 disabled
+        #wscarena_test.30    # Pick avatar disabled
+        #wscarena_mob.4
+        #wscarena_leaderboard_events.1 # Assign Leaderboard Event Targets disabled
+        #wscarena_test.45    # Set Team Hostility
+        #wscarena_test.43    # Force Open Borders
+        #wscarena_test.46    # Form Team Federations
+        #wscarena_test.53    # Set Federations at war
+        #wscarena_test.58     # Burn starting starbases with fire
+        wscarena_spawning.1             
+    }
+}
+
+# A country has increased the level of a tech, use last_increased_tech trigger to check tech and level.
+# This = Country
+on_tech_increased = {
+	events = {
+        #wscarena_test.10
+        #wscarena_test.11
+        wscarena_test.47
+        wscarena_test.48
+        wscarena_test.49
+        wscarena_test.50
+    }
+}
+
+# A war has ended
+# Root = Loser
+# From = Main Winner
+on_war_ended = {
+	events = {
+		#wscarena_test.15 editted out for now -- reopen citadel hyperlane
+	}
+}
+
+on_five_year_pulse_country  = {
+    events = {
+        #wscarena_leaderboard_events.6 Editted out for now, as leaderboard events need to be rewritten
+        wscarena_test.27
+        
+        #wscarena_mobhandler.2  # respawn boss ## REMOVED MRFREAKE
+    }
+}
+
+## spawn more minions every year
+on_yearly_pulse  = {
+    events = {
+       wscarena_mobhandler.1    # respawn mob every year
+
+    }
+}
+
+on_monthly_pulse = {
+    events = {
+        wscarena_ark_events.3
+        wscarena_test.56     # repeating event for ship ascension
+
+        
+    }
+}
+
+# No scope, like on_game_start
+on_decade_pulse = {
+	events = {
+        wscarena_test.51
+	}
+}
+
+# A ship has been built
+# Root = Ship
+# From = Planet
+on_ship_built = {
+	events = {
+        wscarena_test.55 # Built ark ship
+	}
+}
+
+on_ship_disabled = {
+    events = {
+        wscarena_test.5
+    }
+}
+
+# This = owner of ship 1 (combatant)
+# From = owner of ship 2 (destroyed)
+# FromFrom = ship 1
+# FromFromFrom = ship 2
+on_ship_destroyed_perp = {
+	events = {
+        wscarena_test.31    # Kills mob ship
+        wscarena_test.32    # Kills Hero Ship
+        wscarena_test.34    # Respawn hero ship
+        wscarena_test.35    # kill player/ai owned ship
+    }
+}
