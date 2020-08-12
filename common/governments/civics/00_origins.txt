@@ -11,7 +11,7 @@ origin_default = {
 	}
 
 	random_weight = {
-		base = 100
+		base = 0
 	}
 	description = "origin_tooltip_default_effects"
 

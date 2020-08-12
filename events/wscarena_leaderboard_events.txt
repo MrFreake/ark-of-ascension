@@ -1,0 +1,243 @@
+namespace = wscarena_leaderboard_events 
+
+event = {
+    id = wscarena_leaderboard_events.4
+    is_triggered_only = yes
+    title = "wscarena_leaderboard_events_4_title"
+	desc = "wscarena_leaderboard_events_4_desc"
+	picture = GFX_evt_wormhole
+
+    immediate = {
+		random_country = {
+			limit = {
+				has_country_flag = leader_team_1
+			}
+			set_variable = {
+				which = team_1_score
+				value = 0
+			}
+			save_global_event_target_as = leader_team_1
+			every_country = {
+				limit = {
+					has_country_flag = player_team_1
+				}
+				set_variable = {
+					which = team_1_score_temp
+					value = ascended_pops
+				}
+				prev = {
+					set_variable = {
+						which = team_1_score_temp
+						value = prev
+					}
+					change_variable = {
+						which = team_1_score
+						value = team_1_score_temp
+					}
+					set_variable = {
+						which = team_1_score_temp
+						value = 0
+					}
+				}
+			}
+			random_federation = {
+				limit = {
+					any_member = {
+						OR = {
+							has_country_flag = player_team_1
+							has_country_flag = leader_team_1
+						}
+					}
+				}
+				save_global_event_target_as = federation_1
+			}
+		}
+		random_country = {
+			limit = {
+				has_country_flag = leader_team_2
+			}
+			set_variable = {
+				which = team_2_score
+				value = 0
+			}
+			save_global_event_target_as = leader_team_2
+			every_country = {
+				limit = {
+					has_country_flag = player_team_2
+				}
+				set_variable = {
+					which = team_2_score_temp
+					value = ascended_pops
+				}
+				prev = {
+					set_variable = {
+						which = team_2_score_temp
+						value = prev
+					}
+					change_variable = {
+						which = team_2_score
+						value = team_2_score_temp
+					}
+					set_variable = {
+						which = team_2_score_temp
+						value = 0
+					}
+				}
+			}
+			random_federation = {
+				limit = {
+					any_member = {
+						OR = {
+							has_country_flag = player_team_2
+							has_country_flag = leader_team_2
+						}
+					}
+				}
+				save_global_event_target_as = federation_2
+			}
+		}
+		
+		random_country = {
+			limit = {
+				has_country_flag = leader_team_3
+			}
+			set_variable = {
+				which = team_3_score
+				value = 0
+			}
+			save_global_event_target_as = leader_team_3
+			every_country = {
+				limit = {
+					has_country_flag = player_team_3
+				}
+				set_variable = {
+					which = team_3_score_temp
+					value = ascended_pops
+				}
+				prev = {
+					set_variable = {
+						which = team_3_score_temp
+						value = prev
+					}
+					change_variable = {
+						which = team_3_score
+						value = team_3_score_temp
+					}
+					set_variable = {
+						which = team_3_score_temp
+						value = 0
+					}
+				}
+			}
+			random_federation = {
+				limit = {
+					any_member = {
+						OR = {
+							has_country_flag = player_team_3
+							has_country_flag = leader_team_3
+						}
+					}
+				}
+				save_global_event_target_as = federation_3
+			}
+		}		
+	}
+    
+    option = {
+        trigger = {
+            exists = event_target:leader_team_1
+        }
+        allow = {
+            always = no
+        }
+        NAME = "[event_target:federation_1.GetName], lead by: [event_target:leader_team_1.GetName] Pops Ascended: [event_target:leader_team_1.team_1_score]"
+    }
+
+	option = {
+        trigger = {
+            exists = event_target:leader_team_2
+        }
+        allow = {
+            always = no
+        }
+        NAME = "[event_target:federation_2.GetName], lead by: [event_target:leader_team_2.GetName] Pops Ascended: [event_target:leader_team_2.team_2_score]"
+	}
+
+	option = {
+        trigger = {
+            exists = event_target:leader_team_3
+        }
+        allow = {
+            always = no
+        }
+        NAME = "[event_target:federation_3.GetName], lead by: [event_target:leader_team_3.GetName] Pops Ascended: [event_target:leader_team_3.team_3_score]"
+	}
+	
+	option = {
+		NAME = Exit
+	}
+
+    after = {
+		if = {
+			limit = {
+				exists = event_target:leader_team_1
+			}
+			clear_global_event_target = leader_team_1
+			clear_global_event_target = federation_1
+		}
+		if = {
+			limit = {
+				exists = event_target:leader_team_2
+			}
+			clear_global_event_target = leader_team_2
+			clear_global_event_target = federation_2
+		}
+		if = {
+			limit = {
+				exists = event_target:leader_team_3
+			}
+			clear_global_event_target = leader_team_3
+			clear_global_event_target = federation_3
+		}
+	}
+}
+
+country_event = {
+    id = wscarena_leaderboard_events.6
+    is_triggered_only = yes
+    hide_window = yes
+
+    trigger = {
+        end_game_years_passed > 0
+    }
+
+    immediate = {
+        event_target:leader_team_1 = {
+            set_loser_flags = yes
+            log = "setting loser flags country 1"
+        }
+        event_target:leader_team_2 = {
+            set_loser_flags = yes
+            log = "setting loser flags country 2"
+        }
+        event_target:leader_team_3 = {
+            set_loser_flags = yes
+            log = "setting loser flags country 3"
+        }
+    }
+    after = {
+        every_country = {
+            limit = {
+                is_country_type = default
+                NOT = {
+                    has_country_flag = loser
+                }
+            }
+            set_country_flag = winning_country
+            log = "flagged [This.GetName] as winner"
+            country_event = {
+                id = wscarena_leaderboard_events.7
+            }
+        }        
+    }
+}

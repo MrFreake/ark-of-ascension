@@ -1,0 +1,186 @@
+namespace = wscarena_mob
+
+@mobCount = 3
+
+
+
+event = {
+    id = wscarena_mob.1
+    is_triggered_only = yes
+    hide_window = yes
+    
+    immediate = {
+
+        event_target:drone_country = {
+            #set_country_type = swarm
+        }
+
+        random_system = {
+            limit = {
+                has_star_flag = ne_bridge_start
+            }
+            save_event_target_as = drone_system
+                while = {
+                count = 6
+                    create_fleet = {
+                        name = "NAME_Ancient_Mining_Drones"
+                        effect = {
+                            set_owner = event_target:drone_country
+                            while = {
+                                count = 80
+                                create_ship = {
+                                    name = ""
+                                    design = "NAME_Ancient_Mining_Drone"
+                                }
+                            }
+                            while = {
+                                count = 30
+                                create_ship = {
+                                    name = ""
+                                    design = "NAME_Ancient_Combat_Drone"
+                                }
+                            }
+                            while = {
+                                count = 30
+                                create_ship = {
+                                    name = ""
+                                    design = "NAME_Ancient_Destroyer"
+                                }
+                            }
+                            set_location = event_target:drone_system.star
+                            set_fleet_stance = aggressive
+
+                }
+            }
+        }
+
+            }
+    }
+}
+
+country_event = {
+    id = wscarena_mob.2
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        event_target:goodie_guardians = {
+            set_country_type = awakened_marauders
+        }
+    }
+}
+
+## has been moved to on player cluster spawn
+event = {
+    id = wscarena_mob.3
+    is_triggered_only = yes
+    hide_window = yes
+    fire_only_once = yes
+
+    immediate = {
+	## create country
+    create_goodie_guardians_country = yes
+	## cycle systems to create mobs for the first time
+	while = {
+		count = 2
+        while = {
+            count = 99
+            random_system = {
+                limit = {
+                    is_appropriate_mob_system = yes
+                #is_in_cluster = resource_cluster_0
+                }
+            #set_star_flag = RNG_d
+            set_star_flag = mob_spawned
+			
+			init_spawn_random_mob = yes
+			
+            
+			
+			}
+		}
+	 }
+}
+}
+
+event = {
+    id = wscarena_mob.4
+    is_triggered_only = yes
+    hide_window = yes
+
+    immediate = {
+        every_system = {
+            limit = {
+                has_star_flag = core_system
+                has_star_flag = core_gateway
+            }
+            create_goodie_guardians = yes
+            random_fleet_in_system = {
+                limit = {
+                    any_owned_ship = {
+                        is_ship_class = shipclass_starbase
+                    }
+                }
+                random_owned_ship = {
+                    set_disabled = yes
+                }
+                set_event_locked = yes
+            }
+            
+            }
+        }
+    }
+
+
+# This = Ship
+# From = Disabler Ship
+# On_ship_disabled
+
+ship_event = {                                  # 
+    id = wscarena_mob.5
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = { 
+        is_ship_class = shipclass_starbase
+        owner = {
+            is_same_value = event_target:goodie_guardians
+        }
+    }
+
+    immediate = {
+        fleet = {
+            set_event_locked = yes
+        }
+
+    }
+}
+
+event = {
+    id = wscarena_mob.6
+    hide_window = yes
+    is_triggered_only = yes
+
+    immediate = {
+        every_system = {
+            limit = {
+                has_star_flag = relic_neighbor
+                NOT = {
+                    has_star_flag = boss_spawned
+                }
+            }
+            set_star_flag = boss_spawned
+
+            create_goodie_guardians_10k = yes
+            random_system_planet = {
+                limit = {
+                    is_star = no
+                }
+                change_pc = pc_gaia
+                set_planet_size = 12
+                generate_planet_deposits_and_blockers = yes
+                
+            }
+        }
+    }
+}

@@ -1,0 +1,74 @@
+
+#####################################################
+#####											#####
+#####					planar gate				#####
+#####											#####
+#####################################################
+
+entity = {
+	name = "leviathan_01_planar_gate_entity"
+	pdxmesh = "interstellar_assembly_01_stage_4_mesh"
+	
+	default_state = "idle"
+	state = { name = "idle" animation = "idle" animation_speed = 0.2 
+		start_event = { node = "effect_1" particle = "interstellar_assembly_effect" keep_particle = yes trigger_once = yes }
+
+		start_event = { trigger_once = yes sound = { soundeffect = "sfx_interstellar_assembly_hum" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "sfx_interstellar_assembly_pulse" } }
+		start_event = { trigger_once = yes sound = { soundeffect = "sfx_interstellar_assembly_beats" } }
+	}
+
+	meshsettings = {
+		name = "body_4Shape"
+		index = 0
+		texture_diffuse = "arthropoid_01_interstellar_assembly_diffuse.dds"
+		texture_normal = "arthropoid_01_interstellar_assembly_normal.dds"
+		texture_specular = "arthropoid_01_interstellar_assembly_specular.dds"
+		shader = "PdxMeshShip"
+	}
+	scale = 3
+	locator = { name = "part1" 		position = { 0 	20 0 }  scale = 0.02	}
+
+	attach = { ring_1 = "planar_gate_effect_entity" }
+}
+
+
+###############################################
+entity = {
+	name = "planar_gate_effect_entity"
+	pdxmesh = "interstellar_assembly_effect_mesh"
+	scale = 1
+	game_data = {
+		uv_animation_speed 		= 0.25
+		uv_animation_direction 	= { 0.0 1.0 }
+	}
+}
+
+#animation = {
+#	name = "leviathan_01_planar_gate_idle_animation"
+#	file = "interstellar_assembly_01_stage_4_idle.anim"
+#}
+
+
+entity = {
+	name = "leviathan_01_planar_gate_destroyed_entity"
+	pdxmesh = "interstellar_assembly_01_destroyed_mesh"
+	
+	locator = { name = "debris"	position = { 0 0 0 } }	
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 10
+		start_event = { trigger_once = yes sound = { soundeffect = "spy_orb_destroyed" stop_on_state_change = yes } }
+	}
+	
+	meshsettings = {
+		name = "g_bodyShape"
+		index = 0
+		texture_diffuse = "interstellar_assembly_destroyed_01_diffuse.dds"
+		texture_normal = "interstellar_assembly_destroyed_01_normal.dds"
+		texture_specular = "interstellar_assembly_destroyed_01_specular.dds"
+		shader = "PdxMeshShip"
+	}
+	
+	attach = { debris = "debris_small_01_entity" }
+}

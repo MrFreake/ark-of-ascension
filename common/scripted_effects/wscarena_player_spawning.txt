@@ -235,8 +235,12 @@ generate_wscarena_start_buildings_and_districts = {
 				}
 			}
 			else = {
-				add_district = district_mining
-				add_district = district_mining
+				add_district_and_planet_size_if_needed_effect = {
+					district = district_mining
+				}
+				add_district_and_planet_size_if_needed_effect = {
+					district = district_mining
+				}
 				if = {
 					limit = {
 						owner = { has_origin = origin_default }
@@ -447,6 +451,9 @@ sanitize_planet = {
 	if = {
 		limit = {
 			is_capital = no
+			NOT = {
+				has_planet_flag = wscarena_prescripted
+			}
 		}
 			set_planet_flag = deposits_cleared
     		reroll_planet = yes
@@ -457,10 +464,10 @@ sanitize_planet = {
                 habitable_planet = yes
                 is_planet_class = pc_nuked
             }
-            #NOR = {
-            #    has_planet_flag = new_home_planet
-            #    has_planet_flag = wscarena_prescripted
-            #}
+            NOR = {
+                has_planet_flag = new_home_planet
+                has_planet_flag = wscarena_prescripted
+			}
         }
             change_pc = pc_barren
     }

@@ -1,0 +1,124 @@
+namespace = wscarena_mobhandler
+@maxSpawns = 6
+
+#respawn mobs
+event = {                                       
+    id = wscarena_mobhandler.1
+    hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		event_target:goodie_guardians = {
+			fleet_power <= 150000
+		}
+	}
+
+	## respawn mobs every year for country drone
+    immediate = {
+		every_system = {
+				limit = {
+					check_variable = {  which = mobcount value < @maxSpawns}
+					has_star_flag = mob_spawner
+					has_star_flag = has_boss_flag
+				}		
+				respawn_mobs = yes
+			}
+		}
+	}
+	
+#respawn bosses and initial minions. happens every 5 years
+## removed!
+event = {                                       
+    id = wscarena_mobhandler.2
+    hide_window = yes
+	is_triggered_only = yes
+
+	## respawn mobs and boss
+    immediate = {
+		every_system = {
+				limit = {
+				  check_variable = {  which = mobcount value < 1}
+				  has_star_flag = mob_spawner
+				  NOT = { has_star_flag = has_boss_flag }
+				}		
+				init_spawn_random_mob = yes
+				
+			}
+		}
+	}
+
+# relocate mob if at maxspawns									##################### ADDED MRFREAKE
+event = {                                       
+    id = wscarena_mobhandler.3
+    hide_window = yes
+	is_triggered_only = yes
+	
+    immediate = {
+		every_system = {
+				limit = {
+			  		#check_variable = {  which = mobcount value >= @maxSpawns}
+					has_star_flag = mob_spawner
+					has_star_flag = has_boss_flag  
+				}		
+				respawn_mobs = yes
+				last_created_fleet = {
+					move_mob_to_random_neighbor = yes	
+				}
+			}
+		}
+	}																##################### ADDED MRFREAKE
+	
+# This = owner of fleet 1 (combatant)
+# From = owner of fleet 2 (destroyed)
+# FromFrom = fleet 1
+# FromFromFrom = fleet 2
+#mob fleed died, reduce amount in system
+country_event = {                                       
+    id = wscarena_mobhandler.10
+    hide_window = yes
+	is_triggered_only = yes
+
+	
+	trigger = {
+		FromFromFrom = { has_fleet_flag = mob_fleet }
+	}
+
+	## respawn mobs every year for country drone
+    immediate = {
+		FromFrom = {
+			solar_system = {
+				change_variable = {
+					which = mobcount
+					value = -1
+				}
+			}
+		}		
+	}
+}	
+	
+		
+# This = owner of fleet 1 (combatant)
+# From = owner of fleet 2 (destroyed)
+# FromFrom = fleet 1
+# FromFromFrom = fleet 2
+#boss fleed died, remove the has boss flag
+country_event = {                                       
+    id = wscarena_mobhandler.11
+    hide_window = yes
+	is_triggered_only = yes
+
+	
+	trigger = {
+		FromFromFrom = { has_fleet_flag = mob_boss }
+	}
+
+	## respawn mobs every year for country drone
+    immediate = {
+		FromFrom = {
+			solar_system = {
+				remove_star_flag = has_boss_flag
+			}
+		}		
+	}
+	
+}

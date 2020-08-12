@@ -1,0 +1,1026 @@
+@initialMobsCount = 6
+
+## mobs per tier
+	#tier 1                 # Spawning set manually for cloudy bois
+@t1t1count = 5
+@t1t2count = 0
+@t1t3count = 0
+	#tier 2
+@t2t1count = 10
+@t2t2count = 1
+@t2t3count = 1
+	#tier 3
+@t3t1count = 15
+@t3t2count = 5
+@t3t3count = 1
+	#tier 4
+@t4t1count = 15
+@t4t2count = 10
+@t4t3count = 5
+
+
+## mob designs
+@forceRandomMobs = 1 # 1 for active, 0 for inactive
+@droneT1 = "NAME_Ancient_Mining_Drone"
+@droneT2 = "NAME_Ancient_Combat_Drone"
+@droneT3 = "NAME_Ancient_Destroyer"
+@whaleT1 = "NAME_Tiyanki_Calf"
+@whaleT2 = "NAME_Tiyanki_Bull"
+@whaleT3 = "NAME_Tiyanki_Cow"
+@cloudT1 = "NAME_Small_Crystal_Entity_Blue"
+@cloudT2 = "NAME_Medium_Crystal_Entity_Green"
+@cloudT3 = "NAME_Large_Crystal_Entity_Yellow"
+
+@droneBoss = "NAME_Planar_Gate" #"NAME_Automated_drone_factory"
+@whaleBoss = "NAME_Planar_Gate" #"NAME_whale_matriarch"
+@cloudBoss = "NAME_Planar_Gate" #"NAME_StormBringer"
+
+## time frame to spawn
+@T1minYears = 5
+@T1maxYears = 30
+@T2minYears = 31
+@T2maxYears = 60
+@T3minYears = 61
+
+## select a random mob to host a system
+init_spawn_random_mob = {
+set_variable = { which = forceRandomMobs value = @forceRandomMobs }	
+	random_list = {
+                    33 = {
+						set_star_flag = drone_mob	
+						spawn_drone_boss = yes
+						spawn_init_drone_fleet = yes
+					}
+					33 = {
+						set_star_flag = whale_mob	
+						spawn_whale_boss = yes
+						spawn_init_whale_fleet = yes
+					}
+					33 = {
+						set_star_flag = cloud_mob	
+						spawn_cloud_boss = yes
+						spawn_init_cloud_fleet = yes
+					}
+					}
+}
+
+## respawn mobs acording to flag star
+## we should also check the year and spawn a different tier acordingly
+respawn_mobs = {
+
+	if = {
+		limit = { 
+		AND = {
+		years_passed >= @T1minYears
+		years_passed < @T1maxYears
+		}
+		}
+		spawn_T1_fleets = yes
+		}
+	else_if = {
+		limit = {
+			 AND = {
+			 years_passed >= @T2minYears
+			 years_passed < @T2maxYears
+			}
+		}
+		spawn_T2_fleets = yes
+		}
+	else_if = {
+		limit = { years_passed > @T3minYears }
+		spawn_T3_fleets = yes
+		}
+
+}
+## spawn acording to the system flag
+spawn_T1_fleets = {
+
+	#our flag is set to true we ignore the star flag and random stuff
+	if = {
+		limit = { check_variable = { which = forceRandomMobs value = 1 } }
+		
+			random_list = {
+						33 = {
+								spawn_T1_drone_fleet = yes	
+						}
+						33 = {
+								spawn_T1_whale_fleet = yes	
+						}
+						33 = {
+								spawn_T1_cloud_fleet = yes	
+						}
+					}
+
+	}
+	## else we get the flag from the system and spawn accordingly
+	else = {
+			if = {
+				limit = { has_star_flag = drone_mob }
+				spawn_T1_drone_fleet = yes			
+			}
+			if = {
+				limit = { has_star_flag = whale_mob }
+				spawn_T1_whale_fleet = yes			
+			}
+			if = {
+				limit = { has_star_flag = cloud_mob }	
+				spawn_T1_cloud_fleet = yes			
+			}
+		}
+}
+
+spawn_T2_fleets = {
+	#our flag is set to true we ignore the star flag and random stuff
+	if = {
+		limit = { check_variable = { which = forceRandomMobs value = 1 } }
+		
+			random_list = {
+						33 = {
+								spawn_T2_drone_fleet = yes	
+						}
+						33 = {
+								spawn_T2_whale_fleet = yes	
+						}
+						33 = {
+								spawn_T2_cloud_fleet = yes	
+						}
+					}
+
+	}
+	## else we get the flag from the system and spawn accordingly
+	else = {
+		if = {
+			limit = { has_star_flag = drone_mob }
+			spawn_T2_drone_fleet = yes			
+		}
+		if = {
+			limit = { has_star_flag = whale_mob }
+			spawn_T2_whale_fleet = yes			
+		}
+		if = {
+			limit = { has_star_flag = cloud_mob }	
+			spawn_T2_cloud_fleet = yes			
+		}
+		}
+}
+
+spawn_T3_fleets = {
+	# our flag is set to true we ignore the star flag and random stuff
+	if = {
+		limit = { check_variable = { which = forceRandomMobs value = 1 } }
+		
+			random_list = {
+						33 = {
+								spawn_T3_drone_fleet = yes	
+						}
+						33 = {
+								spawn_T3_whale_fleet = yes	
+						}
+						33 = {
+								spawn_T3_cloud_fleet = yes	
+						}
+					}
+
+	}
+	## else we get the flag from the system and spawn accordingly
+	else = {
+		if = {
+			limit = { has_star_flag = drone_mob }
+			spawn_T3_drone_fleet = yes			
+		}
+		if = {
+			limit = { has_star_flag = whale_mob }
+			spawn_T3_whale_fleet = yes			
+		}
+		if = {
+			limit = { has_star_flag = cloud_mob }	
+			spawn_T3_cloud_fleet = yes			
+		}
+		}
+}
+
+
+## the initial fleets. these guys spawn next to the boss
+
+spawn_init_drone_fleet = {
+	
+    ##create_goodie_guardians_country = yes
+	
+	
+		while = {
+		count = @initialMobsCount
+			spawn_T1_drone_fleet = yes				
+		}
+	
+	}
+
+spawn_init_whale_fleet = {
+	
+    ##create_goodie_guardians_country = yes
+	
+	
+		while = {
+		count = @initialMobsCount
+            spawn_T1_whale_fleet = yes
+            #move_mob_to_random_neighbor = yes			
+		}
+	
+	}
+	
+spawn_init_cloud_fleet = {
+	
+    ##create_goodie_guardians_country = yes
+	
+	
+		while = {
+		count = @initialMobsCount
+            spawn_T1_cloud_fleet = yes
+            #move_mob_to_random_neighbor = yes			
+		}
+	
+	}
+
+	## mob tiers
+##drone
+spawn_T1_drone_fleet = {
+			create_goodie_guardians_country = yes
+            random_system_planet = {
+            create_fleet = {
+                name = "NAME_Ancient_Mining_Drones"
+                effect = {
+                    set_owner = event_target:goodie_guardians
+                    while = {
+                        count = @t1t1count
+                        create_ship = {
+                            name = ""
+                            design = @droneT1
+                        }
+                        set_ship_tier_1 = yes
+                    }
+                    while = {
+                        count = @t1t2count
+                        create_ship = {
+                            name = ""
+                            design = @droneT2
+                        }
+                        set_ship_tier_2 = yes
+                    }
+                    while = {
+                        count = @t1t3count
+                        create_ship = {
+                            name = ""
+                            design = @droneT3
+                        }
+                        set_ship_tier_3 = yes
+                    }
+                    set_fleet_bounty_tier_1 = yes
+					set_fleet_flag = mob_fleet
+                    set_location = prev
+                    set_fleet_stance = aggressive
+                    set_aggro_range = 1000
+                    set_aggro_range_measure_from = star
+                }
+            }
+        }
+		
+			## add counter
+				if = {
+					limit = { check_variable = { which = mobcount value < 1 }	}
+					set_variable = {
+						which = mobcount
+						value = 0
+					}
+				}
+				change_variable = {
+					which = mobcount
+					value = 1
+				}
+	
+	}
+
+spawn_T2_drone_fleet = {
+        random_system_planet = {
+            create_fleet = {
+                name = "NAME_Ancient_Mining_Drones"
+                effect = {
+                    set_owner = event_target:goodie_guardians
+					while = {
+                        count = @t2t1count
+                        create_ship = {
+                            name = ""
+                            design = @droneT1
+                        }
+                        set_ship_tier_1 = yes
+                    }
+                    while = {
+                        count = @t2t2count
+                        create_ship = {
+                            name = ""
+                            design = @droneT2
+                        }
+                        set_ship_tier_2 = yes
+                    }
+                    while = {
+                        count = @t2t3count
+                        create_ship = {
+                            name = ""
+                            design = @droneT3
+                        }
+                        set_ship_tier_3 = yes
+                    }
+                    set_fleet_bounty_tier_2 = yes
+                    set_location = prev
+                    set_fleet_stance = aggressive
+                    set_aggro_range = 1000
+                    set_aggro_range_measure_from = star
+                }
+            }
+        }
+    }
+
+spawn_T3_drone_fleet = {
+    random_system_planet = {
+            create_fleet = {
+                name = "NAME_Ancient_Mining_Drones"
+                effect = {
+                    set_owner = event_target:goodie_guardians
+                    while = {
+                        count = @t3t1count
+                        create_ship = {
+                            name = ""
+                            design = @droneT1
+                        }
+                        set_ship_tier_1 = yes
+                    }
+                    while = {
+                        count = @t3t2count
+                        create_ship = {
+                            name = ""
+                            design = @droneT2
+                        }
+                        set_ship_tier_2 = yes
+                    }
+                    while = {
+                        count = @t3t3count
+                        create_ship = {
+                            name = ""
+                            design = @droneT3
+                        }
+                        set_ship_tier_3 = yes
+                    }
+                    set_fleet_bounty_tier_3 = yes
+                    set_location = prev
+                    set_fleet_stance = aggressive
+                    set_aggro_range = 1000
+                    set_aggro_range_measure_from = star
+                }
+            }
+        }
+    }
+
+spawn_T4_drone_fleet = {
+    random_system_planet = {
+            create_fleet = {
+                name = "NAME_Ancient_Mining_Drones"
+                effect = {
+                    set_owner = event_target:goodie_guardians
+                    while = {
+                        count = @t4t1count
+                        create_ship = {
+                            name = ""
+                            design = @droneT1
+                        }
+                        set_ship_tier_1 = yes
+                    }
+                    while = {
+                        count = @t4t2count
+                        create_ship = {
+                            name = ""
+                            design = @droneT2
+                        }
+                        set_ship_tier_2 = yes
+                    }
+                    while = {
+                        count = @t4t3count
+                        create_ship = {
+                            name = ""
+                            design = @droneT3
+                        }
+                        set_ship_tier_3 = yes
+                    }
+                    set_fleet_bounty_tier_4 = yes
+                    set_location = prev
+                    set_fleet_stance = aggressive
+                    set_aggro_range = 1000
+                    set_aggro_range_measure_from = star
+                }
+            }
+        }
+    }
+
+spawn_drone_boss = {
+    create_goodie_guardians_country = yes
+    set_star_flag = has_boss_flag
+    random_system_planet = {
+                create_fleet = {
+                    name = "NAME_Automated_Drone_Factory"
+                    effect = {
+                        set_owner = event_target:goodie_guardians
+                        while = {
+                            count = 1
+                            create_ship = {
+                                name = "Boss"
+                                design = @droneBoss
+                            }
+                            set_ship_tier_6 = yes
+                        }
+                        set_fleet_flag = mob_boss
+                        set_location = prev
+                        set_fleet_stance = aggressive
+                        set_aggro_range = 1000
+                        set_aggro_range_measure_from = star
+                    }
+                    settings = {
+                        spawn_debris = no
+                    }
+                }
+            }
+            
+    }
+
+##whales
+spawn_T1_whale_fleet = {
+			create_goodie_guardians_country = yes
+            random_system_planet = {
+            create_fleet = {
+                name = ""
+                effect = {
+                    set_owner = event_target:goodie_guardians
+                    while = {
+                        count = @t1t1count
+                        create_ship = {
+                            name = ""
+                            design = @whaleT1
+                        }
+                        set_ship_tier_1 = yes
+                    }
+                    while = {
+                        count = @t1t2count
+                        create_ship = {
+                            name = ""
+                            design = @whaleT2
+                        }
+                        set_ship_tier_2 = yes
+                    }
+                    while = {
+                        count = @t1t3count
+                        create_ship = {
+                            name = ""
+                            design = @whaleT3
+                        }
+                        set_ship_tier_3 = yes
+                    }
+                    set_fleet_bounty_tier_1 = yes
+					set_fleet_flag = mob_fleet
+                    set_location = prev
+                    set_fleet_stance = aggressive
+                    set_aggro_range = 1000
+                    set_aggro_range_measure_from = star
+                }
+            }
+        }
+		
+			## add counter
+				if = {
+					limit = { check_variable = { which = mobcount value < 1 }	}
+					set_variable = {
+						which = mobcount
+						value = 0
+					}
+				}
+				change_variable = {
+					which = mobcount
+					value = 1
+				}
+	
+	}
+
+spawn_T2_whale_fleet = {
+        random_system_planet = {
+            create_fleet = {
+                name = ""
+                effect = {
+                    set_owner = event_target:goodie_guardians
+					while = {
+                        count = @t2t1count
+                        create_ship = {
+                            name = ""
+                            design = @whaleT1
+                        }
+                        set_ship_tier_1 = yes
+                    }
+                    while = {
+                        count = @t2t2count
+                        create_ship = {
+                            name = ""
+                            design = @whaleT2
+                        }
+                        set_ship_tier_2 = yes
+                    }
+                    while = {
+                        count = @t2t3count
+                        create_ship = {
+                            name = ""
+                            design = @whaleT3
+                        }
+                        set_ship_tier_3 = yes
+                    }
+                    set_fleet_bounty_tier_2 = yes
+                    set_location = prev
+                    set_fleet_stance = aggressive
+                    set_aggro_range = 1000
+                    set_aggro_range_measure_from = star
+                }
+            }
+        }
+    }
+
+spawn_T3_whale_fleet = {
+    random_system_planet = {
+            create_fleet = {
+                name = ""
+                effect = {
+                    set_owner = event_target:goodie_guardians
+                    while = {
+                        count = @t3t1count
+                        create_ship = {
+                            name = ""
+                            design = @whaleT1
+                        }
+                        set_ship_tier_1 = yes
+                    }
+                    while = {
+                        count = @t3t2count
+                        create_ship = {
+                            name = ""
+                            design = @whaleT2
+                        }
+                        set_ship_tier_2 = yes
+                    }
+                    while = {
+                        count = @t3t3count
+                        create_ship = {
+                            name = ""
+                            design = @whaleT3
+                        }
+                        set_ship_tier_3 = yes
+                    }
+                    set_fleet_bounty_tier_3 = yes
+                    set_location = prev
+                    set_fleet_stance = aggressive
+                    set_aggro_range = 1000
+                    set_aggro_range_measure_from = star
+                }
+            }
+        }
+    }
+
+spawn_T4_whale_fleet = {
+    random_system_planet = {
+            create_fleet = {
+                name = ""
+                effect = {
+                    set_owner = event_target:goodie_guardians
+                    while = {
+                        count = @t4t1count
+                        create_ship = {
+                            name = ""
+                            design = @whaleT1
+                        }
+                        set_ship_tier_1 = yes
+                    }
+                    while = {
+                        count = @t4t2count
+                        create_ship = {
+                            name = ""
+                            design = @whaleT2
+                        }
+                        set_ship_tier_2 = yes
+                    }
+                    while = {
+                        count = @t4t3count
+                        create_ship = {
+                            name = ""
+                            design = @whaleT3
+                        }
+                        set_ship_tier_3 = yes
+                    }
+                    set_fleet_bounty_tier_4 = yes
+                    set_location = prev
+                    set_fleet_stance = aggressive
+                    set_aggro_range = 1000
+                    set_aggro_range_measure_from = star
+                }
+            }
+        }
+    }
+
+spawn_whale_boss = {
+    create_goodie_guardians_country = yes
+    set_star_flag = has_boss_flag
+    random_system_planet = {
+                create_fleet = {
+                    name = "NAME_Big_momma"
+                    effect = {
+                        set_owner = event_target:goodie_guardians
+                        while = {
+                            count = 1
+                            create_ship = {
+                                name = "Boss"
+                                design = @whaleBoss
+                            }
+                            set_ship_tier_6 = yes
+                        }
+                        set_fleet_flag = mob_boss
+                        set_location = prev
+                        set_fleet_stance = aggressive
+                        set_aggro_range = 1000
+                        set_aggro_range_measure_from = star
+                    }
+                    settings = {
+                        spawn_debris = no
+                    }
+                }
+            }
+            
+    }
+
+##cloud
+spawn_T1_cloud_fleet = {
+			create_goodie_guardians_country = yes
+            random_system_planet = {
+            create_fleet = {
+                name = ""
+                effect = {
+                    set_owner = event_target:goodie_guardians
+                    while = {
+                        count = @t1t1count                   # MRFREAKE -- balanced as it's too powerful
+                        create_ship = {
+                            name = ""
+                            design = @cloudT1
+                        }
+                        set_ship_tier_1 = yes
+                    }
+                    while = {
+                        count = @t1t2count
+                        create_ship = {
+                            name = ""
+                            design = @cloudT2
+                        }
+                        set_ship_tier_2 = yes
+                    }
+                    while = {
+                        count = @t1t3count
+                        create_ship = {
+                            name = ""
+                            design = @cloudT3
+                        }
+                        set_ship_tier_3 = yes
+                    }
+                    set_fleet_bounty_tier_1 = yes
+					set_fleet_flag = mob_fleet
+                    set_location = prev
+                    set_fleet_stance = aggressive
+                    set_aggro_range = 1000
+                    set_aggro_range_measure_from = star
+                    
+                }
+            }
+        }
+		
+			## add counter
+				if = {
+					limit = { check_variable = { which = mobcount value < 1 }	}
+					set_variable = {
+						which = mobcount
+						value = 0
+					}
+				}
+				change_variable = {
+					which = mobcount
+					value = 1
+				}
+	
+	}
+
+spawn_T2_cloud_fleet = {
+        random_system_planet = {
+            create_fleet = {
+                name = ""
+                effect = {
+                    set_owner = event_target:goodie_guardians
+					while = {
+                        count = @t2t1count
+                        create_ship = {
+                            name = ""
+                            design = @cloudT1
+                        }
+                        set_ship_tier_1 = yes
+                    }
+                    while = {
+                        count = @t2t2count
+                        create_ship = {
+                            name = ""
+                            design = @cloudT2
+                        }
+                        set_ship_tier_2 = yes
+                    }
+                    while = {
+                        count = @t2t3count
+                        create_ship = {
+                            name = ""
+                            design = @cloudT3
+                        }
+                        set_ship_tier_3 = yes
+                    }
+                    set_fleet_bounty_tier_2 = yes
+                    set_location = prev
+                    set_fleet_stance = aggressive
+                    set_aggro_range = 1000
+                    set_aggro_range_measure_from = star
+                }
+            }
+        }
+    }
+
+spawn_T3_cloud_fleet = {
+    random_system_planet = {
+            create_fleet = {
+                name = ""
+                effect = {
+                    set_owner = event_target:goodie_guardians
+                    while = {
+                        count = @t3t1count
+                        create_ship = {
+                            name = ""
+                            design = @cloudT1
+                        }
+                        set_ship_tier_1 = yes
+                    }
+                    while = {
+                        count = @t3t2count
+                        create_ship = {
+                            name = ""
+                            design = @cloudT2
+                        }
+                        set_ship_tier_2 = yes
+                    }
+                    while = {
+                        count = @t3t3count
+                        create_ship = {
+                            name = ""
+                            design = @cloudT3
+                        }
+                        set_ship_tier_3 = yes
+                    }
+                    set_fleet_bounty_tier_3 = yes
+                    set_location = prev
+                    set_fleet_stance = aggressive
+                    set_aggro_range = 1000
+                    set_aggro_range_measure_from = star
+                }
+            }
+        }
+    }
+
+spawn_T4_cloud_fleet = {
+    random_system_planet = {
+            create_fleet = {
+                name = ""
+                effect = {
+                    set_owner = event_target:goodie_guardians
+                    while = {
+                        count = @t4t1count
+                        create_ship = {
+                            name = ""
+                            design = @cloudT1
+                        }
+                        set_ship_tier_1 = yes
+                    }
+                    while = {
+                        count = @t4t2count
+                        create_ship = {
+                            name = ""
+                            design = @cloudT2
+                        }
+                        set_ship_tier_2 = yes
+                    }
+                    while = {
+                        count = @t4t3count
+                        create_ship = {
+                            name = ""
+                            design = @cloudT3
+                        }
+                        set_ship_tier_3 = yes
+                    }
+                    set_fleet_bounty_tier_4 = yes
+                    set_location = prev
+                    set_fleet_stance = aggressive
+                    set_aggro_range = 1000
+                    set_aggro_range_measure_from = star
+                }
+            }
+        }
+    }
+
+spawn_cloud_boss = {
+    create_goodie_guardians_country = yes
+    set_star_flag = has_boss_flag
+    random_system_planet = {
+                create_fleet = {
+                    name = "NAME_storm_boss"
+                    effect = {
+                        set_owner = event_target:goodie_guardians
+                        while = {
+                            count = 1
+                            create_ship = {
+                                name = "Boss"
+                                design = @cloudBoss
+                            }
+                            set_ship_tier_6 = yes
+                        }
+                        set_fleet_flag = mob_boss
+                        set_location = prev
+                        set_fleet_stance = aggressive
+                        set_aggro_range = 1000
+                        set_aggro_range_measure_from = star
+                    }
+                    settings = {
+                        spawn_debris = no
+                    }
+                }
+            }
+            
+    }
+
+	
+	
+create_goodie_guardians = {
+            create_goodie_guardians_country = yes
+            create_starbase = {
+                size = starbase_starfortress 
+                owner = event_target:goodie_guardians
+                module = gun_battery
+                module = gun_battery
+                module = gun_battery  
+            }
+    }
+
+
+create_goodie_guardians_country = {
+    if = {
+        limit = {
+            NOT = {
+                exists = event_target:goodie_guardians
+            }
+        }
+                create_country = {
+                    name = "NAME_Guardians_Of_The_Fallen"
+                    type = drone
+                    flag = {
+                        icon = {
+                            category = "zoological"
+                            file = "flag_zoological_1.dds"
+                        }
+                        background= {
+                            category = "backgrounds"
+                            file = "00_solid.dds"
+                        }
+                        colors={
+                            "black"
+                            "black"
+                            "null"
+                            "null"
+                        }
+                    }
+                    effect = {
+                        save_global_event_target_as = goodie_guardians
+                        set_graphical_culture = "fallen_empire_03"
+                    }
+                }
+                #event_target:goodie_guardians = {
+                #    give_technology = {
+                #        tech = tech_ftl_inhibitor
+                #        message = no
+                #    }                        
+                #}
+    }
+}
+
+
+create_goodie_guardians_10k = {
+    create_goodie_guardians_country = yes
+    random_system_planet = {
+        save_event_target_as = guardian_location
+    }
+    create_fleet = {
+        name = "NAME_Guardian_Core"
+        settings = { spawn_debris = yes }
+        effect = {
+            set_owner = event_target:goodie_guardians
+            create_ship = {
+                    name = random
+                    design = "NAME_Sanctuary_Core"
+                    graphical_culture = "fallen_empire_03"
+                }
+            
+            set_location = {
+                target = event_target:guardian_location
+                distance = 10
+                angle = random 
+            }
+            add_modifier = {
+                modifier = sanctuary_power
+                days = -1
+            }						
+            #save_event_target_as = guardians_core
+            #set_fleet_flag = sanctuary_core
+        }
+    }
+}
+
+### ADDED MRFREAKE
+
+setup_mob_spawner = {
+    set_star_flag = mob_spawner
+	## first we create the country, this should not be here, since this effect is called multiple times.
+	create_goodie_guardians_country = yes
+	
+	init_spawn_random_mob = yes
+   
+	
+
+    closest_system = { 
+            min_steps = 2 
+            max_steps = 4
+            limit = {
+                NOT = {
+                    has_hyperlane_to = prev
+                }
+                is_appropriate_mob_system = yes
+            }
+            add_hyperlane = {
+                from = this
+                to = prev
+            } 
+        }
+}
+
+
+set_ship_tier_1 = {
+    last_created_ship = {
+        set_ship_flag = level_1
+    }
+}
+
+set_ship_tier_2 = {
+    last_created_ship = {
+        set_ship_flag = level_2
+    }
+}
+
+set_ship_tier_3 = {
+    last_created_ship = {
+        set_ship_flag = level_3
+    }
+}
+
+
+set_ship_tier_4 = {
+    last_created_ship = {
+        set_ship_flag = level_4
+    }
+}
+
+
+set_ship_tier_6 = {
+    last_created_ship = {
+        set_ship_flag = level_6
+    }
+}
+
+set_fleet_bounty_tier_1 = {
+    set_fleet_flag = bounty_tier_1
+}
+
+set_fleet_bounty_tier_2 = {
+    set_fleet_flag = bounty_tier_2
+}
+
+set_fleet_bounty_tier_3 = {
+    set_fleet_flag = bounty_tier_3
+}
+
+set_fleet_bounty_tier_4 = {
+    set_fleet_flag = bounty_tier_4
+}

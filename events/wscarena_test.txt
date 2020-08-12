@@ -355,7 +355,7 @@ country_event = {                   # setup homeworld
         clear_global_event_target = target_capital_system
     }
     }
-    
+
 
 
 
@@ -814,7 +814,7 @@ country_event = {               # Delayed respawning from wscarena_test.34
     immediate = {
         random_owned_planet = {
             limit = {
-                is_capital = yes
+                has_planet_flag = new_home_planet
             }
             save_event_target_as = target_capital
         }

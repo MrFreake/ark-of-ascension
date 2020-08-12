@@ -1,0 +1,26 @@
+set_loser_flags = {
+	if = {
+		limit = {
+			any_country = {
+				NOT = { has_country_flag = loser }
+				is_country_type = default
+				check_variable = {
+					which = ascended_pops
+					value < prev
+				}
+			}
+		}
+		every_country = {
+			limit = {
+				is_country_type = default
+				NOT = { has_country_flag = loser }
+				check_variable = {
+					which = ascended_pops
+					value < prev
+				}
+			}
+			set_country_flag = loser
+			#log = "New way set [This.GetName] as a loser"
+		}
+	}
+}

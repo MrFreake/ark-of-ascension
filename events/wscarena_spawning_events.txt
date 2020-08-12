@@ -777,7 +777,10 @@ country_event = {						# Humans pick AI spawns
 			}
 		add_resource = {
 			minerals = 400
-			energy = 400	
+			energy = 400
+			volatile_motes = 100
+			rare_crystals = 100
+			exotic_gases = 100
 			}
 		}
 	}

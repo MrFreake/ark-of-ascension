@@ -1,0 +1,66 @@
+move_mob_to_random_neighbor = {
+		queue_actions = {
+				find_closest_system = {
+					trigger = {
+						id = move_mob_to_random_neighbor.trigger.1
+						NOR = {
+							any_ship_in_system = {
+								fleet = {
+									has_fleet_flag = mob_fleet
+								}
+							}
+						}
+						is_appropriate_mob_system = yes
+					}
+					found_system = {
+						move_to = this
+						find_closest_planet = {
+							trigger = {
+								id = move_mob_to_random_neighbor.trigger.2
+								is_star = yes
+							}
+							found_planet = {
+								move_to = this
+							}
+						}
+					}
+				}
+			}
+		}
+
+#	move_mob_to_random_neighbor_game_start = {
+#		closest_system = {
+#			min_steps = 1
+#			max_steps = 3
+#			limit = {
+#				is_appropriate_mob_system = yes
+#				NOR = {
+#					any_ship_in_system = {
+#						fleet = {
+#							has_fleet_flag = mob_fleet
+#						}
+#					}
+#					has_star_flag = picked_for_mob_move
+#				}
+#			}
+#			set_timed_star_flag = { flag = picked_for_mob_move days = 30 }
+#			save_event_target_as = mob_target
+#		}
+#		last_created_fleet = {
+#			queue_actions = {
+#				event_target:mob_target = {	
+#					move_to = this
+#					find_closest_planet = {
+#						trigger = {
+#							id = move_mob_to_random_neighbor.trigger.2
+#								is_star = yes
+#						}
+#							found_planet = {
+#								move_to = this
+#							}
+#						}
+#					}
+#				}
+#			}
+#		}
+	

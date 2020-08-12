@@ -509,12 +509,27 @@ ship_design = {
 	ship_size = corrupted_avatar
 	is_event_design = yes
 	hide_size = yes
-
+	
 	section = {
 		template = "corrupted_psionic_avatar_section"
 		slot = "mid"
 		
-
+		component = {
+			slot = "MEDIUM_GUN_01"
+			template = "PSIONIC_BLAST_1"
+		}
+		component = {
+			slot = "MEDIUM_GUN_02"
+			template = "PSIONIC_BLAST_1"
+		}
+		component = {
+			slot = "MEDIUM_GUN_03"
+			template = "PSIONIC_BLAST_1"
+		}
+		component = {
+			slot = "MEDIUM_GUN_04"
+			template = "PSIONIC_BLAST_1"
+		}
 	}
 	required_component="GUARDIAN_DRIVE_2"
 	required_component="COMBAT_COMPUTER_WSCARENA"

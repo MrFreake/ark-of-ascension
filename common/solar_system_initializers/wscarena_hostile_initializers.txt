@@ -9,12 +9,12 @@ wscarena_guardians_init_dragon = {
 
 	init_effect = {
 		spawn_megastructure = {
-			type = matter_decompressor_ruined 
+			type = matter_decompressor_1 
 			orbit_angle = 225
 			orbit_distance = 0
 			location = solar_system
 			init_effect = {
-				upgrade_megastructure_to = matter_decompressor_restored
+				upgrade_megastructure_to = matter_decompressor_2
 				finish_upgrade = yes
 				solar_system = { 
 					random_system_planet = { trigger_megastructure_icon = yes }
@@ -22,7 +22,8 @@ wscarena_guardians_init_dragon = {
 				}
 
 			}
-		}		
+		}
+		#setup_mob_spawner = yes		
 	}
 	planet = {
 		count = 1
@@ -553,5 +554,94 @@ wscarena_hostile_init_05 = {
 				add_deposit = d_minerals_10
 			}
 		}
+	}
+}
+
+# Mining Drones
+wscarena_hostile_init_05_mobs = {
+	class = "rl_standard_stars"
+	asteroid_belt = {
+		type = rocky_asteroid_belt
+		radius = 95
+	}
+	
+	#usage = misc_system_init
+	usage_odds = {
+		base = 0
+		modifier = {
+			factor = 0
+			NOT = { is_in_cluster = resource_cluster_4 }
+		}
+		modifier = {
+            factor = 0
+            has_star_flag = empire_cluster
+        }
+	}
+	
+	flags = { hostile_system drone_system_2 }
+	
+	planet = {
+		count = 1
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+	
+	change_orbit = 30
+	
+	planet = {
+		count = 2
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+	}
+	
+	change_orbit = 25
+	
+	planet = {
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 0 max = 150 }
+	}
+	planet = {
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 160 max = 330 }
+	}
+	
+	planet = {
+		count = { min = 2 max = 5 }
+		orbit_distance = 25
+		orbit_angle = { min = 90 max = 270 }
+		
+		change_orbit = @base_moon_distance
+		
+		moon = {
+			count = { min = 0 max = 1 }
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+		}
+	}
+	
+	init_effect = {
+		create_goodie_guardians_country = yes
+		spawn_T4_drone_fleet = yes
+		spawn_T4_drone_fleet = yes
+		spawn_T4_drone_fleet = yes
+		spawn_T4_drone_fleet = yes
+		While = {
+			count = 6
+			random_system_planet = {
+				limit = {
+					is_star = no
+					NOT = {
+						is_planet_class = pc_gas_giant
+					}
+				}
+				add_deposit = d_minerals_10
+			}
+		}
+		setup_mob_spawner = yes
 	}
 }

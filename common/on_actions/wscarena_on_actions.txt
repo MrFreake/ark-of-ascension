@@ -38,10 +38,18 @@ on_war_ended = {
 
 on_five_year_pulse_country  = {
     events = {
-        #wscarena_leaderboard_events.6 Editted out for now, as leaderboard events need to be rewritten
+        wscarena_leaderboard_events.6 
         wscarena_test.27
         
-        #wscarena_mobhandler.2  # respawn boss ## REMOVED MRFREAKE
+        #wscarena_mobhandler.2  # respawn boss 
+    }
+}
+
+# No scope, like on_game_start
+on_five_year_pulse = {
+	events = {
+        #wscarena_leaderboard_events.8
+        wscarena_mobhandler.3    # move mob when system at maxspawns
     }
 }
 
@@ -95,4 +103,15 @@ on_ship_destroyed_perp = {
         wscarena_test.34    # Respawn hero ship
         wscarena_test.35    # kill player/ai owned ship
     }
+}
+
+# This = owner of fleet 1 (combatant)
+# From = owner of fleet 2 (destroyed)
+# FromFrom = fleet 1
+# FromFromFrom = fleet 2
+on_fleet_destroyed_perp = {
+	events = {
+		wscarena_mobhandler.10 #mob fleet dies
+		wscarena_mobhandler.11 #mob boss dies
+	}
 }

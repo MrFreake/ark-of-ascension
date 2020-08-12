@@ -168,9 +168,9 @@ npc_warship_01 = {
 		ship_armor_regen_add_static = 30
 	}
 	ship_modifier = {
-		ship_fire_rate_mult = 0.1
+		ship_fire_rate_mult = 0.3
 		ships_upkeep_mult = -1.0
-		ship_weapon_damage = 0.20
+		ship_weapon_damage = 0.30
 	}
 	max_hitpoints = 20000
 	combat_size_multiplier = 50
